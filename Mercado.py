@@ -4,7 +4,7 @@ from analise_dados import *
 from datetime import datetime, date
 from os import mkdir, listdir
 
-
+# teste
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
 class aparencia:
     @staticmethod
