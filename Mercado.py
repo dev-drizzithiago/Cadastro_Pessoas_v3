@@ -339,8 +339,8 @@ class mercadinho:
                     else:
                         break
                 aparencia.linha()
-                categoria_GERAL = [str(self.funcao_categoria())]
-                for id_catg, txt_catg in categoria_GERAL:
+                # categoria_GERAL = self.funcao_categoria()
+                for id_catg, txt_catg in self.funcao_categoria():
                     id_categoria = int(id_catg)
                     categoria = str(txt_catg)
                 fabricante = str(input(f'Fabricante do produto: {nome_produto}: ')).upper()
