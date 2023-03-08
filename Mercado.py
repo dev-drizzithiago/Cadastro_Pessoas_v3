@@ -16,6 +16,7 @@ class aparencia:
     def linha():
         print('-' * 100)
 
+    # FUNÇÃO PARA VERIFICAR SE A ENTRADA É UM NÚMERO INTEIRO
     @staticmethod
     def leiaInt(valor_int):
         while True:
@@ -25,6 +26,7 @@ class aparencia:
             except ValueError:
                 print('Você entrou com um valor invalido, tente novamente.')
 
+    # FUNÇÃO PARA ANALISAR SE A ENTRADA É UM NÚMERO REAL(FLOAT)
     @staticmethod
     def leiaFloat(valor_float):
         while True:
@@ -34,10 +36,12 @@ class aparencia:
             except ValueError:
                 print('Você entrou com um valor invalido, tente novamente.')
 
+    # FUNÇÃO PARA QUE O USUÁRIO RESPONDA "SIM" OU "NÃO" QUANDO SE UMA DUVIDA
     @staticmethod
     def continuar_SN(texto):
         print(f'{texto}')
         resp = 'Opção INVALIDA!'
+        sleep(1)
         while True:
             try:
                 valor_opc = str(input('Aceita prosseguir? [S/N]: '))[0].upper()
@@ -50,14 +54,15 @@ class aparencia:
                 aparencia.linha()
                 print(resp)
 
+    # FUNÇÃO DESTINADA EM 'DAR' UMA PAUSA, ANTES DE CONTINUAR
     @staticmethod
     def apt_enter():
         return input('Aperte o ENTER para continuar')
 
-    @staticmethod
-    def guardando(diretorio, valor_lista):
-        abrindo_relatorio = open(diretorio, 'a')
-        abrindo_relatorio.write(f'{valor_lista} \n')
+    # @staticmethod
+    # def guardando(diretorio, valor_lista):
+    #    abrindo_relatorio = open(diretorio, 'a')
+    #    abrindo_relatorio.write(f'{valor_lista} \n')
 
 
 APARENCIA = aparencia()
