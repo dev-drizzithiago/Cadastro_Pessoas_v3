@@ -4,7 +4,7 @@ from analise_dados import *
 from datetime import datetime, date
 from os import mkdir, listdir
 
-# teste
+
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
 class aparencia:
     @staticmethod
@@ -201,22 +201,24 @@ class mercadinho:
                 aparencia.linha()
                 aparencia.apt_enter()
 
+    # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS
+    # É POSSUI ACRESCENTAR MAIS CATEGORIAS
     @staticmethod
     def funcao_categoria():
         print('''
-                [01] PADARIA
-                [02] HORTIFRÚTI
-                [03] CONGELADOS
-                [04] FRIOS
-                [05] AÇOUGUE
-                [06] ALIMENTOS
-                [07] BEBIDAS
-                [08] HIGIENE PESSOAL
-                [09] PRODUTOS DE LIMPEZA
+                [1] PADARIA
+                [2] HORTIFRÚTI
+                [3] CONGELADOS
+                [4] FRIOS
+                [5] AÇOUGUE
+                [6] ALIMENTOS
+                [7] BEBIDAS
+                [8] HIGIENE PESSOAL
+                [9] PRODUTOS DE LIMPEZA
                 [10] PAPELARIA
                 [11] LATICÍNIOS
                 ''')
-        opcao_f_categoria = aparencia.leiaInt(input('Categoria: '))
+        opcao_f_categoria = aparencia.leiaInt('Categoria: ')
         if opcao_f_categoria == 1:
             return ['PADARIA', 1]
         elif opcao_f_categoria == 2:
@@ -337,7 +339,7 @@ class mercadinho:
                     else:
                         break
                 aparencia.linha()
-                categoria_GERAL = str(self.funcao_categoria())
+                categoria_GERAL = [str(self.funcao_categoria())]
                 for id_catg, txt_catg in categoria_GERAL:
                     id_categoria = int(id_catg)
                     categoria = str(txt_catg)
@@ -361,13 +363,14 @@ class mercadinho:
                         conectar_tabela_produto = self.db_conexao.cursor()
                         comando_sql_add_produto = "INSERT INTO produtos_mercadinho " \
                                                   "(nome_produto, fabri_produto, valor_produto, id_categoria)" \
-                                                  "VALUES(%s, %s, %s)"
+                                                  "VALUES(%s, %s, %s, %s)"
                         valor_sql_add_produto = (nome_produto, fabricante, valor_produto)
                         conectar_tabela_produto.execute(comando_sql_add_produto, valor_sql_add_produto)
                         RELATORIOS.relatorio_geral_SEM_ERROS(f'Dados adicionados com sucesso! \n'
                                                              f'{nome_produto} \n'
                                                              f'{fabricante} \n'
-                                                             f'{valor_produto} \n')
+                                                             f'{valor_produto} \n'
+                                                             f'{id_categoria}')
                     except mysql.connector.Error as erro:
                         print('Não foi possível adicionar os dados cadastrados'
                               f'VERIFIQUE SEU BANDO DE DADOS\n ==> {erro}')
