@@ -59,10 +59,10 @@ class aparencia:
     def apt_enter():
         return input('Aperte o ENTER para continuar')
 
-    # @staticmethod
-    # def guardando(diretorio, valor_lista):
-    #    abrindo_relatorio = open(diretorio, 'a')
-    #    abrindo_relatorio.write(f'{valor_lista} \n')
+    @staticmethod
+    def guardando(diretorio, valor_lista):
+        abrindo_relatorio = open(diretorio, 'a')
+        abrindo_relatorio.write(f'{valor_lista} \n')
 
 
 APARENCIA = aparencia()
@@ -92,7 +92,7 @@ class relatorios_mercadinho:
         return relatorio_produto
 
     # ADICIONA OS ERROS NOS LOGS QUE NÃO TIVEREM ERROS.
-    # AS INFORMAÇÕES SÃO ADICIONADAS COM OS HORARIOS É DATA.
+    # AS INFORMAÇÕES SÃO ADICIONADAS COM OS HORÁRIOS É DATA.
     @staticmethod
     def relatorio_geral_SEM_ERROS(msg_sem_erro):
         registrando_relatorio = open(RELATORIOS.criando_arquivos_txt_geral(), 'a')
