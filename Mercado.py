@@ -406,40 +406,34 @@ class mercadinho:
 
     # VISUALIZANDO AS INFORMAÇÕES NO BANCO DE DADOS
     def visualizar_cadastros(self):
-        global comando_SQL_cliente, dict_cliente, visualizacao
+        global comando_SQL_cliente, dict_cliente
         conectando_banco_DB = self.db_conexao.cursor()
 
         def view_dados_cliente(dados_cliente):
-            try:
-                for ID_CLIENTE, NOME, CPF, NASC, TELEFONE, EMAIL in dados_cliente:
-                    print(f'ID: ==> {ID_CLIENTE} \n' f'NOME: ==> {NOME} \n' f'CPF: ==> {CPF} \n'
-                          f'NASC: ==> {NASC} \n' f'TELEFONE ==> {TELEFONE} \n' f'EMAIL: ==> {EMAIL}')
-                    aparencia.linha()
+            verif = list()
+            for ID_CLIENTE, NOME, CPF, NASC, TELEFONE, EMAIL in dados_cliente:
+                verif.append(ID_CLIENTE)
+                print(f'ID: ==> {ID_CLIENTE} \n' f'NOME: ==> {NOME} \n' f'CPF: ==> {CPF} \n'
+                      f'NASC: ==> {NASC} \n' f'TELEFONE ==> {TELEFONE} \n' f'EMAIL: ==> {EMAIL}')
+                aparencia.linha()
+            if len(verif) > 0:
                 RELATORIOS.relatorio_geral_SEM_ERROS('Busca realizada com sucesso!')
-                print()
-                aparencia.apt_enter()
-            except:
-                print('NÃO FOI POSSÍVEL LISTAS OS DADOS DOS CLIENTE')
+            else:
+                print('Não foi encontrado nenhum cadastro')
+                RELATORIOS.relatorio_geral_SEM_ERROS('Busca realizada com sucesso! Mas não foi nenhum cadastro')
 
         def view_dados_produtos(dados_produtos):
-            try:
-                for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO, ID_CATEGORIA in dados_produtos:
-                    print(f' ==> REGISTRO DO PRODUTO: {ID_PRODUTO} \n'
-                          f' ==> NOME DO PRODUTO: {NOME_PRODUTO} \n'
-                          f' ==> FABRICANTE: {FABRICANTE_PRODUTO} \n'
-                          f' ==> R$:{VALOR_PRODUTO} '
-                          f' ==> ID CATEGORIA {ID_CATEGORIA}')
-                    aparencia.linha()
-                    RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO! \n'
-                                                         f'ID: {ID_PRODUTO} \n'
-                                                         f' ==> {NOME_PRODUTO} \n'
-                                                         f' ==> {FABRICANTE_PRODUTO} \n'
-                                                         f' ==> {VALOR_PRODUTO} \n'
-                                                         f' ==> {ID_CATEGORIA}')
-                print()
-                aparencia.apt_enter()
-            except:
-                print('NÃO FOI POSSÍVEL LISTAS OS DADOS DOS CLIENTE')
+            verif = list()
+            for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO, ID_CATEGORIA in dados_produtos:
+                verif.append(ID_PRODUTO)
+                print(f' ==> REGISTRO DO PRODUTO: {ID_PRODUTO} \n'
+                      f' ==> NOME DO PRODUTO: {NOME_PRODUTO} \n'
+                      f' ==> FABRICANTE: {FABRICANTE_PRODUTO} \n'
+                      f' ==> R$:{VALOR_PRODUTO} '
+                      f' ==> ID CATEGORIA {ID_CATEGORIA}')
+                aparencia.linha()
+                RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO!')
+            aparencia.apt_enter()
 
         while True:
             aparencia.logo_principal('---CONSULTA DE CADASTROS DO MERCADINHO---')
@@ -449,6 +443,7 @@ class mercadinho:
         ==> [0] VOLTAR AO MENU PRINCIPAL
             ''')
             opc_consultar = aparencia.leiaInt('Escolha uma opção: ')
+            sleep(1)
             aparencia.linha()
 
             # CONSULTANDO TABELA CLIENTE_MERCADINHO
@@ -470,38 +465,31 @@ class mercadinho:
                             comando_SQL_cliente = "SELECT * FROM cliente_mercadinho"
                             conectando_banco_DB.execute(comando_SQL_cliente)
                             view_dados_cliente(conectando_banco_DB)
-                            visualizacao = True
                         except mysql.connector.Error as erro:
                             print(f'Não foi possível localizar as informações')
                             print('Verifique se a conexão com o bando de dados esta normal.\n '
                                   f'==> {erro}')
                             RELATORIOS.relatorio_geral_COM_ERROS(erro)
-                            visualizacao = False
                             aparencia.apt_enter()
                             break
-                        aparencia.linha()
-                        if visualizacao:
-                            resp_opcao = aparencia.continuar_SN('Deseja realizar um relatório da busca?')
-                            if resp_opcao == 'S':
-                                conectando_banco_DB.execute(comando_SQL_cliente)
-                                for id_cliente, nome_cliente, cpf_cliente, nasc_cliente, tel_cliente, mail_cliente in \
-                                        conectando_banco_DB:
-                                    dict_cliente = {f'ID_CLIENTE: ': id_cliente,
-                                                    'NOME_CLIENTE: ': nome_cliente,
-                                                    'CPF_CLIENTE: ': cpf_cliente,
-                                                    'DATA_NASC: ': nasc_cliente,
-                                                    'TEL_CLIENTE: ': tel_cliente,
-                                                    'MAIL_CLIENTE: ': mail_cliente}
-                                    lista_relatorio_cliente.append(dict_cliente)
-                                gerando_PDF(lista_relatorio_cliente)
-                                aparencia.linha()
-                                aparencia.apt_enter()
-                                break
-                            elif resp_opcao == 'N':
-                                print('Voltando um menu!')
-                                sleep(1)
-                                break
-                        if not visualizacao:
+                        resp_opcao = aparencia.continuar_SN('Deseja realizar um relatório da busca?')
+                        if resp_opcao == 'S':
+                            conectando_banco_DB.execute(comando_SQL_cliente)
+                            for id_cliente, nome_cliente, cpf_cliente, nasc_cliente, tel_cliente, mail_cliente in \
+                                    conectando_banco_DB:
+                                dict_cliente = {f'ID_CLIENTE: ': id_cliente,
+                                                'NOME_CLIENTE: ': nome_cliente,
+                                                'CPF_CLIENTE: ': cpf_cliente,
+                                                'DATA_NASC: ': nasc_cliente,
+                                                'TEL_CLIENTE: ': tel_cliente,
+                                                'MAIL_CLIENTE: ': mail_cliente}
+                                lista_relatorio_cliente.append(dict_cliente)
+                            gerando_PDF(lista_relatorio_cliente)
+                            aparencia.apt_enter()
+                            break
+                        elif resp_opcao == 'N':
+                            print('Voltando um menu!')
+                            sleep(0.5)
                             break
 
                 # BUSCANDO POR INFORMAÇÕES ESPECIFICAS
@@ -584,7 +572,7 @@ class mercadinho:
                 ''')
                 opcao_produto = aparencia.leiaInt('Escolha uma opção: ')
                 sleep(1)
-                
+
                 # BUSCA REALIZADO EM TODA TABELA
                 if opcao_produto == 1:
                     print('carregando...!!\n')
