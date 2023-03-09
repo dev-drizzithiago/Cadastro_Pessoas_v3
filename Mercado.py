@@ -183,9 +183,7 @@ class mercadinho:
             password = str(input('Password: '))
             print('ABRINDO O BANCO DE DADOS, AGUARDE...!!')
             sleep(1)
-            db_conexao = mysql.connector.connect(host='localhost',
-                                                 user='root',
-                                                 password=password,
+            db_conexao = mysql.connector.connect(host='localhost', user='root', password=password,
                                                  database='mercadinho_pinheiro')
             print('Bando de dados conectado!!')
             RELATORIOS.relatorio_geral_SEM_ERROS('Banco de dados conectado!!')
@@ -425,13 +423,20 @@ class mercadinho:
 
         def view_dados_produtos(dados_produtos):
             try:
-                for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO in dados_produtos:
+                for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO, ID_CATEGORIA in dados_produtos:
                     print(f' ==> REGISTRO DO PRODUTO: {ID_PRODUTO} \n'
                           f' ==> NOME DO PRODUTO: {NOME_PRODUTO} \n'
                           f' ==> FABRICANTE: {FABRICANTE_PRODUTO} \n'
-                          f' ==> R$:{VALOR_PRODUTO} ')
+                          f' ==> R$:{VALOR_PRODUTO} '
+                          f' ==> ID CATEGORIA {ID_CATEGORIA}')
                     aparencia.linha()
-                    RELATORIOS.relatorio_geral_SEM_ERROS('Busca realizada com sucesso na tabela "produtos_mercadinho"')
+                    RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO! \n'
+                                                         f'ID: {ID_PRODUTO} \n'
+                                                         f' ==> {NOME_PRODUTO} \n'
+                                                         f' ==> {FABRI_PRODUTO} \n'
+                                                         f' ==> {VALOR_PRODUTO} \n'
+                                                         f' ==> {ID_CATEGORIA}')
+                print()
                 aparencia.apt_enter()
             except:
                 print('NÃO FOI POSSÍVEL LISTAS OS DADOS DOS CLIENTE')
@@ -489,6 +494,8 @@ class mercadinho:
                                                     'MAIL_CLIENTE: ': mail_cliente}
                                     lista_relatorio_cliente.append(dict_cliente)
                                 gerando_PDF(lista_relatorio_cliente)
+                                aparencia.linha()
+                                aparencia.apt_enter()
                                 break
                         elif resp_opcao == 'N':
                             print('Voltando um menu!')
@@ -579,21 +586,11 @@ class mercadinho:
                 # BUSCA REALIZADO EM TODA TABELA
                 if opcao_produto == 1:
                     print('carregando...!!\n')
-                    consultar_produtos = self.db_conexao.cursor()
                     try:
                         comando_SQL_produtos = "SELECT * FROM produtos_mercadinho"
-                        consultar_produtos.execute(comando_SQL_produtos)
-                        for ID_PRODUTO, NOME_PRODUTO, FABRI_PRODUTO, VALOR_PRODUTO in consultar_produtos:
-                            print(f'Registro: {ID_PRODUTO} \n'
-                                  f'Nome do produto: {NOME_PRODUTO} \n'
-                                  f'Fabricante: {FABRI_PRODUTO} \n'
-                                  f'Valor do produto R$:{VALOR_PRODUTO}')
-                            aparencia.linha()
-                            RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO! \n'
-                                                                 f'ID: {ID_PRODUTO} \n'
-                                                                 f'{NOME_PRODUTO} \n'
-                                                                 f'{FABRI_PRODUTO} \n'
-                                                                 f'{VALOR_PRODUTO} \n')
+                        conectando_banco_DB.execute(comando_SQL_produtos)
+                        view_dados_produtos(conectando_banco_DB)
+                        aparencia.linha()
                     except mysql.connector.Error as erro:
                         print('Não foi possível verificar as informações.\n'
                               'Verifique seu bando de dados!'
