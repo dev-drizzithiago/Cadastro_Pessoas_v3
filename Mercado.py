@@ -226,27 +226,27 @@ class mercadinho:
                     ''')
             opcao_f_categoria = aparencia.leiaInt('Categoria: ')
             if opcao_f_categoria == 1:
-                return ['PADARIA', 1]
+                return [('PADARIA', 1)]
             elif opcao_f_categoria == 2:
-                return ['HORTIFRÚTI', 2]
+                return [('HORTIFRÚTI', 2)]
             elif opcao_f_categoria == 3:
-                return ['CONGELADOS', 3]
+                return [('CONGELADOS', 3)]
             elif opcao_f_categoria == 4:
-                return ['FRIOS', 4]
+                return [('FRIOS', 4)]
             elif opcao_f_categoria == 5:
-                return ['AÇOUGUE', 5]
+                return [('AÇOUGUE', 5)]
             elif opcao_f_categoria == 6:
-                return ['ALIMENTOS', 6]
+                return [('ALIMENTOS', 6)]
             elif opcao_f_categoria == 7:
-                return ['BEBIDAS', 7]
+                return [('BEBIDAS', 7)]
             elif opcao_f_categoria == 8:
-                return ['HIGIENE PESSOAL', 8]
+                return [('HIGIENE PESSOAL', 8)]
             elif opcao_f_categoria == 9:
-                return ['PRODUTOS DE LIMPEZA', 9]
+                return [('PRODUTOS DE LIMPEZA', 9)]
             elif opcao_f_categoria == 10:
-                return ['PAPELARIA', 10]
+                return [('PAPELARIA', 10)]
             elif opcao_f_categoria == 11:
-                return ['LATICÍNIOS', 11]
+                return [('LATICÍNIOS', 11)]
             else:
                 opc_categoria = aparencia.continuar_SN('Essa categoria não existe, deseja adicionar outra?')
                 if opc_categoria == 'S':
