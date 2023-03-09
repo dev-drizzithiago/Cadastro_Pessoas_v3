@@ -428,7 +428,7 @@ class mercadinho:
             for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO, ID_CATEGORIA in dados_produtos:
                 verif.append(ID_PRODUTO)
                 valor_catg = self.funcao_categoria(ID_CATEGORIA)
-                for id, categ in valor_catg:
+                for id_sem_uso, categ in valor_catg:
                     NOME_CATG = categ
                 print(f' ==> REGISTRO DO PRODUTO: {ID_PRODUTO} \n'
                       f' ==> NOME DO PRODUTO: {NOME_PRODUTO} \n'
