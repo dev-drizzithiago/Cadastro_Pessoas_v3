@@ -423,15 +423,18 @@ class mercadinho:
                 RELATORIOS.relatorio_geral_SEM_ERROS('Busca realizada com sucesso! Mas não foi nenhum cadastro')
 
         def view_dados_produtos(dados_produtos):
+            global NOME_CATG
             verif = list()
             for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO, ID_CATEGORIA in dados_produtos:
                 verif.append(ID_PRODUTO)
+                valor_catg = self.funcao_categoria(ID_CATEGORIA)
+                for id, categ in valor_catg:
+                    NOME_CATG = categ
                 print(f' ==> REGISTRO DO PRODUTO: {ID_PRODUTO} \n'
                       f' ==> NOME DO PRODUTO: {NOME_PRODUTO} \n'
                       f' ==> FABRICANTE: {FABRICANTE_PRODUTO} \n'
                       f' ==> R$:{VALOR_PRODUTO} '
-                      f' ==> ID CATEGORIA {ID_CATEGORIA}')
-                aparencia.linha()
+                      f' ==> ID CATEGORIA: {ID_CATEGORIA} - CATEGORIA: {NOME_CATG}')
                 RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO!')
             aparencia.apt_enter()
 
