@@ -443,7 +443,7 @@ class mercadinho:
         ==> [0] VOLTAR AO MENU PRINCIPAL
             ''')
             opc_consultar = aparencia.leiaInt('Escolha uma opção: ')
-            sleep(1)
+            sleep(0.5)
             aparencia.linha()
 
             # CONSULTANDO TABELA CLIENTE_MERCADINHO
@@ -458,8 +458,10 @@ class mercadinho:
 
                 # BUSCAR POR TODOS OS DADOS DO CLIENTE.
                 if resp_opcao == 1:
+                    sleep(0.5)
                     lista_relatorio_cliente = list()
                     print('carregando...!!\n')
+                    sleep(0.5)
                     while True:
                         try:
                             comando_SQL_cliente = "SELECT * FROM cliente_mercadinho"
@@ -494,6 +496,7 @@ class mercadinho:
 
                 # BUSCANDO POR INFORMAÇÕES ESPECIFICAS
                 elif resp_opcao == 2:
+                    sleep(0.5)
                     while True:
                         print('''
                         [1] BUSCA POR NOME
@@ -506,6 +509,7 @@ class mercadinho:
 
                         # BUSCA REALIZADA POR NOME
                         if resp_busca == 1:
+                            sleep(0.5)
                             nome_busca = str(input('Digite o nome do cliente: '))
                             try:
                                 convertendo_STR = str("SELECT * FROM cliente_mercadinho "
@@ -519,6 +523,7 @@ class mercadinho:
 
                         # BUSCA REALIZADA POR CPF
                         elif resp_busca == 2:
+                            sleep(0.5)
                             try:
                                 busca_cpf = str(input("Digite o CPF (Sem acento): "))
                                 convertendo_comando_STR = str("SELECT * FROM cliente_mercadinho "
@@ -533,6 +538,7 @@ class mercadinho:
 
                         # BUSCA REALIZADA POR TELEFONE
                         elif resp_busca == 3:
+                            sleep(0.5)
                             try:
                                 busca_telefone = str(input('Digite o telefone(com DDD): '))
                                 convertendo_comando_STR = str("SELECT * FROM cliente_mercadinho "
@@ -546,6 +552,7 @@ class mercadinho:
 
                         # BUSCA REALIZADA POR E-MAIL
                         elif resp_busca == 4:
+                            sleep(0.5)
                             try:
                                 buscar_email = str(input('Digite um e-mail: '))
                                 convertendo_comando_STR = str("SELECT * FROM cliente_mercadinho "
@@ -559,12 +566,14 @@ class mercadinho:
 
                         # VOLTAR AO MENU ANTERIOR
                         if resp_busca == 0:
+                            sleep(0.5)
                             print('Voltando ao menu!')
-                            sleep(1)
+                            sleep(0.5)
                             break
 
             # VERIFICANDO TABELA PRODUTOS_MERCADINHO
             elif opc_consultar == 2:
+                sleep(0.5)
                 print('''
                 [1] BUSCAR POR TODA TABELA
                 [2] BUSCAR POR INFORMAÇÕES ESPECIFICAS
@@ -575,6 +584,7 @@ class mercadinho:
 
                 # BUSCA REALIZADO EM TODA TABELA
                 if opcao_produto == 1:
+                    sleep(0.5)
                     print('carregando...!!\n')
                     try:
                         comando_SQL_produtos = "SELECT * FROM produtos_mercadinho"
@@ -589,6 +599,7 @@ class mercadinho:
 
                 # REALIZAR UMA BUSCA ESPECIFICA
                 elif opcao_produto == 2:
+                    sleep(0.5)
                     print('''
                     [1] BUSCA PELO ID DO PRODUTO
                     [2] BUSCA PELO NOME DO PRODUTO
@@ -600,6 +611,7 @@ class mercadinho:
 
                     # BUSCAR REALIZADA PELO ID DO PRODUTO
                     if resp_busca_espc == 1:
+                        sleep(0.5)
                         try:
                             busca_produto_ID = str(input('DIGITE O NUMERO DE ID DO PRODUTO: '))
                             comando_sql_id_produto = "SELECT * FROM produtos_mercadinho " \
@@ -612,6 +624,7 @@ class mercadinho:
 
                     # BUSCAR REALIZADA PELO NOME DO PRODUTO
                     elif resp_busca_espc == 2:
+                        sleep(0.5)
                         try:
                             busca_produto_nome = str(input('DIGITE O NOME DO PRODUTO: '))
                             comando_sql_nome_produto = "SELECT * FROM produtos_mercadinho " \
@@ -624,6 +637,7 @@ class mercadinho:
 
                     # BUSCAR REALIZADA PELO FABRICANTE DO PRODUTO
                     elif resp_busca_espc == 3:
+                        sleep(0.5)
                         try:
                             busca_produto_fabricante = str(input('DIGITE O FABRICANTE DO PRODUTO: '))
                             comando_sql_fabricante = "SELECT * FROM produtos_mercadinho " \
@@ -636,6 +650,7 @@ class mercadinho:
 
                     # BUSCAR REALIZADA POR VALORES R$ DO PRODUTO
                     elif resp_busca_espc == 4:
+                        sleep(0.5)
                         try:
                             busca_produto_valor = str(input('QUAL VALOR DA BUSCA R$: '))
                             comando_sql_valor = "SELECT * FROM produtos_mercadinho " \
@@ -648,13 +663,15 @@ class mercadinho:
 
                     # BUSCAR REALIZADA PELA CATEGORIA DO PRODUTO
                     elif resp_busca_espc == 5:
+                        sleep(0.5)
                         busca_produto_categoria = self.funcao_categoria()
                         print(busca_produto_categoria)
                     else:
                         print('Opção invalida!')
             elif opc_consultar == 0:
+                sleep(0.5)
                 print('Voltando ao menu principal!!')
-                sleep(1)
+                sleep(0.5)
                 break
             else:
                 print('Você digitou uma opção invalida!!')
@@ -675,16 +692,20 @@ class menu_principal:
         opc_menu_principal = APARENCIA.leiaInt('Escolha uma opção: ')
         if opc_menu_principal == 1:
             print('Direcionando para opção escolhida...')
+            sleep(0.5)
             abrindo_mercadinho.cadastrar()
         elif opc_menu_principal == 2:
             print('Direcionando para opção escolhida...')
+            sleep(0.5)
             abrindo_mercadinho.visualizar_cadastros()
         elif opc_menu_principal == 0:
             print('Saindo do BANDO DE DADOS!')
             print('Fechando o programa!')
+            sleep(0.5)
             abrindo_mercadinho.db_conexao.close()
         else:
             print('Você escolheu uma opção invalida.')
+            sleep(0.5)
 
 
 MENU_PRINCIPAL = menu_principal()
