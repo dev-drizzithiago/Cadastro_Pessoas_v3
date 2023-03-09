@@ -183,7 +183,7 @@ class mercadinho:
             password = str(input('Password: '))
             print('ABRINDO O BANCO DE DADOS, AGUARDE...!!')
             sleep(1)
-            db_conexao = mysql.connector.connect(host='localhost', user='root', password=password,
+            db_conexao = mysql.connector.connect(host='localhost', user='root', password='PE@Penso@',
                                                  database='mercadinho_pinheiro')
             print('Bando de dados conectado!!')
             RELATORIOS.relatorio_geral_SEM_ERROS('Banco de dados conectado!!')
@@ -433,7 +433,7 @@ class mercadinho:
                     RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO! \n'
                                                          f'ID: {ID_PRODUTO} \n'
                                                          f' ==> {NOME_PRODUTO} \n'
-                                                         f' ==> {FABRI_PRODUTO} \n'
+                                                         f' ==> {FABRICANTE_PRODUTO} \n'
                                                          f' ==> {VALOR_PRODUTO} \n'
                                                          f' ==> {ID_CATEGORIA}')
                 print()
@@ -497,11 +497,12 @@ class mercadinho:
                                 aparencia.linha()
                                 aparencia.apt_enter()
                                 break
-                        elif resp_opcao == 'N':
-                            print('Voltando um menu!')
+                            elif resp_opcao == 'N':
+                                print('Voltando um menu!')
+                                sleep(1)
+                                break
+                        if not visualizacao:
                             break
-                        else:
-                            print('Voce digitou uma opção invalida!')
 
                 # BUSCANDO POR INFORMAÇÕES ESPECIFICAS
                 elif resp_opcao == 2:
@@ -582,7 +583,8 @@ class mercadinho:
                 [0] VOLTAR AO MENU PRINCIPAL
                 ''')
                 opcao_produto = aparencia.leiaInt('Escolha uma opção: ')
-
+                sleep(1)
+                
                 # BUSCA REALIZADO EM TODA TABELA
                 if opcao_produto == 1:
                     print('carregando...!!\n')
@@ -596,7 +598,6 @@ class mercadinho:
                               'Verifique seu bando de dados!'
                               f' ==> {erro}')
                         RELATORIOS.relatorio_geral_COM_ERROS(erro)
-                    aparencia.apt_enter()
 
                 # REALIZAR UMA BUSCA ESPECIFICA
                 elif opcao_produto == 2:
