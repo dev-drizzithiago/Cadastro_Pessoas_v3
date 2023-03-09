@@ -605,6 +605,7 @@ class mercadinho:
                     [2] BUSCA PELO NOME DO PRODUTO
                     [3] BUSCA PELO FABRICANTE DOS PRODUTOS
                     [4] BUSCA PELO VALOR
+                    [5] BUSCAR POR CATEGORIA
                     ''')
                     resp_busca_espc = aparencia.leiaInt('Escolha uma opção: ')
 
@@ -655,6 +656,11 @@ class mercadinho:
                         except mysql.connector.Error as erro:
                             print(f'NÃO FOI POSSÍVEL BUSCAR OS DADOS!! ==> {erro}')
                             RELATORIOS.relatorio_geral_COM_ERROS(erro)
+
+                    # BUSCAR REALIZADA PELA CATEGORIA DO PRODUTO
+                    elif resp_busca_espc == 5:
+                        busca_produto_categoria = self.funcao_categoria()
+                        print(busca_produto_categoria)
                     else:
                         print('Opção invalida!')
             elif opc_consultar == 0:
