@@ -303,17 +303,19 @@ class mercadinho:
                     else:
                         break
                 Aparencia.linha()
-                add_catg = self.funcao_categoria()
+                for id_catg, nome_catg in self.funcao_categoria():
+                    id_categoria = id_catg
+                    categoria = nome_catg
                 fabricante = str(input(f'Fabricante do produto: {nome_produto}: ')).upper()
                 if len(fabricante) == 0:
                     fabricante = '<desconhecido>'
                 Aparencia.linha()
                 valor_produto = Aparencia.leiaFloat('Valor do produto R$: ')
                 print(f'Valores adicionados: \n  '
-                      f' ==> {nome_produto} \n  '
-                      f' ==> ID: {id_categoria} {categoria} \n '
+                      f' ==> {nome_produto} \n  '                      
                       f' ==> {fabricante} \n  '
                       f' ==> {valor_produto} \n'
+                      f' ==> ID: {id_categoria} {categoria} \n '
                       f'{Aparencia.linha()} \n')
                 Aparencia.linha()
                 Aparencia.apt_enter()
@@ -325,7 +327,7 @@ class mercadinho:
                         comando_sql_add_produto = "INSERT INTO produtos_mercadinho " \
                                                   "(nome_produto, fabri_produto, valor_produto, id_categoria)" \
                                                   "VALUES(%s, %s, %s, %s)"
-                        valor_sql_add_produto = (nome_produto, fabricante, valor_produto, add_catg)
+                        valor_sql_add_produto = (nome_produto, fabricante, valor_produto, id_categoria)
                         conectar_tabela_produto.execute(comando_sql_add_produto, valor_sql_add_produto)
                         RELATORIOS.relatorio_geral_SEM_ERROS(f'Dados adicionados com sucesso! \n'
                                                              f'{nome_produto} \n'
@@ -381,15 +383,12 @@ class mercadinho:
                 RELATORIOS.relatorio_geral_SEM_ERROS('Busca realizada com sucesso! Mas não foi nenhum cadastro')
 
         def view_dados_produtos(dados_produtos):
-            global NOME_CATG
-            verif = list()
-            for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO, ID_CATEGORIA in dados_produtos:
-                
+            for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO, ID_CATG, NOME_CATG in dados_produtos:
                 print(f' ==> REGISTRO DO PRODUTO: {ID_PRODUTO} \n'
                       f' ==> NOME DO PRODUTO: {NOME_PRODUTO} \n'
                       f' ==> FABRICANTE: {FABRICANTE_PRODUTO} \n'
                       f' ==> R$:{VALOR_PRODUTO} '
-                      f' ==> ID CATEGORIA: {ID_CATEGORIA} - CATEGORIA: {NOME_CATG}')
+                      f' ==> ID CATEGORIA: {ID_CATG} - CATEGORIA: {NOME_CATG}')
                 RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO!')
             Aparencia.apt_enter()
 
