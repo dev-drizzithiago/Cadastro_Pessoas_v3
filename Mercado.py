@@ -65,9 +65,6 @@ class Aparencia:
         abrindo_relatorio.write(f'{valor_lista} \n')
 
 
-# APARENCIA = Aparencia()
-
-
 # OBJETO DE RELATORIOS
 class Relatorios_Mercadinho:
     # CRIA ARQUIVO DE LOG GERAL, ONDE CONTEM OS ERROS | CASO ARQUIVOS DE LOG NÃO ESTEJA CRIADO, USA-SE AS INFORMAÇÕES ABAIXO PARA CRIA-LOS
@@ -207,7 +204,7 @@ class mercadinho:
     # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS
     # É POSSUI ACRESCENTAR MAIS CATEGORIAS
     @staticmethod
-    def funcao_categoria(valor_cateagoria):
+    def funcao_categoria():
         categorias = [' PADARIA', 'HORTIFRÚTI', 'CONGELADOS', 'FRIOS', 'AÇOUGUE', 'ALIMENTOS', 'BEBIDAS',
                       'HIGIENE PESSOAL', 'PRODUTOS DE LIMPEZA', 'PAPELARIA', 'LATICÍNIOS']
         for valor_view, contador in categorias:
@@ -328,7 +325,7 @@ class mercadinho:
                         comando_sql_add_produto = "INSERT INTO produtos_mercadinho " \
                                                   "(nome_produto, fabri_produto, valor_produto, id_categoria)" \
                                                   "VALUES(%s, %s, %s, %s)"
-                        valor_sql_add_produto = (nome_produto, fabricante, valor_produto)
+                        valor_sql_add_produto = (nome_produto, fabricante, valor_produto, add_catg)
                         conectar_tabela_produto.execute(comando_sql_add_produto, valor_sql_add_produto)
                         RELATORIOS.relatorio_geral_SEM_ERROS(f'Dados adicionados com sucesso! \n'
                                                              f'{nome_produto} \n'
@@ -387,10 +384,7 @@ class mercadinho:
             global NOME_CATG
             verif = list()
             for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO, ID_CATEGORIA in dados_produtos:
-                verif.append(ID_PRODUTO)
-                valor_catg = self.funcao_categoria(ID_CATEGORIA)
-                for id_sem_uso, categ in valor_catg:
-                    NOME_CATG = categ
+                
                 print(f' ==> REGISTRO DO PRODUTO: {ID_PRODUTO} \n'
                       f' ==> NOME DO PRODUTO: {NOME_PRODUTO} \n'
                       f' ==> FABRICANTE: {FABRICANTE_PRODUTO} \n'
