@@ -205,14 +205,17 @@ class mercadinho:
     # É POSSUI ACRESCENTAR MAIS CATEGORIAS
     @staticmethod
     def funcao_categoria():
-        categorias = [' PADARIA', 'HORTIFRÚTI', 'CONGELADOS', 'FRIOS', 'AÇOUGUE', 'ALIMENTOS', 'BEBIDAS',
-                      'HIGIENE PESSOAL', 'PRODUTOS DE LIMPEZA', 'PAPELARIA', 'LATICÍNIOS']
+        contador = 0
+        opcao_catg = list()
+        categorias = list()
+        ## conectando_CATG_DB =
         for valor_view in categorias:
-            contador = 0
             print(f' {contador + 1} ==> {valor_view}')
             contador += 1
         Aparencia.linha()
-        opcao_catg = Aparencia.leiaInt('Escolha uma categoria: ')
+        esc_catg = Aparencia.leiaInt('Escolha uma categoria: ')
+        opcao_catg.append(esc_catg)
+        opcao_catg.append(categorias[esc_catg])
         return [opcao_catg]
 
     def cadastrar(self):
@@ -306,6 +309,8 @@ class mercadinho:
                     else:
                         break
                 add_catg = self.funcao_categoria()
+                print(add_catg)
+                Aparencia.apt_enter()
                 for id_catg, nome_catg in add_catg:
                     id_categoria = id_catg
                     categoria = nome_catg
@@ -315,10 +320,10 @@ class mercadinho:
                 Aparencia.linha()
                 valor_produto = Aparencia.leiaFloat('Valor do produto R$: ')
                 print(f'Valores adicionados: \n  '
-                      f' ==> {nome_produto} \n  '                      
-                      f' ==> {fabricante} \n  '
-                      f' ==> {valor_produto} \n'
-                      f' ==> ID: {id_categoria} {categoria} \n '
+                      f' ==> Nome do produto: {nome_produto} \n  '                      
+                      f' ==> Fabricante: {fabricante} \n  '
+                      f' ==> Valor R$: {valor_produto} \n'
+                      f' ==> ID: {id_categoria} | Categoria: {categoria} \n '
                       f'{Aparencia.linha()} \n')
                 Aparencia.linha()
                 Aparencia.apt_enter()
