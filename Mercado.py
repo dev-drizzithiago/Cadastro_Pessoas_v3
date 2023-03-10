@@ -207,10 +207,13 @@ class mercadinho:
     def funcao_categoria():
         categorias = [' PADARIA', 'HORTIFRÚTI', 'CONGELADOS', 'FRIOS', 'AÇOUGUE', 'ALIMENTOS', 'BEBIDAS',
                       'HIGIENE PESSOAL', 'PRODUTOS DE LIMPEZA', 'PAPELARIA', 'LATICÍNIOS']
-        for valor_view, contador in categorias:
-            print(f' {contador + 1}==> {valor_view}')
+        for valor_view in categorias:
+            contador = 0
+            print(f' {contador + 1} ==> {valor_view}')
+            contador += 1
+        Aparencia.linha()
         opcao_catg = Aparencia.leiaInt('Escolha uma categoria: ')
-        return opcao_catg
+        return [opcao_catg]
 
     def cadastrar(self):
         global id_categoria, categoria
@@ -302,8 +305,8 @@ class mercadinho:
                         print('Esse campo não pode ficar vazio, digite o nome do produto.')
                     else:
                         break
-                Aparencia.linha()
-                for id_catg, nome_catg in self.funcao_categoria():
+                add_catg = self.funcao_categoria()
+                for id_catg, nome_catg in add_catg:
                     id_categoria = id_catg
                     categoria = nome_catg
                 fabricante = str(input(f'Fabricante do produto: {nome_produto}: ')).upper()
