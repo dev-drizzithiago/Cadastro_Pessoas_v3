@@ -208,7 +208,7 @@ class mercadinho:
         contador = 0
         opcao_catg = list()
         categorias = list()
-        ## conectando_CATG_DB =
+        # conectando_CATG_DB =
         for valor_view in categorias:
             print(f' {contador + 1} ==> {valor_view}')
             contador += 1
@@ -320,7 +320,7 @@ class mercadinho:
                 Aparencia.linha()
                 valor_produto = Aparencia.leiaFloat('Valor do produto R$: ')
                 print(f'Valores adicionados: \n  '
-                      f' ==> Nome do produto: {nome_produto} \n  '                      
+                      f' ==> Nome do produto: {nome_produto} \n  '
                       f' ==> Fabricante: {fabricante} \n  '
                       f' ==> Valor R$: {valor_produto} \n'
                       f' ==> ID: {id_categoria} | Categoria: {categoria} \n '
