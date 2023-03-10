@@ -68,7 +68,7 @@ class Aparencia:
 # OBJETO DE RELATORIOS
 class Relatorios_Mercadinho:
     # CRIA ARQUIVO DE LOG GERAL, ONDE CONTEM OS ERROS | CASO ARQUIVOS DE LOG NÃO ESTEJA CRIADO, USA-SE AS INFORMAÇÕES ABAIXO PARA CRIA-LOS
-    # O ARQUIVO É ÚNICO, NÃO GERANDO UM POR DIA, COMO AS FUNÇOES DE CLIENTE E PRODUTOS GERAM.
+    # O ARQUIVO É ÚNICO, NÃO GERANDO UM POR DIA, COMO AS FUNÇÕES DE CLIENTE E PRODUTOS GERAM.
     @staticmethod
     def criando_arquivos_txt_geral():
         relatorio_geral__ = 'G:/Meu Drive/Estudos/Pasta_teste_PYTHON/Geral_mercadinho_.log'
@@ -98,7 +98,7 @@ class Relatorios_Mercadinho:
         registrando_relatorio.close()
 
     # ADICIONA OS ERROS NO LOG QUE POSSUEM ERROS.
-    # AS INFORMAÇÕES SÃO ADICIONADAS COM OS HORARIOS É DATA.
+    # AS INFORMAÇÕES SÃO ADICIONADAS COM OS HORÁRIOS E DATA.
     @staticmethod
     def relatorio_geral_COM_ERROS(msg_com_erro):
         registrando_relatorio = open(RELATORIOS.criando_arquivos_txt_geral(), 'a')
@@ -119,7 +119,7 @@ class Relatorios_Mercadinho:
         data = str(date.today())
         return data
 
-    # RESPONSAVEL POR GERAR A DATA E HORA DOS ARQUIVOS DE LOG
+    # RESPONSÁVEL POR GERAR A DATA E HORA DOS ARQUIVOS DE LOG
     @staticmethod
     def time_mercadinho():
         data_relatorio = datetime.now()
@@ -169,6 +169,7 @@ RELATORIOS.verificacao_relatorios_txt()
 
 
 class mercadinho:
+    self = None
     Aparencia.logo_principal('BEM VINDO AO MERCADINHO PINHEIRO')
 
     # SCRIPT PARA ABRIR UM PROGRAMA EM ESPECIFICO
@@ -201,14 +202,12 @@ class mercadinho:
                 Aparencia.linha()
                 Aparencia.apt_enter()
 
-    # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS
-    # É POSSUI ACRESCENTAR MAIS CATEGORIAS
+    # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS, BUSCANDO AS INFORMAÇÕES NO BANCO DE DADOS
     @staticmethod
     def funcao_categoria():
         contador = 0
         opcao_catg = list()
         categorias = list()
-        # conectando_CATG_DB =
         for valor_view in categorias:
             print(f' {contador + 1} ==> {valor_view}')
             contador += 1
@@ -643,7 +642,7 @@ class mercadinho:
                 sleep(0.5)
 
 
-abrindo_mercadinho = mercadinho()
+MERCADINHO = mercadinho()
 
 
 class menu_principal:
@@ -658,16 +657,16 @@ class menu_principal:
         if opc_menu_principal == 1:
             print('Direcionando para opção escolhida...')
             sleep(0.5)
-            abrindo_mercadinho.cadastrar()
+            MERCADINHO.cadastrar()
         elif opc_menu_principal == 2:
             print('Direcionando para opção escolhida...')
             sleep(0.5)
-            abrindo_mercadinho.visualizar_cadastros()
+            MERCADINHO.visualizar_cadastros()
         elif opc_menu_principal == 0:
             print('Saindo do BANDO DE DADOS!')
             print('Fechando o programa!')
             sleep(0.5)
-            abrindo_mercadinho.db_conexao.close()
+            mercadinho.db_conexao.close()
         else:
             print('Você escolheu uma opção invalida.')
             sleep(0.5)
