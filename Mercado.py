@@ -6,7 +6,7 @@ from os import mkdir, listdir
 
 
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
-class aparencia:
+class Aparencia:
     @staticmethod
     def logo_principal(texto):
         print('-' * 100)
@@ -46,12 +46,12 @@ class aparencia:
             try:
                 valor_opc = str(input('Aceita prosseguir? [S/N]: '))[0].upper()
                 if len(valor_opc) == 0:
-                    aparencia.linha()
+                    Aparencia.linha()
                     print(resp)
                 else:
                     return valor_opc
             except:
-                aparencia.linha()
+                Aparencia.linha()
                 print(resp)
 
     # FUNÇÃO DESTINADA EM 'DAR' UMA PAUSA, ANTES DE CONTINUAR
@@ -65,11 +65,11 @@ class aparencia:
         abrindo_relatorio.write(f'{valor_lista} \n')
 
 
-APARENCIA = aparencia()
+# APARENCIA = Aparencia()
 
 
 # OBJETO DE RELATORIOS
-class relatorios_mercadinho:
+class Relatorios_Mercadinho:
     # CRIA ARQUIVO DE LOG GERAL, ONDE CONTEM OS ERROS | CASO ARQUIVOS DE LOG NÃO ESTEJA CRIADO, USA-SE AS INFORMAÇÕES ABAIXO PARA CRIA-LOS
     # O ARQUIVO É ÚNICO, NÃO GERANDO UM POR DIA, COMO AS FUNÇOES DE CLIENTE E PRODUTOS GERAM.
     @staticmethod
@@ -166,19 +166,19 @@ class relatorios_mercadinho:
             RELATORIOS.criando_arquivo(RELATORIOS.criando_arquivo_txt_cliente())
 
 
-RELATORIOS = relatorios_mercadinho()
+RELATORIOS = Relatorios_Mercadinho()
 RELATORIOS.pasta_relatorio()
 RELATORIOS.verificacao_relatorios_txt()
 
 
 class mercadinho:
-    aparencia.logo_principal('BEM VINDO AO MERCADINHO PINHEIRO')
+    Aparencia.logo_principal('BEM VINDO AO MERCADINHO PINHEIRO')
 
     # SCRIPT PARA ABRIR UM PROGRAMA EM ESPECIFICO
     while True:
         try:
-            aparencia.logo_principal('ABRINDO O BANDO DE DADOS, ENTRE COM SUAS INFORMAÇÕES')
-            aparencia.logo_principal('DIGITE O USUÁRIO E A SENHA PARA SE CONECTAR AO BANCO DE DADOS')
+            Aparencia.logo_principal('ABRINDO O BANDO DE DADOS, ENTRE COM SUAS INFORMAÇÕES')
+            Aparencia.logo_principal('DIGITE O USUÁRIO E A SENHA PARA SE CONECTAR AO BANCO DE DADOS')
             usuario = str(input('Usuário: '))
             password = str(input('Password: '))
             print('ABRINDO O BANCO DE DADOS, AGUARDE...!!')
@@ -201,72 +201,35 @@ class mercadinho:
                 RELATORIOS.relatorio_geral_COM_ERROS(error)
                 print(f' ==>  {error}')
                 print('Não foi possível conectar o banco de dados! Para continuar, VERIFIQUE SEU BANCO DE DADOS!')
-                aparencia.linha()
-                aparencia.apt_enter()
+                Aparencia.linha()
+                Aparencia.apt_enter()
 
     # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS
     # É POSSUI ACRESCENTAR MAIS CATEGORIAS
     @staticmethod
-    def funcao_categoria():
-        while True:
-            print('''
-                    [1] PADARIA
-                    [2] HORTIFRÚTI
-                    [3] CONGELADOS
-                    [4] FRIOS
-                    [5] AÇOUGUE
-                    [6] ALIMENTOS
-                    [7] BEBIDAS
-                    [8] HIGIENE PESSOAL
-                    [9] PRODUTOS DE LIMPEZA
-                    [10] PAPELARIA
-                    [11] LATICÍNIOS
-                    ''')
-            opcao_f_categoria = aparencia.leiaInt('Categoria: ')
-            if opcao_f_categoria == 1:
-                return [('PADARIA', '1')]
-            elif opcao_f_categoria == 2:
-                return [('HORTIFRÚTI', '2')]
-            elif opcao_f_categoria == 3:
-                return [('CONGELADOS', '3')]
-            elif opcao_f_categoria == 4:
-                return [('FRIOS', '4')]
-            elif opcao_f_categoria == 5:
-                return [('AÇOUGUE', '5')]
-            elif opcao_f_categoria == 6:
-                return [('ALIMENTOS', '6')]
-            elif opcao_f_categoria == 7:
-                return [('BEBIDAS', '7')]
-            elif opcao_f_categoria == 8:
-                return [('HIGIENE PESSOAL', '8')]
-            elif opcao_f_categoria == 9:
-                return [('PRODUTOS DE LIMPEZA', '9')]
-            elif opcao_f_categoria == 10:
-                return [('PAPELARIA', '10')]
-            elif opcao_f_categoria == 11:
-                return [('LATICÍNIOS', '11')]
-            else:
-                opc_categoria = aparencia.continuar_SN('Essa categoria não existe, deseja adicionar outra?')
-                if opc_categoria == 'S':
-                    print('<desenvolvimento!>\n')
-                    print('Escolha uma categoria valida')
-                    sleep(1)
+    def funcao_categoria(valor_cateagoria):
+        categorias = [' PADARIA', 'HORTIFRÚTI', 'CONGELADOS', 'FRIOS', 'AÇOUGUE', 'ALIMENTOS', 'BEBIDAS',
+                      'HIGIENE PESSOAL', 'PRODUTOS DE LIMPEZA', 'PAPELARIA', 'LATICÍNIOS']
+        for valor_view, contador in categorias:
+            print(f' {contador + 1}==> {valor_view}')
+        opcao_catg = Aparencia.leiaInt('Escolha uma categoria: ')
+        return opcao_catg
 
     def cadastrar(self):
         global id_categoria, categoria
         while True:
-            aparencia.logo_principal('JANELA DE CADASTRO...')
+            Aparencia.logo_principal('JANELA DE CADASTRO...')
             print('''
             [1] CADASTRAR UM NOVO CLIENTES
             [2] CADASTRAR UM NOVO PRODUTOS
             [0] VOLTAR AO MENU PRINCIPAL
             ''')
-            opc_cadastro = aparencia.leiaInt('Escolha uma opção: ')
+            opc_cadastro = Aparencia.leiaInt('Escolha uma opção: ')
 
             # CADASTRO CLIENTES
             if opc_cadastro == 1:
                 cont = 0
-                aparencia.logo_principal('CADASTRANDO CLIENTES...')
+                Aparencia.logo_principal('CADASTRANDO CLIENTES...')
                 while True:
                     while True:
                         nome_cliente = str(input('Nome do cliente: ')).upper()
@@ -275,7 +238,7 @@ class mercadinho:
                             cont += 1
                         else:
                             break
-                    cpf_cliente = aparencia.leiaInt('Entre com o CPF(Sem pontos): ')
+                    cpf_cliente = Aparencia.leiaInt('Entre com o CPF(Sem pontos): ')
                     data_nasc = str(input('Data de nascimento (ddmmaaaa): '))
                     if len(data_nasc) == 0:
                         data_nasc = '1900-01-01'
@@ -291,14 +254,14 @@ class mercadinho:
                         print('Voltando ao menu...')
                         sleep(1)
                         break
-                    aparencia.linha()
+                    Aparencia.linha()
                     print('Você adicionou as seguintes informações \n')
                     print(f'Nome do Cliente: {nome_cliente} \n'
                           f'CPF do cliente: {cpf_cliente} \n'
                           f'Data de Nascimento: {data_nasc} \n'
                           f'Telefone: {telefone} \n'
                           f'E-mail do Cliente: {email} \n')
-                    resp = aparencia.continuar_SN('Deseja adicionar essas informações no bando de dados?')
+                    resp = Aparencia.continuar_SN('Deseja adicionar essas informações no bando de dados?')
                     if resp == 'S':
                         try:
                             conexao_cliente = self.db_conexao.cursor()
@@ -320,15 +283,15 @@ class mercadinho:
                             print('Não foi possível adicionar os dados cadastrados'
                                   f'VERIFIQUE SEU BANDO DE DADOS\n ==> {erro}')
                             cadastro_produto_relatorio = [nome_cliente, cpf_cliente, data_nasc, telefone, email]
-                            aparencia.guardando(RELATORIOS.criando_arquivo_txt_cliente(),
+                            Aparencia.guardando(RELATORIOS.criando_arquivo_txt_cliente(),
                                                 cadastro_produto_relatorio)
-                            aparencia.apt_enter()
+                            Aparencia.apt_enter()
                             RELATORIOS.relatorio_geral_COM_ERROS(erro)
                             break
-                    resp = aparencia.continuar_SN('Adicionar outro cliente?')
+                    resp = Aparencia.continuar_SN('Adicionar outro cliente?')
                     if resp == 'N':
                         cadastro_produto_relatorio = [nome_cliente, cpf_cliente, data_nasc, telefone, email]
-                        aparencia.guardando(RELATORIOS.criando_arquivo_txt_produto(),
+                        Aparencia.guardando(RELATORIOS.criando_arquivo_txt_produto(),
                                             cadastro_produto_relatorio)
                         RELATORIOS.relatorio_geral_SEM_ERROS('Você optou por CANCELAR A AÇÃO!')
                         break
@@ -336,31 +299,29 @@ class mercadinho:
             # CADASTRO PRODUTOS
             elif opc_cadastro == 2:
                 while True:
-                    aparencia.linha()
+                    Aparencia.linha()
                     nome_produto = str(input('Nome do produto: ')).upper()
                     if len(nome_produto) == 0:
                         print('Esse campo não pode ficar vazio, digite o nome do produto.')
                     else:
                         break
-                aparencia.linha()
-                for id_catg, txt_catg in self.funcao_categoria():
-                    id_categoria = id_catg
-                    categoria = txt_catg
+                Aparencia.linha()
+                add_catg = self.funcao_categoria()
                 fabricante = str(input(f'Fabricante do produto: {nome_produto}: ')).upper()
                 if len(fabricante) == 0:
                     fabricante = '<desconhecido>'
-                aparencia.linha()
-                valor_produto = aparencia.leiaFloat('Valor do produto R$: ')
+                Aparencia.linha()
+                valor_produto = Aparencia.leiaFloat('Valor do produto R$: ')
                 print(f'Valores adicionados: \n  '
                       f' ==> {nome_produto} \n  '
                       f' ==> ID: {id_categoria} {categoria} \n '
                       f' ==> {fabricante} \n  '
                       f' ==> {valor_produto} \n'
-                      f'{aparencia.linha()} \n')
-                aparencia.linha()
-                aparencia.apt_enter()
-                resp = aparencia.continuar_SN('Adicionar esse produto?')
-                aparencia.linha()
+                      f'{Aparencia.linha()} \n')
+                Aparencia.linha()
+                Aparencia.apt_enter()
+                resp = Aparencia.continuar_SN('Adicionar esse produto?')
+                Aparencia.linha()
                 if resp == 'S':
                     try:
                         conectar_tabela_produto = self.db_conexao.cursor()
@@ -379,11 +340,11 @@ class mercadinho:
                               f'VERIFIQUE SEU BANDO DE DADOS\n ==> {erro}')
                         RELATORIOS.relatorio_geral_COM_ERROS(erro)
                         cadastro_produto_relatorio = [nome_produto, fabricante, valor_produto]
-                        aparencia.guardando(RELATORIOS.criando_arquivo_txt_produto(),
+                        Aparencia.guardando(RELATORIOS.criando_arquivo_txt_produto(),
                                             cadastro_produto_relatorio)
                 elif resp == 'N':
                     cadastro_produto_relatorio = [nome_produto, fabricante, valor_produto]
-                    aparencia.guardando(RELATORIOS.criando_arquivo_txt_produto(), cadastro_produto_relatorio)
+                    Aparencia.guardando(RELATORIOS.criando_arquivo_txt_produto(), cadastro_produto_relatorio)
                     RELATORIOS.relatorio_geral_SEM_ERROS('Você optou por CANCELAR A AÇÃO!')
                     break
                 else:
@@ -396,7 +357,7 @@ class mercadinho:
                 sleep(1)
                 break
             else:
-                opc_erro = aparencia.continuar_SN('Voce escolheu uma opção INCORRETA')
+                opc_erro = Aparencia.continuar_SN('Voce escolheu uma opção INCORRETA')
                 if opc_erro == 'S':
                     print('Escolha uma opção correta!!')
                     sleep(1)
@@ -415,7 +376,7 @@ class mercadinho:
                 verif.append(ID_CLIENTE)
                 print(f'ID: ==> {ID_CLIENTE} \n' f'NOME: ==> {NOME} \n' f'CPF: ==> {CPF} \n'
                       f'NASC: ==> {NASC} \n' f'TELEFONE ==> {TELEFONE} \n' f'EMAIL: ==> {EMAIL}')
-                aparencia.linha()
+                Aparencia.linha()
             if len(verif) > 0:
                 RELATORIOS.relatorio_geral_SEM_ERROS('Busca realizada com sucesso!')
             else:
@@ -436,18 +397,18 @@ class mercadinho:
                       f' ==> R$:{VALOR_PRODUTO} '
                       f' ==> ID CATEGORIA: {ID_CATEGORIA} - CATEGORIA: {NOME_CATG}')
                 RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO!')
-            aparencia.apt_enter()
+            Aparencia.apt_enter()
 
         while True:
-            aparencia.logo_principal('---CONSULTA DE CADASTROS DO MERCADINHO---')
+            Aparencia.logo_principal('---CONSULTA DE CADASTROS DO MERCADINHO---')
             print('''
         ==> [1] VERIFICAR CADASTROS DE CLIENTES
         ==> [2] VERIFICAR CADASTROS DE PRODUTOS
         ==> [0] VOLTAR AO MENU PRINCIPAL
             ''')
-            opc_consultar = aparencia.leiaInt('Escolha uma opção: ')
+            opc_consultar = Aparencia.leiaInt('Escolha uma opção: ')
             sleep(0.5)
-            aparencia.linha()
+            Aparencia.linha()
 
             # CONSULTANDO TABELA CLIENTE_MERCADINHO
             if opc_consultar == 1:
@@ -456,8 +417,8 @@ class mercadinho:
                 [2] BUSCAR POR INFORMAÇÕES ESPECIFICAS
                 [0] VOLTAR AO MENU PRINCIPAL
                 ''')
-                resp_opcao = aparencia.leiaInt('Escolha uma opção: ')
-                aparencia.linha()
+                resp_opcao = Aparencia.leiaInt('Escolha uma opção: ')
+                Aparencia.linha()
 
                 # BUSCAR POR TODOS OS DADOS DO CLIENTE.
                 if resp_opcao == 1:
@@ -475,9 +436,9 @@ class mercadinho:
                             print('Verifique se a conexão com o bando de dados esta normal.\n '
                                   f'==> {erro}')
                             RELATORIOS.relatorio_geral_COM_ERROS(erro)
-                            aparencia.apt_enter()
+                            Aparencia.apt_enter()
                             break
-                        resp_opcao = aparencia.continuar_SN('Deseja realizar um relatório da busca?')
+                        resp_opcao = Aparencia.continuar_SN('Deseja realizar um relatório da busca?')
                         if resp_opcao == 'S':
                             conectando_banco_DB.execute(comando_SQL_cliente)
                             for id_cliente, nome_cliente, cpf_cliente, nasc_cliente, tel_cliente, mail_cliente in \
@@ -490,7 +451,7 @@ class mercadinho:
                                                 'MAIL_CLIENTE: ': mail_cliente}
                                 lista_relatorio_cliente.append(dict_cliente)
                             gerando_PDF(lista_relatorio_cliente)
-                            aparencia.apt_enter()
+                            Aparencia.apt_enter()
                             break
                         elif resp_opcao == 'N':
                             print('Voltando um menu!')
@@ -508,7 +469,7 @@ class mercadinho:
                         [4] BUSCA POR EMAIL
                         [0] Voltar
                         ''')
-                        resp_busca = aparencia.leiaInt('Escolha um opção: ')
+                        resp_busca = Aparencia.leiaInt('Escolha um opção: ')
 
                         # BUSCA REALIZADA POR NOME
                         if resp_busca == 1:
@@ -582,7 +543,7 @@ class mercadinho:
                 [2] BUSCAR POR INFORMAÇÕES ESPECIFICAS
                 [0] VOLTAR AO MENU PRINCIPAL
                 ''')
-                opcao_produto = aparencia.leiaInt('Escolha uma opção: ')
+                opcao_produto = Aparencia.leiaInt('Escolha uma opção: ')
                 sleep(1)
 
                 # BUSCA REALIZADO EM TODA TABELA
@@ -593,7 +554,7 @@ class mercadinho:
                         comando_SQL_produtos = "SELECT * FROM produtos_mercadinho"
                         conectando_banco_DB.execute(comando_SQL_produtos)
                         view_dados_produtos(conectando_banco_DB)
-                        aparencia.linha()
+                        Aparencia.linha()
                     except mysql.connector.Error as erro:
                         print('Não foi possível verificar as informações.\n'
                               'Verifique seu bando de dados!'
@@ -610,7 +571,7 @@ class mercadinho:
                     [4] BUSCA PELO VALOR
                     [5] BUSCAR POR CATEGORIA
                     ''')
-                    resp_busca_espc = aparencia.leiaInt('Escolha uma opção: ')
+                    resp_busca_espc = Aparencia.leiaInt('Escolha uma opção: ')
 
                     # BUSCAR REALIZADA PELO ID DO PRODUTO
                     if resp_busca_espc == 1:
@@ -692,7 +653,7 @@ class menu_principal:
     ==> [2] Consultando cadastros (Clientes/Produtos)
     ==> [0] Sair do programa
         ''')
-        opc_menu_principal = APARENCIA.leiaInt('Escolha uma opção: ')
+        opc_menu_principal = Aparencia.leiaInt('Escolha uma opção: ')
         if opc_menu_principal == 1:
             print('Direcionando para opção escolhida...')
             sleep(0.5)
