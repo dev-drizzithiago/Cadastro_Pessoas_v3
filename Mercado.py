@@ -71,22 +71,27 @@ class Relatorios_Mercadinho:
     # CRIA ARQUIVO DE LOG GERAL, ONDE CONTEM OS ERROS | CASO ARQUIVOS DE LOG NÃO ESTEJA CRIADO, USA-SE AS INFORMAÇÕES ABAIXO PARA CRIA-LOS
     # O ARQUIVO É ÚNICO, NÃO GERANDO UM POR DIA, COMO AS FUNÇÕES DE CLIENTE E PRODUTOS GERAM.
     @staticmethod
+    def pasta_relatorios():
+        local_pasta_relatorio = 'G:/Meu Drive/Estudos/Python/Pasta_teste_PYTHON/Relatorios/'
+        return local_pasta_relatorio
+
+    @staticmethod
     def criando_arquivos_txt_geral():
-        relatorio_geral__ = 'G:/Meu Drive/Estudos/Pasta_teste_PYTHON/Geral_mercadinho_.log'
+        relatorio_geral__ = RELATORIOS.pasta_relatorios() + 'Geral_mercadinho_.log'
         return relatorio_geral__
 
     # CASO ARQUIVOS DE LOG NÃO ESTEJA CRIADO, USA-SE AS INFORMAÇÕES ABAIXO PARA CRIA-LOS
     # PARA CRIAR UM ARQUIVO POR DIA, USA-SE A FUNCÃO 'data_mercadinho'
     @staticmethod
     def criando_arquivo_txt_cliente():
-        relatorio_cliente = 'G:/Meu Drive/Estudos/Pasta_teste_PYTHON/Relatorio_Cliente - ' + RELATORIOS.data_mercadinho() + '.log'
+        relatorio_cliente = RELATORIOS.pasta_relatorios() + 'Relatorio_Cliente - ' + RELATORIOS.data_mercadinho() + '.log'
         return relatorio_cliente
 
     # CASO ARQUIVOS DE LOG NÃO ESTEJA CRIADO, USA-SE AS INFORMAÇÕES ABAIXO PARA CRIA-LOS
     # PARA CRIAR UM ARQUIVO POR DIA, USA-SE A FUNCÃO 'data_mercadinho'
     @staticmethod
     def criando_arquivo_txt_produto():
-        relatorio_produto = 'G:/Meu Drive/Estudos/Pasta_teste_PYTHON/Relatorio_Produto - ' + RELATORIOS.data_mercadinho() + '.log'
+        relatorio_produto = RELATORIOS.pasta_relatorios() + ' - ' + RELATORIOS.data_mercadinho() + '.log'
         return relatorio_produto
 
     # ADICIONA OS ERROS NOS LOGS QUE NÃO TIVEREM ERROS.
@@ -163,10 +168,6 @@ class Relatorios_Mercadinho:
         if not RELATORIOS.verf_relatorio(RELATORIOS.criando_arquivo_txt_cliente()):
             RELATORIOS.criando_arquivo(RELATORIOS.criando_arquivo_txt_cliente())
 
-    @staticmethod
-    def pasta_relatorios():
-        local_pasta_relatorio = 'G:/Meu Drive/Estudos/Python/Pasta_teste_PYTHON/Relatorios'
-        return local_pasta_relatorio
 
 
 RELATORIOS = Relatorios_Mercadinho()
