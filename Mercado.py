@@ -91,7 +91,7 @@ class Relatorios_Mercadinho:
     # PARA CRIAR UM ARQUIVO POR DIA, USA-SE A FUNCÃO 'data_mercadinho'
     @staticmethod
     def criando_arquivo_txt_produto():
-        relatorio_produto = RELATORIOS.pasta_relatorios() + ' - ' + RELATORIOS.data_mercadinho() + '.log'
+        relatorio_produto = RELATORIOS.pasta_relatorios() + 'Relatorio_Produto - ' + RELATORIOS.data_mercadinho() + '.log'
         return relatorio_produto
 
     # ADICIONA OS ERROS NOS LOGS QUE NÃO TIVEREM ERROS.
@@ -167,7 +167,6 @@ class Relatorios_Mercadinho:
 
         if not RELATORIOS.verf_relatorio(RELATORIOS.criando_arquivo_txt_cliente()):
             RELATORIOS.criando_arquivo(RELATORIOS.criando_arquivo_txt_cliente())
-
 
 
 RELATORIOS = Relatorios_Mercadinho()
@@ -551,109 +550,116 @@ class mercadinho:
 
             # VERIFICANDO TABELA PRODUTOS_MERCADINHO
             elif opc_consultar == 2:
-                sleep(0.5)
-                print('''
-                [1] BUSCAR POR TODA TABELA
-                [2] BUSCAR POR INFORMAÇÕES ESPECIFICAS
-                [0] VOLTAR AO MENU PRINCIPAL
-                ''')
-                opcao_produto = Aparencia.leiaInt('Escolha uma opção: ')
-                sleep(1)
-
-                # BUSCA REALIZADO EM TODA TABELA
-                if opcao_produto == 1:
-                    sleep(0.5)
-                    print('carregando...!!\n')
-                    try:
-                        comando_SQL_produtos = "SELECT * FROM produtos_mercadinho"
-                        conectando_banco_DB.execute(comando_SQL_produtos)
-                        view_dados_produtos(conectando_banco_DB)
-                        Aparencia.linha()
-                    except mysql.connector.Error as erro:
-                        print('Não foi possível verificar as informações.\n'
-                              'Verifique seu bando de dados!'
-                              f' ==> {erro}')
-                        RELATORIOS.relatorio_geral_COM_ERROS(erro)
-
-                # REALIZAR UMA BUSCA ESPECIFICA
-                elif opcao_produto == 2:
+                while True:
                     sleep(0.5)
                     print('''
-                    [1] BUSCA PELO ID DO PRODUTO
-                    [2] BUSCA PELO NOME DO PRODUTO
-                    [3] BUSCA PELO FABRICANTE DOS PRODUTOS
-                    [4] BUSCA PELO VALOR
-                    [5] BUSCAR POR CATEGORIA
+                    [1] BUSCAR POR TODA TABELA
+                    [2] BUSCAR POR INFORMAÇÕES ESPECIFICAS
+                    [0] VOLTAR AO MENU PRINCIPAL
                     ''')
-                    resp_busca_espc = Aparencia.leiaInt('Escolha uma opção: ')
+                    opcao_produto = Aparencia.leiaInt('Escolha uma opção: ')
+                    sleep(1)
 
-                    # BUSCAR REALIZADA PELO ID DO PRODUTO
-                    if resp_busca_espc == 1:
+                    # BUSCA REALIZADO EM TODA TABELA
+                    if opcao_produto == 1:
                         sleep(0.5)
+                        print('Carregando o bando de dados...!!\n')
                         try:
-                            busca_produto_ID = str(input('DIGITE O NUMERO DE ID DO PRODUTO: '))
-                            comando_sql_id_produto = "SELECT * FROM produtos_mercadinho " \
-                                                     "WHERE reg_produto = " + busca_produto_ID
-                            conectando_banco_DB.execute(comando_sql_id_produto)
+                            comando_SQL_produtos = "SELECT * FROM produtos_mercadinho"
+                            conectando_banco_DB.execute(comando_SQL_produtos)
                             view_dados_produtos(conectando_banco_DB)
+                            Aparencia.linha()
+                            resp_busca = Aparencia.continuar_SN('Deseja realizar mais um busca?')
+                            if resp_busca == 'S':
+                                print('Carregando o bando de dados...')
+                            else:
+                                break
                         except mysql.connector.Error as erro:
-                            print(f'NÃO FOI POSSÍVEL BUSCAR OS DADOS!! ==> {erro}')
+                            print('Não foi possível verificar as informações.\n'
+                                  'Verifique seu bando de dados!'
+                                  f' ==> {erro}')
                             RELATORIOS.relatorio_geral_COM_ERROS(erro)
 
-                    # BUSCAR REALIZADA PELO NOME DO PRODUTO
-                    elif resp_busca_espc == 2:
+                    # REALIZAR UMA BUSCA ESPECIFICA
+                    elif opcao_produto == 2:
                         sleep(0.5)
-                        try:
-                            busca_produto_nome = str(input('DIGITE O NOME DO PRODUTO: '))
-                            comando_sql_nome_produto = "SELECT * FROM produtos_mercadinho " \
-                                                       "WHERE nome_produto LIKE " + "'" + busca_produto_nome + "%'"
-                            conectando_banco_DB.execute(comando_sql_nome_produto)
-                            view_dados_produtos(conectando_banco_DB)
-                        except mysql.connector.Error as erro:
-                            print(f'NÃO FOI POSSÍVEL BUSCAR OS DADOS!! ==> {erro}')
-                            RELATORIOS.relatorio_geral_COM_ERROS(erro)
+                        while True:
+                            print('''
+                            [1] BUSCA PELO ID DO PRODUTO
+                            [2] BUSCA PELO NOME DO PRODUTO
+                            [3] BUSCA PELO FABRICANTE DOS PRODUTOS
+                            [4] BUSCA PELO VALOR
+                            [5] BUSCA POR CATEGORIA
+                            ''')
+                            resp_busca_espc = Aparencia.leiaInt('Escolha uma opção: ')
 
-                    # BUSCAR REALIZADA PELO FABRICANTE DO PRODUTO
-                    elif resp_busca_espc == 3:
-                        sleep(0.5)
-                        try:
-                            busca_produto_fabricante = str(input('DIGITE O FABRICANTE DO PRODUTO: '))
-                            comando_sql_fabricante = "SELECT * FROM produtos_mercadinho " \
-                                                     "WHERE fabricante LIKE " + "'" + busca_produto_fabricante + "%'"
-                            conectando_banco_DB.execute(comando_sql_fabricante)
-                            view_dados_produtos(conectando_banco_DB)
-                        except mysql.connector.Error as erro:
-                            print(f'NÃO FOI POSSÍVEL BUSCAR OS DADOS!! ==> {erro}')
-                            RELATORIOS.relatorio_geral_COM_ERROS(erro)
+                            # BUSCAR REALIZADA PELO ID DO PRODUTO
+                            if resp_busca_espc == 1:
+                                sleep(0.5)
+                                try:
+                                    busca_produto_ID = str(input('DIGITE O NUMERO DE ID DO PRODUTO: '))
+                                    comando_sql_id_produto = "SELECT * FROM produtos_mercadinho " \
+                                                             "WHERE reg_produto = " + busca_produto_ID
+                                    conectando_banco_DB.execute(comando_sql_id_produto)
+                                    view_dados_produtos(conectando_banco_DB)
+                                except mysql.connector.Error as erro:
+                                    print(f'NÃO FOI POSSÍVEL BUSCAR OS DADOS!! ==> {erro}')
+                                    RELATORIOS.relatorio_geral_COM_ERROS(erro)
 
-                    # BUSCAR REALIZADA POR VALORES R$ DO PRODUTO
-                    elif resp_busca_espc == 4:
-                        sleep(0.5)
-                        try:
-                            busca_produto_valor = str(input('QUAL VALOR DA BUSCA R$: '))
-                            comando_sql_valor = "SELECT * FROM produtos_mercadinho " \
-                                                "WHERE valor_produto = " + busca_produto_valor
-                            conectando_banco_DB.execute(comando_sql_valor)
-                            view_dados_produtos(conectando_banco_DB)
-                        except mysql.connector.Error as erro:
-                            print(f'NÃO FOI POSSÍVEL BUSCAR OS DADOS!! ==> {erro}')
-                            RELATORIOS.relatorio_geral_COM_ERROS(erro)
+                            # BUSCAR REALIZADA PELO NOME DO PRODUTO
+                            elif resp_busca_espc == 2:
+                                sleep(0.5)
+                                try:
+                                    busca_produto_nome = str(input('DIGITE O NOME DO PRODUTO: '))
+                                    comando_sql_nome_produto = "SELECT * FROM produtos_mercadinho " \
+                                                               "WHERE nome_produto LIKE " + "'" + busca_produto_nome + "%'"
+                                    conectando_banco_DB.execute(comando_sql_nome_produto)
+                                    view_dados_produtos(conectando_banco_DB)
+                                except mysql.connector.Error as erro:
+                                    print(f'NÃO FOI POSSÍVEL BUSCAR OS DADOS!! ==> {erro}')
+                                    RELATORIOS.relatorio_geral_COM_ERROS(erro)
 
-                    # BUSCAR REALIZADA PELA CATEGORIA DO PRODUTO
-                    elif resp_busca_espc == 5:
+                            # BUSCAR REALIZADA PELO FABRICANTE DO PRODUTO
+                            elif resp_busca_espc == 3:
+                                sleep(0.5)
+                                try:
+                                    busca_produto_fabricante = str(input('DIGITE O FABRICANTE DO PRODUTO: '))
+                                    comando_sql_fabricante = "SELECT * FROM produtos_mercadinho " \
+                                                             "WHERE fabricante LIKE " + "'" + busca_produto_fabricante + "%'"
+                                    conectando_banco_DB.execute(comando_sql_fabricante)
+                                    view_dados_produtos(conectando_banco_DB)
+                                except mysql.connector.Error as erro:
+                                    print(f'NÃO FOI POSSÍVEL BUSCAR OS DADOS!! ==> {erro}')
+                                    RELATORIOS.relatorio_geral_COM_ERROS(erro)
+
+                            # BUSCAR REALIZADA POR VALORES R$ DO PRODUTO
+                            elif resp_busca_espc == 4:
+                                sleep(0.5)
+                                try:
+                                    busca_produto_valor = str(input('QUAL VALOR DA BUSCA R$: '))
+                                    comando_sql_valor = "SELECT * FROM produtos_mercadinho " \
+                                                        "WHERE valor_produto = " + busca_produto_valor
+                                    conectando_banco_DB.execute(comando_sql_valor)
+                                    view_dados_produtos(conectando_banco_DB)
+                                except mysql.connector.Error as erro:
+                                    print(f'NÃO FOI POSSÍVEL BUSCAR OS DADOS!! ==> {erro}')
+                                    RELATORIOS.relatorio_geral_COM_ERROS(erro)
+
+                            # BUSCAR REALIZADA PELA CATEGORIA DO PRODUTO
+                            elif resp_busca_espc == 5:
+                                sleep(0.5)
+                                busca_produto_categoria = self.funcao_categoria()
+                                print(busca_produto_categoria)
+                            else:
+                                print('Opção invalida!')
+                    elif opc_consultar == 0:
                         sleep(0.5)
-                        busca_produto_categoria = self.funcao_categoria()
-                        print(busca_produto_categoria)
+                        print('Voltando para o menu de busca de produtos!!')
+                        sleep(0.5)
+                        break
                     else:
-                        print('Opção invalida!')
-            elif opc_consultar == 0:
-                sleep(0.5)
-                print('Voltando ao menu principal!!')
-                sleep(0.5)
-                break
-            else:
-                print('Você digitou uma opção invalida!!')
-                sleep(0.5)
+                        print('Você digitou uma opção invalida!!')
+                        sleep(0.5)
 
 
 MERCADINHO = mercadinho()
