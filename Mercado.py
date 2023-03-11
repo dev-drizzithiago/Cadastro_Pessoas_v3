@@ -380,8 +380,13 @@ class mercadinho:
             verif = list()
             for ID_CLIENTE, NOME, CPF, NASC, TELEFONE, EMAIL in dados_cliente:
                 verif.append(ID_CLIENTE)
-                print(f'ID: ==> {ID_CLIENTE} \n' f'NOME: ==> {NOME} \n' f'CPF: ==> {CPF} \n'
-                      f'NASC: ==> {NASC} \n' f'TELEFONE ==> {TELEFONE} \n' f'EMAIL: ==> {EMAIL}')
+                print(f'ID: ==> {ID_CLIENTE} \n' 
+                      f'NOME: ==> {NOME} \n' 
+                      f'CPF: ==> {CPF} \n'
+                      f'NASC: ==> {NASC} \n' 
+                      f'TELEFONE ==> {TELEFONE} \n' 
+                      f'EMAIL: ==> {EMAIL}')
+                print('')
                 Aparencia.linha()
             if len(verif) > 0:
                 RELATORIOS.relatorio_geral_SEM_ERROS('Busca realizada com sucesso!')
@@ -390,13 +395,15 @@ class mercadinho:
                 RELATORIOS.relatorio_geral_SEM_ERROS('Busca realizada com sucesso! Mas não foi nenhum cadastro')
 
         def view_dados_produtos(dados_produtos):
-            for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO, ID_CATG, NOME_CATG in dados_produtos:
+            for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO, ID_CATG in dados_produtos:
                 print(f' ==> REGISTRO DO PRODUTO: {ID_PRODUTO} \n'
                       f' ==> NOME DO PRODUTO: {NOME_PRODUTO} \n'
                       f' ==> FABRICANTE: {FABRICANTE_PRODUTO} \n'
                       f' ==> R$:{VALOR_PRODUTO} '
-                      f' ==> ID CATEGORIA: {ID_CATG} - CATEGORIA: {NOME_CATG}')
+                      f' ==> ID CATEGORIA: {ID_CATG}')
+                print('')
                 RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO!')
+            Aparencia.linha()
             Aparencia.apt_enter()
 
         while True:
@@ -579,7 +586,7 @@ class mercadinho:
                         try:
                             busca_produto_ID = str(input('DIGITE O NUMERO DE ID DO PRODUTO: '))
                             comando_sql_id_produto = "SELECT * FROM produtos_mercadinho " \
-                                                     "'WHERE registro_produto = '" + busca_produto_ID + "'"
+                                                     "WHERE reg_produto = " + busca_produto_ID
                             conectando_banco_DB.execute(comando_sql_id_produto)
                             view_dados_produtos(conectando_banco_DB)
                         except mysql.connector.Error as erro:
