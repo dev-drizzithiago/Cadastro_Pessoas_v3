@@ -2,7 +2,7 @@ import mysql.connector
 from mysql.connector import errorcode
 from analise_dados import *
 from datetime import datetime, date
-from os import mkdir, listdir
+from os import makedirs, listdir
 
 
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
@@ -67,6 +67,7 @@ class Aparencia:
 
 # OBJETO DE RELATORIOS
 class Relatorios_Mercadinho:
+
     # CRIA ARQUIVO DE LOG GERAL, ONDE CONTEM OS ERROS | CASO ARQUIVOS DE LOG NÃO ESTEJA CRIADO, USA-SE AS INFORMAÇÕES ABAIXO PARA CRIA-LOS
     # O ARQUIVO É ÚNICO, NÃO GERANDO UM POR DIA, COMO AS FUNÇÕES DE CLIENTE E PRODUTOS GERAM.
     @staticmethod
@@ -146,9 +147,9 @@ class Relatorios_Mercadinho:
     @staticmethod
     def pasta_relatorio():
         try:
-            listdir('C:/Relatorios/')
+            listdir('G:/Meu Drive/Estudos/Python/Pasta_teste_PYTHON/Relatorios')
         except FileNotFoundError:
-            mkdir('C:/Relatorios/')
+            makedirs('G:/Meu Drive/Estudos/Python/Pasta_teste_PYTHON/Relatorios')
 
     #  VERIFICAR SE OS ARQUIVOS DE TEXTO ESTÃO CRIADOS, SERVE APENAS PARA 'LOGS'
     @staticmethod
@@ -161,6 +162,11 @@ class Relatorios_Mercadinho:
 
         if not RELATORIOS.verf_relatorio(RELATORIOS.criando_arquivo_txt_cliente()):
             RELATORIOS.criando_arquivo(RELATORIOS.criando_arquivo_txt_cliente())
+
+    @staticmethod
+    def pasta_relatorios():
+        local_pasta_relatorio = 'G:/Meu Drive/Estudos/Python/Pasta_teste_PYTHON/Relatorios'
+        return local_pasta_relatorio
 
 
 RELATORIOS = Relatorios_Mercadinho()
@@ -380,11 +386,11 @@ class mercadinho:
             verif = list()
             for ID_CLIENTE, NOME, CPF, NASC, TELEFONE, EMAIL in dados_cliente:
                 verif.append(ID_CLIENTE)
-                print(f'ID: ==> {ID_CLIENTE} \n' 
-                      f'NOME: ==> {NOME} \n' 
+                print(f'ID: ==> {ID_CLIENTE} \n'
+                      f'NOME: ==> {NOME} \n'
                       f'CPF: ==> {CPF} \n'
-                      f'NASC: ==> {NASC} \n' 
-                      f'TELEFONE ==> {TELEFONE} \n' 
+                      f'NASC: ==> {NASC} \n'
+                      f'TELEFONE ==> {TELEFONE} \n'
                       f'EMAIL: ==> {EMAIL}')
                 print('')
                 Aparencia.linha()
