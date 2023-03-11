@@ -209,11 +209,12 @@ class mercadinho:
                 Aparencia.apt_enter()
 
     # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS, BUSCANDO AS INFORMAÇÕES NO BANCO DE DADOS
-    @staticmethod
-    def funcao_categoria():
+
+    def funcao_categoria(self):
         contador = 0
         opcao_catg = list()
         categorias = list()
+        conectando_DB = self.db_conexao.cursor()
         for valor_view in categorias:
             print(f' {contador + 1} ==> {valor_view}')
             contador += 1
