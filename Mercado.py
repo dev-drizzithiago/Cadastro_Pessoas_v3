@@ -380,7 +380,6 @@ class mercadinho:
 
     # VISUALIZANDO AS INFORMAÇÕES NO BANCO DE DADOS
     def visualizar_cadastros(self):
-        global comando_SQL_cliente, dict_cliente
         conectando_banco_DB = self.db_conexao.cursor()
 
         def view_dados_cliente(dados_cliente):
