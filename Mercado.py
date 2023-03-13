@@ -210,7 +210,7 @@ class mercadinho:
 
     # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS, BUSCANDO AS INFORMAÇÕES NO BANCO DE DADOS
 
-    def funcao_categoria(self):
+    def funcao_categoria(self, valor_catg):
         categorias = list()
         conectando_DB = self.db_conexao.cursor()
         comando_catg = "SELECT * FROM categorias_mercadinhos "
@@ -398,16 +398,14 @@ class mercadinho:
                 RELATORIOS.relatorio_geral_SEM_ERROS('Busca realizada com sucesso! Mas não foi nenhum cadastro')
 
         def view_dados_produtos(dados_produtos):
-            dict_produto = dict()
             for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO, ID_CATG in dados_produtos:
-                dict_produto = {'ID PRODUTO': ID_PRODUTO,
-                                'NOME DO PRODUTO': NOME_PRODUTO,
-                                'FABRICANDO DO PRODUTO': FABRICANTE_PRODUTO,
-                                'VALOR DO PRODUTO R$': VALOR_PRODUTO,
-                                'ID DE CATEGORIA': ID_CATG}
-            for chave, valor in dict_produto.items:
-
-            RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO!')
+                print(f' ==> REGISTRO DO PRODUTO: {ID_PRODUTO} \n'
+                      f' ==> NOME DO PRODUTO: {NOME_PRODUTO} \n'
+                      f' ==> FABRICANTE: {FABRICANTE_PRODUTO} \n'
+                      f' ==> VALOR R$:{VALOR_PRODUTO} '
+                      f' ==> ID CATEGORIA: {ID_CATG}')
+                print('')
+                RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO!')
             Aparencia.linha()
             Aparencia.apt_enter()
 
