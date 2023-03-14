@@ -399,7 +399,6 @@ class mercadinho:
 
         def view_dados_produtos(dados_produtos):
             for ID_PRODUTO, NOME_PRODUTO, FABRICANTE_PRODUTO, VALOR_PRODUTO, ID_CATG in dados_produtos:
-
                 print(f' ==> REGISTRO DO PRODUTO: {ID_PRODUTO} \n'
                       f' ==> NOME DO PRODUTO: {NOME_PRODUTO} \n'
                       f' ==> FABRICANTE: {FABRICANTE_PRODUTO} \n'
@@ -646,10 +645,24 @@ class mercadinho:
                             # BUSCAR REALIZADA PELA CATEGORIA DO PRODUTO
                             elif resp_busca_espc == 5:
                                 sleep(0.5)
-                                busca_produto_categoria = self.funcao_categoria()
-                                print(busca_produto_categoria)
+                                lista_produto_catg = self.db_conexao.cursor()
+                                comando_listar_catg_sql = "SELECT * FROM categorias_produtos "
+                                lista_produto_catg.execute(comando_listar_catg_sql)
+                                for id_catg, nome_catg in lista_produto_catg:
+                                    print(f'ID DA CATEGORIA: {id_catg} \nCATEGORIA: {nome_catg}')
+                                try:
+                                    opcao_busca_catg = str(Aparencia.leiaInt('Selecione uma categoria: '))
+                                    comando_catg_sql = "SELECT * FROM categorias_produtos " \
+                                                       "WHERE id_categoria = '" + opcao_busca_catg + "'"
+                                    lista_produto_catg.execute(comando_catg_sql)
+                                    view_dados_produtos(lista_produto_catg)
+                                except mysql.connector.Error as erro:
+                                    print(f'NÃO FOI POSSÍVEL BUSCAR OS DADOS!! ==> {erro}')
+                                    RELATORIOS.relatorio_geral_COM_ERROS(erro)
                             else:
                                 print('Opção invalida!')
+
+                    # SAIR DO MENU BUSCA ESPECIFICA
                     elif opc_consultar == 0:
                         sleep(0.5)
                         print('Voltando para o menu de busca de produtos!!')
