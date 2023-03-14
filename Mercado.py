@@ -609,7 +609,7 @@ class mercadinho:
                                 try:
                                     busca_produto_nome = str(input('DIGITE O NOME DO PRODUTO: '))
                                     comando_sql_nome_produto = "SELECT * FROM produtos_mercadinho " \
-                                                               "WHERE nome_produto LIKE " + "'" + busca_produto_nome + "%'"
+                                                               "WHERE nome_produto LIKE '" + busca_produto_nome + "%'"
                                     conectando_banco_DB.execute(comando_sql_nome_produto)
                                     view_dados_produtos(conectando_banco_DB)
                                 except mysql.connector.Error as erro:
@@ -622,7 +622,7 @@ class mercadinho:
                                 try:
                                     busca_produto_fabricante = str(input('DIGITE O FABRICANTE DO PRODUTO: '))
                                     comando_sql_fabricante = "SELECT * FROM produtos_mercadinho " \
-                                                             "WHERE fabri_produto LIKE " + "'" + busca_produto_fabricante + "%'"
+                                                             "WHERE fabri_produto LIKE '" + busca_produto_fabricante + "%'"
                                     conectando_banco_DB.execute(comando_sql_fabricante)
                                     view_dados_produtos(conectando_banco_DB)
                                 except mysql.connector.Error as erro:
@@ -652,8 +652,8 @@ class mercadinho:
                                     print(f'ID DA CATEGORIA: {id_catg} \nCATEGORIA: {nome_catg}')
                                 try:
                                     opcao_busca_catg = str(Aparencia.leiaInt('Selecione uma categoria: '))
-                                    comando_catg_sql = "SELECT * FROM categorias_produtos " \
-                                                       "WHERE id_categoria = '" + opcao_busca_catg + "'"
+                                    comando_catg_sql = "SELECT * FROM produtos_mercadinho " \
+                                                       "WHERE id_categoria_ = '" + opcao_busca_catg + "'"
                                     lista_produto_catg.execute(comando_catg_sql)
                                     view_dados_produtos(lista_produto_catg)
                                 except mysql.connector.Error as erro:
