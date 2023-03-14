@@ -211,13 +211,17 @@ class mercadinho:
     # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS, BUSCANDO AS INFORMAÇÕES NO BANCO DE DADOS
 
     def funcao_categoria(self):
-        categorias = list()
+        global categorias
         conectando_DB = self.db_conexao.cursor()
         comando_listar_catg_sql = "SELECT * FROM categorias_produtos "
         conectando_DB.execute(comando_listar_catg_sql)
         for id_catg, nome_catg in conectando_DB:
             print(f'ID DA CATEGORIA: {id_catg} ==> CATEGORIA: {nome_catg}')
+            categorias = {'ID: ': id_catg,
+                          'CATEGORIA: ': nome_catg}
             Aparencia.linha()
+        for k, v in categorias.items():
+            print(k, v)
         Aparencia.apt_enter()
 
     def cadastrar(self):
