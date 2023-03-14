@@ -213,12 +213,12 @@ class mercadinho:
     def funcao_categoria(self):
         categorias = list()
         conectando_DB = self.db_conexao.cursor()
-        comando_catg = "SELECT * FROM categorias_mercadinhos"
-        conectando_DB.execute(comando_catg)
+        comando_listar_catg_sql = "SELECT * FROM categorias_produtos "
+        conectando_DB.execute(comando_listar_catg_sql)
         for id_catg, nome_catg in conectando_DB:
-            categorias.append(id_catg)
-            categorias.append(nome_catg)
-        return categorias
+            print(f'ID DA CATEGORIA: {id_catg} ==> CATEGORIA: {nome_catg}')
+            Aparencia.linha()
+        Aparencia.apt_enter()
 
     def cadastrar(self):
         global id_categoria, categoria
@@ -646,10 +646,7 @@ class mercadinho:
                             elif resp_busca_espc == 5:
                                 sleep(0.5)
                                 lista_produto_catg = self.db_conexao.cursor()
-                                comando_listar_catg_sql = "SELECT * FROM categorias_produtos "
-                                lista_produto_catg.execute(comando_listar_catg_sql)
-                                for id_catg, nome_catg in lista_produto_catg:
-                                    print(f'ID DA CATEGORIA: {id_catg} \nCATEGORIA: {nome_catg}')
+                                self.funcao_categoria()
                                 try:
                                     opcao_busca_catg = str(Aparencia.leiaInt('Selecione uma categoria: '))
                                     comando_catg_sql = "SELECT * FROM produtos_mercadinho " \
