@@ -210,15 +210,19 @@ class mercadinho:
 
     # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS, BUSCANDO AS INFORMAÇÕES NO BANCO DE DADOS
 
-    def funcao_categoria(self, valor_catg):
-        categorias = list()
+    def funcao_categoria(self):
+        global categorias
         conectando_DB = self.db_conexao.cursor()
-        comando_catg = "SELECT * FROM categorias_mercadinhos "
-        conectando_DB.execute(comando_catg)
+        comando_listar_catg_sql = "SELECT * FROM categorias_produtos "
+        conectando_DB.execute(comando_listar_catg_sql)
         for id_catg, nome_catg in conectando_DB:
-            categorias.append(id_catg)
-            categorias.append(nome_catg)
-        return categorias
+            print(f'ID DA CATEGORIA: {id_catg} ==> CATEGORIA: {nome_catg}')
+            categorias = {'ID: ': id_catg,
+                          'CATEGORIA: ': nome_catg}
+            Aparencia.linha()
+        for k, v in categorias.items():
+            print(k, v)
+        Aparencia.apt_enter()
 
     def cadastrar(self):
         global id_categoria, categoria
@@ -609,7 +613,7 @@ class mercadinho:
                                 try:
                                     busca_produto_nome = str(input('DIGITE O NOME DO PRODUTO: '))
                                     comando_sql_nome_produto = "SELECT * FROM produtos_mercadinho " \
-                                                               "WHERE nome_produto LIKE " + "'" + busca_produto_nome + "%'"
+                                                               "WHERE nome_produto LIKE '" + busca_produto_nome + "%'"
                                     conectando_banco_DB.execute(comando_sql_nome_produto)
                                     view_dados_produtos(conectando_banco_DB)
                                 except mysql.connector.Error as erro:
@@ -622,7 +626,7 @@ class mercadinho:
                                 try:
                                     busca_produto_fabricante = str(input('DIGITE O FABRICANTE DO PRODUTO: '))
                                     comando_sql_fabricante = "SELECT * FROM produtos_mercadinho " \
-                                                             "WHERE fabricante LIKE " + "'" + busca_produto_fabricante + "%'"
+                                                             "WHERE fabri_produto LIKE '" + busca_produto_fabricante + "%'"
                                     conectando_banco_DB.execute(comando_sql_fabricante)
                                     view_dados_produtos(conectando_banco_DB)
                                 except mysql.connector.Error as erro:
@@ -645,10 +649,21 @@ class mercadinho:
                             # BUSCAR REALIZADA PELA CATEGORIA DO PRODUTO
                             elif resp_busca_espc == 5:
                                 sleep(0.5)
-                                busca_produto_categoria = self.funcao_categoria()
-                                print(busca_produto_categoria)
+                                lista_produto_catg = self.db_conexao.cursor()
+                                self.funcao_categoria()
+                                try:
+                                    opcao_busca_catg = str(Aparencia.leiaInt('Selecione uma categoria: '))
+                                    comando_catg_sql = "SELECT * FROM produtos_mercadinho " \
+                                                       "WHERE id_categoria_ = '" + opcao_busca_catg + "'"
+                                    lista_produto_catg.execute(comando_catg_sql)
+                                    view_dados_produtos(lista_produto_catg)
+                                except mysql.connector.Error as erro:
+                                    print(f'NÃO FOI POSSÍVEL BUSCAR OS DADOS!! ==> {erro}')
+                                    RELATORIOS.relatorio_geral_COM_ERROS(erro)
                             else:
                                 print('Opção invalida!')
+
+                    # SAIR DO MENU BUSCA ESPECIFICA
                     elif opc_consultar == 0:
                         sleep(0.5)
                         print('Voltando para o menu de busca de produtos!!')
