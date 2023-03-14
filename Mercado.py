@@ -623,7 +623,7 @@ class mercadinho:
                                 try:
                                     busca_produto_fabricante = str(input('DIGITE O FABRICANTE DO PRODUTO: '))
                                     comando_sql_fabricante = "SELECT * FROM produtos_mercadinho " \
-                                                             "WHERE fabricante LIKE " + "'" + busca_produto_fabricante + "%'"
+                                                             "WHERE fabri_produto LIKE " + "'" + busca_produto_fabricante + "%'"
                                     conectando_banco_DB.execute(comando_sql_fabricante)
                                     view_dados_produtos(conectando_banco_DB)
                                 except mysql.connector.Error as erro:
