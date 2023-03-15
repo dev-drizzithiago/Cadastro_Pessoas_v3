@@ -327,7 +327,7 @@ class mercadinho:
                 Aparencia.linha()
                 valor_produto = str(Aparencia.leiaFloat('Valor do produto R$: '))
                 Aparencia.linha()
-                valor_categoria = self.funcao_categoria()
+                valor_categoria = [self.funcao_categoria()]
                 for id_catg, nome_catg in valor_categoria:
                     id_categoria = id_catg
                     categoria = str(nome_catg)
