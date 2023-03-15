@@ -327,10 +327,15 @@ class mercadinho:
                 Aparencia.linha()
                 valor_produto = str(Aparencia.leiaFloat('Valor do produto R$: '))
                 Aparencia.linha()
+
+                # O programa não estava funcionando nesse ponto. Toda vez que tentava mandar os dados para a variavel "valor_categoria" ==>
+                # sempre gerava um erro "cannot unpack non-iterable int object"
+                # Eu consegui resolver esse problema transformando a varial em uma lista
                 valor_categoria = [self.funcao_categoria()]
                 for id_catg, nome_catg in valor_categoria:
                     id_categoria = id_catg
                     categoria = str(nome_catg)
+
                 Aparencia.apt_enter()
                 Aparencia.linha()
                 print(f'Valores adicionados: \n'
