@@ -64,6 +64,8 @@ class Aparencia:
         abrindo_relatorio = open(diretorio, 'a')
         abrindo_relatorio.write(f'{valor_lista} \n')
 
+aparencia = Aparencia()
+
 
 # OBJETO DE RELATORIOS
 class Relatorios_Mercadinho:
@@ -220,9 +222,9 @@ class mercadinho:
             print(f' ID: {id_catg_1} \n Categoria: {catg_1}')
             categorias.append(id_catg_1)
             categorias.append(catg_1)
-        valor_escolha = Aparencia.leiaFloat('Escolha um valor: ')
-        Aparencia.apt_enter()
-        return valor_escolha
+        valor_escolha = str(aparencia.leiaFloat('Escolha um valor: '))
+        item_export = categorias[valor_escolha]
+        return item_export
 
     def cadastrar(self):
         global id_categoria, categoria
