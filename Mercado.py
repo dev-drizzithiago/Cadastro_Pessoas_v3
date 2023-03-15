@@ -213,18 +213,17 @@ class mercadinho:
     # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS, BUSCANDO AS INFORMAÇÕES NO BANCO DE DADOS
 
     def funcao_categoria(self):
-        categorias = list()
-        valor_escolha = list()
         conectando_DB = self.db_conexao.cursor()
         comando_listar_catg_sql = "SELECT * FROM categorias_produtos "
         conectando_DB.execute(comando_listar_catg_sql)
         for id_catg_1, catg_1 in conectando_DB:
             print(f' ID: {id_catg_1} \n Categoria: {catg_1}')
-            categorias.append(id_catg_1)
-            categorias.append(catg_1)
-        valor_escolha = int(aparencia.leiaInt('Escolha um valor: '))
-        item_export = categorias[valor_escolha]
-        return item_export
+            aparencia.linha()
+        valor_escolha = str(aparencia.leiaInt('Escolha uma categoria: '))
+        comando_escolha_catg_sql = "SELECT * FROM categorias_produtos " \
+                                   "WHERE id_categoria = '" + valor_escolha
+
+        return
 
     def cadastrar(self):
         global id_categoria, categoria
@@ -324,13 +323,16 @@ class mercadinho:
                 valor_produto = Aparencia.leiaFloat('Valor do produto R$: ')
                 Aparencia.linha()
                 valor_categoria = self.funcao_categoria()
+                for id_catg, nome_catg in valor_categoria:
+                    id_categoria = id_catg
+                    categoria = nome_catg
                 Aparencia.apt_enter()
                 Aparencia.linha()
-                print(f'Valores adicionados: \n  '
-                      f' ==> Nome do produto: {nome_produto} \n  '
-                      f' ==> Fabricante: {fabricante} \n  '
+                print(f'Valores adicionados: \n'
+                      f' ==> Nome do produto: {nome_produto} \n'
+                      f' ==> Fabricante: {fabricante} \n '
                       f' ==> Valor R$: {valor_produto} \n'
-                      f' ==> ID:  | Categoria:  \n '
+                      f' ==> {valor_categoria}  {id_categoria}\n'
                       f'{Aparencia.linha()} \n')
                 Aparencia.linha()
                 Aparencia.apt_enter()
