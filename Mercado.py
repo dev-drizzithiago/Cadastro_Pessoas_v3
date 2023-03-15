@@ -218,18 +218,33 @@ class mercadinho:
         conectando_DB = self.db_conexao.cursor()
         comando_listar_catg_sql = "SELECT * FROM categorias_produtos "
         conectando_DB.execute(comando_listar_catg_sql)
-        for id_catg_1, catg_1 in conectando_DB:
-            print(f' ID: {id_catg_1} \n Categoria: {catg_1}')
-            aparencia.linha()
-        print('')
-        valor_escolha = str(aparencia.leiaInt('Escolha uma categoria: '))
-        comando_escolha_catg_sql = "SELECT * FROM categorias_produtos " \
-                                   "WHERE id_categoria = " + valor_escolha
-        conectando_DB.execute(comando_escolha_catg_sql)
-        for id_catg_2, catg_2 in conectando_DB:
-            valor_id_catg.append(id_catg_2)
-            valor_id_catg.append(catg_2)
-        return valor_id_catg
+        while True:
+            for id_catg_1, catg_1 in conectando_DB:
+                print(f' ID: {id_catg_1} \n Categoria: {catg_1}')
+                aparencia.linha()
+            print('')
+            valor_escolha = str(aparencia.leiaInt('Escolha uma categoria: '))
+            try:
+                comando_escolha_catg_sql = "SELECT * FROM categorias_produtos " \
+                                           "WHERE id_categoria = " + valor_escolha
+                conectando_DB.execute(comando_escolha_catg_sql)
+            except ValueError:
+                resp_erro = aparencia.continuar_SN('Essa categoria não existe, deseja adicionar?')
+                if resp_erro == 'S':
+                    ADD_CATG = str(input('Digita o nome da categoria: ')).upper()
+                    comando_add_catg = "INSERT INTO categorias_produtos VALUES " \
+                                       "(default, '" + ADD_CATG + "') "
+                    conectando_DB.execute(comando_add_catg)
+                    print('Categoria adicionada com sucesso!')
+                elif resp_erro == 'N':
+                    print('Caso tenha errado, adicione outra!')
+                else:
+                    print('Opção incorreta!')
+
+            for id_catg_2, catg_2 in conectando_DB:
+                valor_id_catg.append(id_catg_2)
+                valor_id_catg.append(catg_2)
+            return valor_id_catg
 
     def cadastrar(self):
         global id_categoria, categoria
