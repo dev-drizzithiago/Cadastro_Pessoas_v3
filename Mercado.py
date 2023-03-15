@@ -215,10 +215,9 @@ class mercadinho:
         conectando_DB = self.db_conexao.cursor()
         comando_listar_catg_sql = "SELECT * FROM categorias_produtos "
         conectando_DB.execute(comando_listar_catg_sql)
-        for id_catg, nome_catg in conectando_DB:
-            print(f' ==> ID: {id_catg} \n ==> Cateagoria: {nome_catg}')
-            categorias = {'ID: ': id_catg,
-                          'Categoria: ': nome_catg}
+        for id_catg_1, catg_1 in conectando_DB:
+            print(f' ==> ID: {id_catg_1} \n ==> Cateagoria: {catg_1}')
+
         Aparencia.apt_enter()
         return categorias
 
@@ -312,17 +311,21 @@ class mercadinho:
                         print('Esse campo não pode ficar vazio, digite o nome do produto.')
                     else:
                         break
-                Aparencia.apt_enter()
+                Aparencia.linha()
                 fabricante = str(input(f'Fabricante do produto: {nome_produto}: ')).upper()
                 if len(fabricante) == 0:
                     fabricante = '<desconhecido>'
                 Aparencia.linha()
                 valor_produto = Aparencia.leiaFloat('Valor do produto R$: ')
+                Aparencia.linha()
+                valor_categoria = self.funcao_categoria()
+                Aparencia.apt_enter()
+                Aparencia.linha()
                 print(f'Valores adicionados: \n  '
                       f' ==> Nome do produto: {nome_produto} \n  '
                       f' ==> Fabricante: {fabricante} \n  '
                       f' ==> Valor R$: {valor_produto} \n'
-                      f' ==> ID: {id_categoria} | Categoria: {categoria} \n '
+                      f' ==> ID:  | Categoria:  \n '
                       f'{Aparencia.linha()} \n')
                 Aparencia.linha()
                 Aparencia.apt_enter()
