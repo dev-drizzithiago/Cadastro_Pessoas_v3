@@ -213,19 +213,21 @@ class mercadinho:
     # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS, BUSCANDO AS INFORMAÇÕES NO BANCO DE DADOS
 
     def funcao_categoria(self):
-        global valor_id_catg
+        valor_id_catg = list()
         conectando_DB = self.db_conexao.cursor()
         comando_listar_catg_sql = "SELECT * FROM categorias_produtos "
         conectando_DB.execute(comando_listar_catg_sql)
         for id_catg_1, catg_1 in conectando_DB:
             print(f' ID: {id_catg_1} \n Categoria: {catg_1}')
             aparencia.linha()
+        print('')
         valor_escolha = str(aparencia.leiaInt('Escolha uma categoria: '))
         comando_escolha_catg_sql = "SELECT * FROM categorias_produtos " \
-                                   "WHERE id_categoria = '" + valor_escolha
+                                   "WHERE id_categoria = " + valor_escolha
         conectando_DB.execute(comando_escolha_catg_sql)
         for id_catg_2, catg_2 in conectando_DB:
-            valor_id_catg = str(id_catg_2)
+            valor_id_catg.append(id_catg_2)
+            valor_id_catg.append(catg_2)
         return valor_id_catg
 
     def cadastrar(self):
@@ -323,19 +325,19 @@ class mercadinho:
                 if len(fabricante) == 0:
                     fabricante = '<desconhecido>'
                 Aparencia.linha()
-                valor_produto = Aparencia.leiaFloat('Valor do produto R$: ')
+                valor_produto = str(Aparencia.leiaFloat('Valor do produto R$: '))
                 Aparencia.linha()
                 valor_categoria = self.funcao_categoria()
                 for id_catg, nome_catg in valor_categoria:
                     id_categoria = id_catg
-                    categoria = nome_catg
+                    categoria = str(nome_catg)
                 Aparencia.apt_enter()
                 Aparencia.linha()
                 print(f'Valores adicionados: \n'
                       f' ==> Nome do produto: {nome_produto} \n'
                       f' ==> Fabricante: {fabricante} \n '
                       f' ==> Valor R$: {valor_produto} \n'
-                      f' ==> {valor_categoria}  {id_categoria}\n'
+                      f' ==> {id_categoria}  {categoria}\n'
                       f'{Aparencia.linha()} \n')
                 Aparencia.linha()
                 Aparencia.apt_enter()
@@ -349,6 +351,7 @@ class mercadinho:
                                                   "VALUES(%s, %s, %s, %s)"
                         valor_sql_add_produto = (nome_produto, fabricante, valor_produto, id_categoria)
                         conectar_tabela_produto.execute(comando_sql_add_produto, valor_sql_add_produto)
+                        # ARQUIVO DE RELATORIO, ONDE ACRESCENTA OS DADOS ADCIONADOS NA TABELA
                         RELATORIOS.relatorio_geral_SEM_ERROS(f'Dados adicionados com sucesso! \n'
                                                              f'{nome_produto} \n'
                                                              f'{fabricante} \n'
