@@ -190,7 +190,7 @@ class mercadinho:
             password = str(input('Password: '))
             print('ABRINDO O BANCO DE DADOS, AGUARDE...!!')
             sleep(1)
-            db_conexao = mysql.connector.connect(host='localhost', user='root', password='PE@Penso@',
+            db_conexao = mysql.connector.connect(host='localhost', user='root', password='',
                                                  database='mercadinho_pinheiro')
             print('Bando de dados conectado!!')
             RELATORIOS.relatorio_geral_SEM_ERROS('Banco de dados conectado!!')
@@ -231,11 +231,14 @@ class mercadinho:
             except ValueError:
                 resp_erro = aparencia.continuar_SN('Essa categoria não existe, deseja adicionar?')
                 if resp_erro == 'S':
-                    ADD_CATG = str(input('Digita o nome da categoria: ')).upper()
-                    comando_add_catg = "INSERT INTO categorias_produtos VALUES " \
-                                       "(default, '" + ADD_CATG + "') "
-                    conectando_DB.execute(comando_add_catg)
-                    print('Categoria adicionada com sucesso!')
+                    try:
+                        ADD_CATG = str(input('Digita o nome da categoria: ')).upper()
+                        comando_add_catg = "INSERT INTO categorias_produtos VALUES " \
+                                           "(default, '" + ADD_CATG + "') "
+                        conectando_DB.execute(comando_add_catg)
+                        print('Categoria adicionada com sucesso!')
+                    except mysql.connector.Error as erro_sql:
+                        print(f'Não foi possivel adicionar as informações no bando de dados! {erro_sql}')
                 elif resp_erro == 'N':
                     print('Caso tenha errado, adicione outra!')
                 else:
