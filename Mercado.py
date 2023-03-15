@@ -5,6 +5,7 @@ from datetime import datetime, date
 from os import makedirs, listdir
 
 
+
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
 class Aparencia:
     @staticmethod
@@ -315,16 +316,26 @@ class mercadinho:
             elif opc_cadastro == 2:
                 while True:
                     Aparencia.linha()
+
+                    # O nome do produto é obrigatorio, não sendo possivel adicionar sem um nome, pois não tem como adicionar um produto sem nome.
+                    # O banco de dados está configurado para não entrar valores nulos. Para não ocorrer erros, obrigo os usários a adicionarem o nome.
                     nome_produto = str(input('Nome do produto: ')).upper()
                     if len(nome_produto) == 0:
                         print('Esse campo não pode ficar vazio, digite o nome do produto.')
                     else:
                         break
                 Aparencia.linha()
+
+                # Caso não entre nenhum valor, o programa ira indenficar e adicionar um valor <desconhecido>
+                # No banco de dados está com o mesmo valor padrão, mas para que o programa não fique sem valor,
+                # quando for apresentar as informações antes de adiciona-lo, resolvir colocar dessa forma.
                 fabricante = str(input(f'Fabricante do produto: {nome_produto}: ')).upper()
                 if len(fabricante) == 0:
                     fabricante = '<desconhecido>'
                 Aparencia.linha()
+
+                # O valor que deve entrar é em float(REAL), o programa verifica se o valor é correto, caso não seja,
+                # o programa pede para adicionar o valor correto, não sendo possivel continuar.
                 valor_produto = str(Aparencia.leiaFloat('Valor do produto R$: '))
                 Aparencia.linha()
 
@@ -335,9 +346,11 @@ class mercadinho:
                 for id_catg, nome_catg in valor_categoria:
                     id_categoria = id_catg
                     categoria = str(nome_catg)
-
-                Aparencia.apt_enter()
                 Aparencia.linha()
+                print('')
+
+                # Essa parte mostra os dados adicionados, caso ocorra algum erro na digitação, é possivel não adiciona-los
+                # dados é voltar para o menu, começando tudo novamente.
                 print(f'Valores adicionados: \n'
                       f' ==> Nome do produto: {nome_produto} \n'
                       f' ==> Fabricante: {fabricante} \n '
@@ -345,7 +358,7 @@ class mercadinho:
                       f' ==> {id_categoria}  {categoria}\n'
                       f'{Aparencia.linha()} \n')
                 Aparencia.linha()
-                Aparencia.apt_enter()
+                print('')
                 resp = Aparencia.continuar_SN('Adicionar esse produto?')
                 Aparencia.linha()
                 if resp == 'S':
