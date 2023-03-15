@@ -216,12 +216,8 @@ class mercadinho:
         comando_listar_catg_sql = "SELECT * FROM categorias_produtos "
         conectando_DB.execute(comando_listar_catg_sql)
         for id_catg, nome_catg in conectando_DB:
-            print(f'ID DA CATEGORIA: {id_catg} ==> CATEGORIA: {nome_catg}')
-            categorias = {'ID: ': id_catg,
-                          'CATEGORIA: ': nome_catg}
-            Aparencia.linha()
-        for k, v in categorias.items():
-            print(k, v)
+            print(f' ==> ID:{id_catg} \n'
+                  f'CATEGORIA: {nome_catg}')
         Aparencia.apt_enter()
 
     def cadastrar(self):
@@ -314,12 +310,7 @@ class mercadinho:
                         print('Esse campo não pode ficar vazio, digite o nome do produto.')
                     else:
                         break
-                add_catg = self.funcao_categoria()
-                print(add_catg)
                 Aparencia.apt_enter()
-                for id_catg, nome_catg in add_catg:
-                    id_categoria = id_catg
-                    categoria = nome_catg
                 fabricante = str(input(f'Fabricante do produto: {nome_produto}: ')).upper()
                 if len(fabricante) == 0:
                     fabricante = '<desconhecido>'
