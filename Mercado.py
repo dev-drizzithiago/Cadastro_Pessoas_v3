@@ -102,8 +102,8 @@ class Relatorios_Mercadinho:
     @staticmethod
     def relatorio_geral_SEM_ERROS(msg_sem_erro):
         registrando_relatorio = open(RELATORIOS.criando_arquivos_txt_geral(), 'a')
-        registrando_relatorio.write(f'PROCESSO REALIZADO SEM ERROS - {RELATORIOS.time_mercadinho()}'
-                                    f' | MSG: {msg_sem_erro}\n')
+        registrando_relatorio.write(f'{aparencia.linha()} \n ==> PROCESSO REALIZADO SEM ERROS - {RELATORIOS.time_mercadinho()}'
+                                    f' | MSG: {msg_sem_erro}\n {aparencia.linha()}\n')
         registrando_relatorio.close()
 
     # ADICIONA OS ERROS NO LOG QUE POSSUEM ERROS.
