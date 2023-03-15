@@ -222,7 +222,7 @@ class mercadinho:
             print(f' ID: {id_catg_1} \n Categoria: {catg_1}')
             categorias.append(id_catg_1)
             categorias.append(catg_1)
-        valor_escolha = str(aparencia.leiaFloat('Escolha um valor: '))
+        valor_escolha = int(aparencia.leiaInt('Escolha um valor: '))
         item_export = categorias[valor_escolha]
         return item_export
 
