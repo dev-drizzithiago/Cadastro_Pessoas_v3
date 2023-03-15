@@ -5,6 +5,7 @@ from datetime import datetime, date
 from os import makedirs, listdir
 
 
+
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
 class Aparencia:
     @staticmethod
@@ -63,6 +64,8 @@ class Aparencia:
     def guardando(diretorio, valor_lista):
         abrindo_relatorio = open(diretorio, 'a')
         abrindo_relatorio.write(f'{valor_lista} \n')
+
+aparencia = Aparencia()
 
 
 # OBJETO DE RELATORIOS
@@ -211,18 +214,22 @@ class mercadinho:
     # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS, BUSCANDO AS INFORMAÇÕES NO BANCO DE DADOS
 
     def funcao_categoria(self):
-        global categorias
+        valor_id_catg = list()
         conectando_DB = self.db_conexao.cursor()
         comando_listar_catg_sql = "SELECT * FROM categorias_produtos "
         conectando_DB.execute(comando_listar_catg_sql)
-        for id_catg, nome_catg in conectando_DB:
-            print(f'ID DA CATEGORIA: {id_catg} ==> CATEGORIA: {nome_catg}')
-            categorias = {'ID: ': id_catg,
-                          'CATEGORIA: ': nome_catg}
-            Aparencia.linha()
-        for k, v in categorias.items():
-            print(k, v)
-        Aparencia.apt_enter()
+        for id_catg_1, catg_1 in conectando_DB:
+            print(f' ID: {id_catg_1} \n Categoria: {catg_1}')
+            aparencia.linha()
+        print('')
+        valor_escolha = str(aparencia.leiaInt('Escolha uma categoria: '))
+        comando_escolha_catg_sql = "SELECT * FROM categorias_produtos " \
+                                   "WHERE id_categoria = " + valor_escolha
+        conectando_DB.execute(comando_escolha_catg_sql)
+        for id_catg_2, catg_2 in conectando_DB:
+            valor_id_catg.append(id_catg_2)
+            valor_id_catg.append(catg_2)
+        return valor_id_catg
 
     def cadastrar(self):
         global id_categoria, categoria
@@ -309,30 +316,49 @@ class mercadinho:
             elif opc_cadastro == 2:
                 while True:
                     Aparencia.linha()
+
+                    # O nome do produto é obrigatorio, não sendo possivel adicionar sem um nome, pois não tem como adicionar um produto sem nome.
+                    # O banco de dados está configurado para não entrar valores nulos. Para não ocorrer erros, obrigo os usários a adicionarem o nome.
                     nome_produto = str(input('Nome do produto: ')).upper()
                     if len(nome_produto) == 0:
                         print('Esse campo não pode ficar vazio, digite o nome do produto.')
                     else:
                         break
-                add_catg = self.funcao_categoria()
-                print(add_catg)
-                Aparencia.apt_enter()
-                for id_catg, nome_catg in add_catg:
-                    id_categoria = id_catg
-                    categoria = nome_catg
+                Aparencia.linha()
+
+                # Caso não entre nenhum valor, o programa ira indenficar e adicionar um valor <desconhecido>
+                # No banco de dados está com o mesmo valor padrão, mas para que o programa não fique sem valor,
+                # quando for apresentar as informações antes de adiciona-lo, resolvir colocar dessa forma.
                 fabricante = str(input(f'Fabricante do produto: {nome_produto}: ')).upper()
                 if len(fabricante) == 0:
                     fabricante = '<desconhecido>'
                 Aparencia.linha()
-                valor_produto = Aparencia.leiaFloat('Valor do produto R$: ')
-                print(f'Valores adicionados: \n  '
-                      f' ==> Nome do produto: {nome_produto} \n  '
-                      f' ==> Fabricante: {fabricante} \n  '
+
+                # O valor que deve entrar é em float(REAL), o programa verifica se o valor é correto, caso não seja,
+                # o programa pede para adicionar o valor correto, não sendo possivel continuar.
+                valor_produto = str(Aparencia.leiaFloat('Valor do produto R$: '))
+                Aparencia.linha()
+
+                # O programa não estava funcionando nesse ponto. Toda vez que tentava mandar os dados para a variavel "valor_categoria" ==>
+                # sempre gerava um erro "cannot unpack non-iterable int object"
+                # Eu consegui resolver esse problema transformando a varial em uma lista
+                valor_categoria = [self.funcao_categoria()]
+                for id_catg, nome_catg in valor_categoria:
+                    id_categoria = id_catg
+                    categoria = str(nome_catg)
+                Aparencia.linha()
+                print('')
+
+                # Essa parte mostra os dados adicionados, caso ocorra algum erro na digitação, é possivel não adiciona-los
+                # dados é voltar para o menu, começando tudo novamente.
+                print(f'Valores adicionados: \n'
+                      f' ==> Nome do produto: {nome_produto} \n'
+                      f' ==> Fabricante: {fabricante} \n '
                       f' ==> Valor R$: {valor_produto} \n'
-                      f' ==> ID: {id_categoria} | Categoria: {categoria} \n '
+                      f' ==> {id_categoria}  {categoria}\n'
                       f'{Aparencia.linha()} \n')
                 Aparencia.linha()
-                Aparencia.apt_enter()
+                print('')
                 resp = Aparencia.continuar_SN('Adicionar esse produto?')
                 Aparencia.linha()
                 if resp == 'S':
@@ -343,6 +369,7 @@ class mercadinho:
                                                   "VALUES(%s, %s, %s, %s)"
                         valor_sql_add_produto = (nome_produto, fabricante, valor_produto, id_categoria)
                         conectar_tabela_produto.execute(comando_sql_add_produto, valor_sql_add_produto)
+                        # ARQUIVO DE RELATORIO, ONDE ACRESCENTA OS DADOS ADCIONADOS NA TABELA
                         RELATORIOS.relatorio_geral_SEM_ERROS(f'Dados adicionados com sucesso! \n'
                                                              f'{nome_produto} \n'
                                                              f'{fabricante} \n'
