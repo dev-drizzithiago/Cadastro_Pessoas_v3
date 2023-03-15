@@ -228,6 +228,10 @@ class mercadinho:
                 comando_escolha_catg_sql = "SELECT * FROM categorias_produtos " \
                                            "WHERE id_categoria = " + valor_escolha
                 conectando_DB.execute(comando_escolha_catg_sql)
+                for id_catg_2, catg_2 in conectando_DB:
+                    valor_id_catg.append(id_catg_2)
+                    valor_id_catg.append(catg_2)
+                return valor_id_catg
             except ValueError:
                 resp_erro = aparencia.continuar_SN('Essa categoria não existe, deseja adicionar?')
                 if resp_erro == 'S':
@@ -243,11 +247,6 @@ class mercadinho:
                     print('Caso tenha errado, adicione outra!')
                 else:
                     print('Opção incorreta!')
-
-            for id_catg_2, catg_2 in conectando_DB:
-                valor_id_catg.append(id_catg_2)
-                valor_id_catg.append(catg_2)
-            return valor_id_catg
 
     def cadastrar(self):
         global id_categoria, categoria
@@ -371,13 +370,14 @@ class mercadinho:
                 # dados é voltar para o menu, começando tudo novamente.
                 print(f'Valores adicionados: \n'
                       f' ==> Nome do produto: {nome_produto} \n'
-                      f' ==> Fabricante: {fabricante} \n '
+                      f' ==> Fabricante: {fabricante} \n'
                       f' ==> Valor R$: {valor_produto} \n'
-                      f' ==> {id_categoria}  {categoria}\n'
-                      f'{Aparencia.linha()} \n')
+                      f'{aparencia.linha()} \n'
+                      f' ==> ID: {id_categoria}  \n'
+                      f' ==> CATG: {categoria} \n')
                 Aparencia.linha()
                 print('')
-                resp = Aparencia.continuar_SN('Adicionar esse produto?')
+                resp = Aparencia.continuar_SN('Deseja adicionar o produto descrita acima?')
                 Aparencia.linha()
                 if resp == 'S':
                     try:
@@ -387,17 +387,23 @@ class mercadinho:
                                                   "VALUES(%s, %s, %s, %s)"
                         valor_sql_add_produto = (nome_produto, fabricante, valor_produto, id_categoria)
                         conectar_tabela_produto.execute(comando_sql_add_produto, valor_sql_add_produto)
+
                         # ARQUIVO DE RELATORIO, ONDE ACRESCENTA OS DADOS ADCIONADOS NA TABELA
                         RELATORIOS.relatorio_geral_SEM_ERROS(f'Dados adicionados com sucesso! \n'
                                                              f'{nome_produto} \n'
                                                              f'{fabricante} \n'
                                                              f'{valor_produto} \n'
                                                              f'{id_categoria}')
+                        print('O produto foi adicionado com sucesso!!')
                     except mysql.connector.Error as erro:
                         print('Não foi possível adicionar os dados cadastrados'
                               f'VERIFIQUE SEU BANDO DE DADOS\n ==> {erro}')
                         RELATORIOS.relatorio_geral_COM_ERROS(erro)
                         cadastro_produto_relatorio = [nome_produto, fabricante, valor_produto]
+
+                        # Essa parte, faz um registro dos produtos adicionados, que por algum motivo deu erro no banco de dados
+                        # e não puderam ser adicionados. Olhando nos logs, é possivel recuperar as informações.
+                        # (Estou a desenvolver uma forma de adicionar automatico.
                         Aparencia.guardando(RELATORIOS.criando_arquivo_txt_produto(),
                                             cadastro_produto_relatorio)
                 elif resp == 'N':
