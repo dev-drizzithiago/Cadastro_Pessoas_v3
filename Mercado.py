@@ -112,9 +112,8 @@ class Relatorios_Mercadinho:
     @staticmethod
     def relatorio_geral_COM_ERROS(msg_com_erro):
         registrando_relatorio = open(RELATORIOS.criando_arquivos_txt_geral(), 'a')
-        registrando_relatorio.write(
-            f'{aparencia.linha()} \n ==> OCORREU UM ERRO NO PROCESSO - {RELATORIOS.time_mercadinho()}'
-            f' | MSG: {msg_com_erro} \n {aparencia.linhas()} \n')
+        registrando_relatorio.write(f'{aparencia.linha()} \n ==> OCORREU UM ERRO NO PROCESSO - {RELATORIOS.time_mercadinho()}'
+                                    f' | MSG: {msg_com_erro} \n {aparencia.linhas()} \n')
         registrando_relatorio.close()
 
     # FUNÇÃO DESTINADA PARA TESTES
@@ -244,7 +243,7 @@ class mercadinho:
                         conectando_DB.execute(comando_add_catg)
                         print('Categoria adicionada com sucesso!')
                     except mysql.connector.Error as erro_sql:
-                        print(f'Não foi possivel adicionar as informações no bando de dados! {erro_sql}')
+                        print(f'Não foi possível adicionar as informações no bando de dados! {erro_sql}')
                 elif resp_erro == 'N':
                     print('Caso tenha errado, adicione outra!')
                 else:
