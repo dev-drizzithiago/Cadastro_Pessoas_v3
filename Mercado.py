@@ -5,7 +5,6 @@ from datetime import datetime, date
 from os import makedirs, listdir
 
 
-
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
 class Aparencia:
     @staticmethod
@@ -65,6 +64,7 @@ class Aparencia:
         abrindo_relatorio = open(diretorio, 'a')
         abrindo_relatorio.write(f'{valor_lista} \n')
 
+
 aparencia = Aparencia()
 
 
@@ -102,8 +102,9 @@ class Relatorios_Mercadinho:
     @staticmethod
     def relatorio_geral_SEM_ERROS(msg_sem_erro):
         registrando_relatorio = open(RELATORIOS.criando_arquivos_txt_geral(), 'a')
-        registrando_relatorio.write(f'{aparencia.linha()} \n ==> PROCESSO REALIZADO SEM ERROS - {RELATORIOS.time_mercadinho()}'
-                                    f' | MSG: {msg_sem_erro}\n {aparencia.linha()}\n')
+        registrando_relatorio.write(
+            f'{aparencia.linha()} \n ==> PROCESSO REALIZADO SEM ERROS - {RELATORIOS.time_mercadinho()}'
+            f' | MSG: {msg_sem_erro}\n {aparencia.linha()}\n')
         registrando_relatorio.close()
 
     # ADICIONA OS ERROS NO LOG QUE POSSUEM ERROS.
@@ -111,8 +112,9 @@ class Relatorios_Mercadinho:
     @staticmethod
     def relatorio_geral_COM_ERROS(msg_com_erro):
         registrando_relatorio = open(RELATORIOS.criando_arquivos_txt_geral(), 'a')
-        registrando_relatorio.write(f'{aparencia.linha()} \n ==> OCORREU UM ERRO NO PROCESSO - {RELATORIOS.time_mercadinho()}'
-                                    f' | MSG: {msg_com_erro} \n {aparencia.linhas()} \n')
+        registrando_relatorio.write(
+            f'{aparencia.linha()} \n ==> OCORREU UM ERRO NO PROCESSO - {RELATORIOS.time_mercadinho()}'
+            f' | MSG: {msg_com_erro} \n {aparencia.linhas()} \n')
         registrando_relatorio.close()
 
     # FUNÇÃO DESTINADA PARA TESTES
