@@ -113,7 +113,7 @@ class Relatorios_Mercadinho:
     def relatorio_geral_COM_ERROS(msg_com_erro):
         registrando_relatorio = open(RELATORIOS.criando_arquivos_txt_geral(), 'a')
         registrando_relatorio.write(f'{aparencia.linha()} \n ==> OCORREU UM ERRO NO PROCESSO - {RELATORIOS.time_mercadinho()}'
-                                    f' | MSG: {msg_com_erro} \n {aparencia.linhas()} \n')
+                                    f' | MSG: {msg_com_erro} \n {aparencia.linha()} \n')
         registrando_relatorio.close()
 
     # FUNÇÃO DESTINADA PARA TESTES
