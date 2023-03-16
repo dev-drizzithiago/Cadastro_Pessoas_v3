@@ -103,8 +103,8 @@ class Relatorios_Mercadinho:
     def relatorio_geral_SEM_ERROS(msg_sem_erro):
         registrando_relatorio = open(RELATORIOS.criando_arquivos_txt_geral(), 'a')
         registrando_relatorio.write(
-            f'{aparencia.linha()} \n ==> PROCESSO REALIZADO SEM ERROS - {RELATORIOS.time_mercadinho()}'
-            f' | MSG: {msg_sem_erro}\n {aparencia.linha()}\n')
+            f' ==> PROCESSO REALIZADO SEM ERROS - {RELATORIOS.time_mercadinho()}'
+            f' | MSG: {msg_sem_erro}\n')
         registrando_relatorio.close()
 
     # ADICIONA OS ERROS NO LOG QUE POSSUEM ERROS.
@@ -112,8 +112,9 @@ class Relatorios_Mercadinho:
     @staticmethod
     def relatorio_geral_COM_ERROS(msg_com_erro):
         registrando_relatorio = open(RELATORIOS.criando_arquivos_txt_geral(), 'a')
-        registrando_relatorio.write(f'{aparencia.linha()} \n ==> OCORREU UM ERRO NO PROCESSO - {RELATORIOS.time_mercadinho()}'
-                                    f' | MSG: {msg_com_erro} \n {aparencia.linha()} \n')
+        registrando_relatorio.write(
+            f'==> OCORREU UM ERRO NO PROCESSO - {RELATORIOS.time_mercadinho()}'
+            f' | MSG: {msg_com_erro} \n')
         registrando_relatorio.close()
 
     # FUNÇÃO DESTINADA PARA TESTES
@@ -190,7 +191,7 @@ class mercadinho:
             usuario = str(input('Usuário: '))
             password = str(input('Password: '))
             print('ABRINDO O BANCO DE DADOS, AGUARDE...!!')
-            sleep(1)
+            sleep(0.5)
             db_conexao = mysql.connector.connect(host='localhost', user='root', password='',
                                                  database='mercadinho_pinheiro')
             print('Bando de dados conectado!!')
@@ -213,7 +214,6 @@ class mercadinho:
                 Aparencia.apt_enter()
 
     # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS, BUSCANDO AS INFORMAÇÕES NO BANCO DE DADOS
-
     def funcao_categoria(self):
         valor_id_catg = list()
         conectando_DB = self.db_conexao.cursor()
@@ -333,7 +333,6 @@ class mercadinho:
             # CADASTRO PRODUTOS
             elif opc_cadastro == 2:
                 while True:
-                    Aparencia.linha()
 
                     # O nome do produto é obrigatorio, não sendo possivel adicionar sem um nome, pois não tem como adicionar um produto sem nome.
                     # O banco de dados está configurado para não entrar valores nulos. Para não ocorrer erros, obrigo os usários a adicionarem o nome.
@@ -379,7 +378,7 @@ class mercadinho:
                 Aparencia.linha()
                 print('')
                 resp = Aparencia.continuar_SN('Deseja adicionar o produto descrita acima?')
-                Aparencia.linha()
+                sleep(0.5)
                 if resp == 'S':
                     try:
                         conectar_tabela_produto = self.db_conexao.cursor()
@@ -446,7 +445,6 @@ class mercadinho:
                       f'TELEFONE ==> {TELEFONE} \n'
                       f'EMAIL: ==> {EMAIL}')
                 print('')
-                Aparencia.linha()
             if len(verif) > 0:
                 RELATORIOS.relatorio_geral_SEM_ERROS('Busca realizada com sucesso!')
             else:
@@ -462,9 +460,9 @@ class mercadinho:
                       f' ==> ID CATEGORIA: {ID_CATG}')
                 print('')
                 RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO!')
-            Aparencia.linha()
             Aparencia.apt_enter()
 
+        # Menu de consulta dos dados contindos nas tabelas "produtos_mercadinho" e "cliente_mercadinho"
         while True:
             Aparencia.logo_principal('---CONSULTA DE CADASTROS DO MERCADINHO---')
             print('''
@@ -479,9 +477,9 @@ class mercadinho:
             # CONSULTANDO TABELA CLIENTE_MERCADINHO
             if opc_consultar == 1:
                 print('''
-                [1] BUSCAR POR TODA TABELA
+                [1] BUSCAR POR TODA TABELA 
                 [2] BUSCAR POR INFORMAÇÕES ESPECIFICAS
-                [0] VOLTAR AO MENU PRINCIPAL
+                [0] VOLTAR O MENU
                 ''')
                 resp_opcao = Aparencia.leiaInt('Escolha uma opção: ')
                 Aparencia.linha()
