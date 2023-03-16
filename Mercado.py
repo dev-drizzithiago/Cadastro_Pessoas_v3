@@ -5,7 +5,6 @@ from datetime import datetime, date
 from os import makedirs, listdir
 
 
-
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
 class Aparencia:
     @staticmethod
@@ -65,6 +64,7 @@ class Aparencia:
         abrindo_relatorio = open(diretorio, 'a')
         abrindo_relatorio.write(f'{valor_lista} \n')
 
+
 aparencia = Aparencia()
 
 
@@ -102,8 +102,9 @@ class Relatorios_Mercadinho:
     @staticmethod
     def relatorio_geral_SEM_ERROS(msg_sem_erro):
         registrando_relatorio = open(RELATORIOS.criando_arquivos_txt_geral(), 'a')
-        registrando_relatorio.write(f'PROCESSO REALIZADO SEM ERROS - {RELATORIOS.time_mercadinho()}'
-                                    f' | MSG: {msg_sem_erro}\n')
+        registrando_relatorio.write(
+            f' ==> PROCESSO REALIZADO SEM ERROS - {RELATORIOS.time_mercadinho()}'
+            f' | MSG: {msg_sem_erro}\n')
         registrando_relatorio.close()
 
     # ADICIONA OS ERROS NO LOG QUE POSSUEM ERROS.
@@ -111,8 +112,9 @@ class Relatorios_Mercadinho:
     @staticmethod
     def relatorio_geral_COM_ERROS(msg_com_erro):
         registrando_relatorio = open(RELATORIOS.criando_arquivos_txt_geral(), 'a')
-        registrando_relatorio.write(f'OCORREU UM ERRO NO PROCESSO - {RELATORIOS.time_mercadinho()}'
-                                    f' | MSG: {msg_com_erro}\n')
+        registrando_relatorio.write(
+            f'==> OCORREU UM ERRO NO PROCESSO - {RELATORIOS.time_mercadinho()}'
+            f' | MSG: {msg_com_erro} \n')
         registrando_relatorio.close()
 
     # FUNÇÃO DESTINADA PARA TESTES
@@ -189,8 +191,8 @@ class mercadinho:
             usuario = str(input('Usuário: '))
             password = str(input('Password: '))
             print('ABRINDO O BANCO DE DADOS, AGUARDE...!!')
-            sleep(1)
-            db_conexao = mysql.connector.connect(host='localhost', user='root', password='PE@Penso@',
+            sleep(0.5)
+            db_conexao = mysql.connector.connect(host='localhost', user='root', password='',
                                                  database='mercadinho_pinheiro')
             print('Bando de dados conectado!!')
             RELATORIOS.relatorio_geral_SEM_ERROS('Banco de dados conectado!!')
@@ -212,24 +214,40 @@ class mercadinho:
                 Aparencia.apt_enter()
 
     # FUNÇÃO PARA CLASSIFICAR OS PRODUTOS EM CATEGORIAS, BUSCANDO AS INFORMAÇÕES NO BANCO DE DADOS
-
     def funcao_categoria(self):
         valor_id_catg = list()
         conectando_DB = self.db_conexao.cursor()
         comando_listar_catg_sql = "SELECT * FROM categorias_produtos "
         conectando_DB.execute(comando_listar_catg_sql)
-        for id_catg_1, catg_1 in conectando_DB:
-            print(f' ID: {id_catg_1} \n Categoria: {catg_1}')
-            aparencia.linha()
-        print('')
-        valor_escolha = str(aparencia.leiaInt('Escolha uma categoria: '))
-        comando_escolha_catg_sql = "SELECT * FROM categorias_produtos " \
-                                   "WHERE id_categoria = " + valor_escolha
-        conectando_DB.execute(comando_escolha_catg_sql)
-        for id_catg_2, catg_2 in conectando_DB:
-            valor_id_catg.append(id_catg_2)
-            valor_id_catg.append(catg_2)
-        return valor_id_catg
+        while True:
+            for id_catg_1, catg_1 in conectando_DB:
+                print(f' ID: {id_catg_1} \n Categoria: {catg_1}')
+                aparencia.linha()
+            print('')
+            valor_escolha = str(aparencia.leiaInt('Escolha uma categoria: '))
+            try:
+                comando_escolha_catg_sql = "SELECT * FROM categorias_produtos " \
+                                           "WHERE id_categoria = " + valor_escolha
+                conectando_DB.execute(comando_escolha_catg_sql)
+                for id_catg_2, catg_2 in conectando_DB:
+                    valor_id_catg.append(id_catg_2)
+                    valor_id_catg.append(catg_2)
+                return valor_id_catg
+            except ValueError:
+                resp_erro = aparencia.continuar_SN('Essa categoria não existe, deseja adicionar?')
+                if resp_erro == 'S':
+                    try:
+                        ADD_CATG = str(input('Digita o nome da categoria: ')).upper()
+                        comando_add_catg = "INSERT INTO categorias_produtos VALUES " \
+                                           "(default, '" + ADD_CATG + "') "
+                        conectando_DB.execute(comando_add_catg)
+                        print('Categoria adicionada com sucesso!')
+                    except mysql.connector.Error as erro_sql:
+                        print(f'Não foi possível adicionar as informações no bando de dados! {erro_sql}')
+                elif resp_erro == 'N':
+                    print('Caso tenha errado, adicione outra!')
+                else:
+                    print('Opção incorreta!')
 
     def cadastrar(self):
         global id_categoria, categoria
@@ -315,7 +333,6 @@ class mercadinho:
             # CADASTRO PRODUTOS
             elif opc_cadastro == 2:
                 while True:
-                    Aparencia.linha()
 
                     # O nome do produto é obrigatorio, não sendo possivel adicionar sem um nome, pois não tem como adicionar um produto sem nome.
                     # O banco de dados está configurado para não entrar valores nulos. Para não ocorrer erros, obrigo os usários a adicionarem o nome.
@@ -353,14 +370,15 @@ class mercadinho:
                 # dados é voltar para o menu, começando tudo novamente.
                 print(f'Valores adicionados: \n'
                       f' ==> Nome do produto: {nome_produto} \n'
-                      f' ==> Fabricante: {fabricante} \n '
+                      f' ==> Fabricante: {fabricante} \n'
                       f' ==> Valor R$: {valor_produto} \n'
-                      f' ==> {id_categoria}  {categoria}\n'
-                      f'{Aparencia.linha()} \n')
+                      f'{aparencia.linha()} \n'
+                      f' ==> ID: {id_categoria}  \n'
+                      f' ==> CATG: {categoria} \n')
                 Aparencia.linha()
                 print('')
-                resp = Aparencia.continuar_SN('Adicionar esse produto?')
-                Aparencia.linha()
+                resp = Aparencia.continuar_SN('Deseja adicionar o produto descrita acima?')
+                sleep(0.5)
                 if resp == 'S':
                     try:
                         conectar_tabela_produto = self.db_conexao.cursor()
@@ -369,17 +387,23 @@ class mercadinho:
                                                   "VALUES(%s, %s, %s, %s)"
                         valor_sql_add_produto = (nome_produto, fabricante, valor_produto, id_categoria)
                         conectar_tabela_produto.execute(comando_sql_add_produto, valor_sql_add_produto)
+
                         # ARQUIVO DE RELATORIO, ONDE ACRESCENTA OS DADOS ADCIONADOS NA TABELA
                         RELATORIOS.relatorio_geral_SEM_ERROS(f'Dados adicionados com sucesso! \n'
                                                              f'{nome_produto} \n'
                                                              f'{fabricante} \n'
                                                              f'{valor_produto} \n'
                                                              f'{id_categoria}')
+                        print('O produto foi adicionado com sucesso!!')
                     except mysql.connector.Error as erro:
                         print('Não foi possível adicionar os dados cadastrados'
                               f'VERIFIQUE SEU BANDO DE DADOS\n ==> {erro}')
                         RELATORIOS.relatorio_geral_COM_ERROS(erro)
                         cadastro_produto_relatorio = [nome_produto, fabricante, valor_produto]
+
+                        # Essa parte, faz um registro dos produtos adicionados, que por algum motivo deu erro no banco de dados
+                        # e não puderam ser adicionados. Olhando nos logs, é possivel recuperar as informações.
+                        # (Estou a desenvolver uma forma de adicionar automatico.
                         Aparencia.guardando(RELATORIOS.criando_arquivo_txt_produto(),
                                             cadastro_produto_relatorio)
                 elif resp == 'N':
@@ -421,7 +445,6 @@ class mercadinho:
                       f'TELEFONE ==> {TELEFONE} \n'
                       f'EMAIL: ==> {EMAIL}')
                 print('')
-                Aparencia.linha()
             if len(verif) > 0:
                 RELATORIOS.relatorio_geral_SEM_ERROS('Busca realizada com sucesso!')
             else:
@@ -437,9 +460,9 @@ class mercadinho:
                       f' ==> ID CATEGORIA: {ID_CATG}')
                 print('')
                 RELATORIOS.relatorio_geral_SEM_ERROS(f'As informações foram listadas com SUCESSO!')
-            Aparencia.linha()
             Aparencia.apt_enter()
 
+        # Menu de consulta dos dados contindos nas tabelas "produtos_mercadinho" e "cliente_mercadinho"
         while True:
             Aparencia.logo_principal('---CONSULTA DE CADASTROS DO MERCADINHO---')
             print('''
@@ -454,9 +477,9 @@ class mercadinho:
             # CONSULTANDO TABELA CLIENTE_MERCADINHO
             if opc_consultar == 1:
                 print('''
-                [1] BUSCAR POR TODA TABELA
+                [1] BUSCAR POR TODA TABELA 
                 [2] BUSCAR POR INFORMAÇÕES ESPECIFICAS
-                [0] VOLTAR AO MENU PRINCIPAL
+                [0] VOLTAR O MENU
                 ''')
                 resp_opcao = Aparencia.leiaInt('Escolha uma opção: ')
                 Aparencia.linha()
