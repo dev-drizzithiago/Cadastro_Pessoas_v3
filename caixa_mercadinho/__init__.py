@@ -14,5 +14,8 @@ class Caixa_mercadinho:
         self.botao_RD_enter = Radiobutton(self.frame_1, text='Entrar', variable=self.radio_valor, value=1)
         self.botao_RD_sair = Radiobutton(self.frame_1, text='Sair', variable=self.radio_valor, value=1)
 
+        self.label_1.pack()
+        self.botao_RD_enter.pack()
+        self.botao_RD_sair.pack()
 
 mainloop()
