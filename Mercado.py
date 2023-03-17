@@ -73,6 +73,9 @@ class Relatorios_Mercadinho:
 
     # CRIA ARQUIVO DE LOG GERAL, ONDE CONTEM OS ERROS | CASO ARQUIVOS DE LOG NÃO ESTEJA CRIADO, USA-SE AS INFORMAÇÕES ABAIXO PARA CRIA-LOS
     # O ARQUIVO É ÚNICO, NÃO GERANDO UM POR DIA, COMO AS FUNÇÕES DE CLIENTE E PRODUTOS GERAM.
+    def __init__(self):
+        pass
+
     @staticmethod
     def pasta_relatorios():
         local_pasta_relatorio = 'G:/Meu Drive/Estudos/Python/Pasta_teste_PYTHON/Relatorios/'
