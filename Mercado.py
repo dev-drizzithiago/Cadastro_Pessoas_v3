@@ -73,6 +73,9 @@ class Relatorios_Mercadinho:
 
     # CRIA ARQUIVO DE LOG GERAL, ONDE CONTEM OS ERROS | CASO ARQUIVOS DE LOG NÃO ESTEJA CRIADO, USA-SE AS INFORMAÇÕES ABAIXO PARA CRIA-LOS
     # O ARQUIVO É ÚNICO, NÃO GERANDO UM POR DIA, COMO AS FUNÇÕES DE CLIENTE E PRODUTOS GERAM.
+    def __init__(self):
+        pass
+
     @staticmethod
     def pasta_relatorios():
         local_pasta_relatorio = 'G:/Meu Drive/Estudos/Python/Pasta_teste_PYTHON/Relatorios/'
@@ -190,9 +193,11 @@ class mercadinho:
             Aparencia.logo_principal('DIGITE O USUÁRIO E A SENHA PARA SE CONECTAR AO BANCO DE DADOS')
             usuario = str(input('Usuário: '))
             password = str(input('Password: '))
+            local_host = str(input('Digite o local do servidor: '))
+            data_base = str(input('Digita o banco de dados: '))
             print('ABRINDO O BANCO DE DADOS, AGUARDE...!!')
             sleep(0.5)
-            db_conexao = mysql.connector.connect(host='localhost', user='root', password='',
+            db_conexao = mysql.connector.connect(host=local_host, user=usuario, password=password,
                                                  database='mercadinho_pinheiro')
             print('Bando de dados conectado!!')
             RELATORIOS.relatorio_geral_SEM_ERROS('Banco de dados conectado!!')
