@@ -7,7 +7,6 @@ from tkinter import *
 from tkinter import messagebox
 
 
-
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
 class Aparencia:
     @staticmethod
@@ -196,12 +195,10 @@ class mercadinho:
             Aparencia.logo_principal('DIGITE O USUÁRIO E A SENHA PARA SE CONECTAR AO BANCO DE DADOS')
             usuario = str(input('Usuário: '))
             password = str(input('Password: '))
-            local_host = str(input('Digite o local do servidor: '))
-            data_base = str(input('Digita o banco de dados: '))
             print('ABRINDO O BANCO DE DADOS, AGUARDE...!!')
             sleep(0.5)
-            db_conexao = mysql.connector.connect(host=local_host, user=usuario, password=password,
-                                                 database='mercadinho_pinheiro')
+            db_conexao = mysql.connector.connect(host='db4free.net', user=usuario, password=password,
+                                                 database='drizzithiago_sql')
             print('Bando de dados conectado!!')
             RELATORIOS.relatorio_geral_SEM_ERROS('Banco de dados conectado!!')
             sleep(0.5)
@@ -484,128 +481,134 @@ class mercadinho:
 
             # CONSULTANDO TABELA CLIENTE_MERCADINHO
             if opc_consultar == 1:
-                print('''
-                [1] BUSCAR POR TODA TABELA 
-                [2] BUSCAR POR INFORMAÇÕES ESPECIFICAS
-                [0] VOLTAR O MENU
-                ''')
-                resp_opcao = Aparencia.leiaInt('Escolha uma opção: ')
-                Aparencia.linha()
+                while True:
+                    print('''
+                    [1] BUSCAR POR TODA TABELA 
+                    [2] BUSCAR POR INFORMAÇÕES ESPECIFICAS
+                    [0] VOLTAR O MENU
+                    ''')
+                    resp_opcao = Aparencia.leiaInt('Escolha uma opção: ')
+                    Aparencia.linha()
 
-                # BUSCAR POR TODOS OS DADOS DO CLIENTE.
-                if resp_opcao == 1:
-                    sleep(0.5)
-                    lista_relatorio_cliente = list()
-                    print('carregando...!!\n')
-                    sleep(0.5)
-                    while True:
-                        try:
-                            comando_SQL_cliente = "SELECT * FROM cliente_mercadinho"
-                            conectando_banco_DB.execute(comando_SQL_cliente)
-                            view_dados_cliente(conectando_banco_DB)
-                        except mysql.connector.Error as erro:
-                            print(f'Não foi possível localizar as informações')
-                            print('Verifique se a conexão com o bando de dados esta normal.\n '
-                                  f'==> {erro}')
-                            RELATORIOS.relatorio_geral_COM_ERROS(erro)
-                            Aparencia.apt_enter()
-                            break
-                        resp_opcao = Aparencia.continuar_SN('Deseja realizar um relatório da busca?')
-                        if resp_opcao == 'S':
-                            conectando_banco_DB.execute(comando_SQL_cliente)
-                            for id_cliente, nome_cliente, cpf_cliente, nasc_cliente, tel_cliente, mail_cliente in \
-                                    conectando_banco_DB:
-                                dict_cliente = {f'ID_CLIENTE: ': id_cliente,
-                                                'NOME_CLIENTE: ': nome_cliente,
-                                                'CPF_CLIENTE: ': cpf_cliente,
-                                                'DATA_NASC: ': nasc_cliente,
-                                                'TEL_CLIENTE: ': tel_cliente,
-                                                'MAIL_CLIENTE: ': mail_cliente}
-                                lista_relatorio_cliente.append(dict_cliente)
-                            gerando_PDF(lista_relatorio_cliente)
-                            Aparencia.apt_enter()
-                            break
-                        elif resp_opcao == 'N':
-                            print('Voltando um menu!')
-                            sleep(0.5)
-                            break
-
-                # BUSCANDO POR INFORMAÇÕES ESPECIFICAS
-                elif resp_opcao == 2:
-                    sleep(0.5)
-                    while True:
-                        print('''
-                        [1] BUSCA POR NOME
-                        [2] BUSCA POR CPF
-                        [3] BUSCA POR TELEFONE
-                        [4] BUSCA POR EMAIL
-                        [0] Voltar
-                        ''')
-                        resp_busca = Aparencia.leiaInt('Escolha um opção: ')
-
-                        # BUSCA REALIZADA POR NOME
-                        if resp_busca == 1:
-                            sleep(0.5)
-                            nome_busca = str(input('Digite o nome do cliente: '))
+                    # BUSCAR POR TODOS OS DADOS DO CLIENTE.
+                    if resp_opcao == 1:
+                        print('carregando...!!\n')
+                        sleep(0.5)
+                        while True:
                             try:
-                                convertendo_STR = str("SELECT * FROM cliente_mercadinho "
-                                                      "WHERE nome_cliente LIKE " + "'" + nome_busca + "%'")
-                                comando_busca_nome = convertendo_STR
-                                conectando_banco_DB.execute(comando_busca_nome)
+                                comando_SQL_cliente = "SELECT * FROM cliente_mercadinho"
+                                conectando_banco_DB.execute(comando_SQL_cliente)
                                 view_dados_cliente(conectando_banco_DB)
+                                aparencia.apt_enter()
+                                break
                             except mysql.connector.Error as erro:
-                                print(f' ==> {erro}')
+                                print(f'Não foi possível localizar as informações')
+                                print('Verifique se a conexão com o bando de dados esta normal.\n '
+                                      f'==> {erro}')
                                 RELATORIOS.relatorio_geral_COM_ERROS(erro)
+                                Aparencia.apt_enter()
+                                break
+                            resp_opcao = Aparencia.continuar_SN('Deseja realizar um relatório da busca?')
+                            if resp_opcao == 'S':
+                                conectando_banco_DB.execute(comando_SQL_cliente)
+                                for id_cliente, nome_cliente, cpf_cliente, nasc_cliente, tel_cliente, mail_cliente in \
+                                        conectando_banco_DB:
+                                    dict_cliente = {f'ID_CLIENTE: ': id_cliente,
+                                                    'NOME_CLIENTE: ': nome_cliente,
+                                                    'CPF_CLIENTE: ': cpf_cliente,
+                                                    'DATA_NASC: ': nasc_cliente,
+                                                    'TEL_CLIENTE: ': tel_cliente,
+                                                    'MAIL_CLIENTE: ': mail_cliente}
+                                    lista_relatorio_cliente.append(dict_cliente)
+                                gerando_PDF(lista_relatorio_cliente)
+                                Aparencia.apt_enter()
+                                break
+                            elif resp_opcao == 'N':
+                                print('Voltando um menu!')
+                                sleep(0.5)
+                                break
 
-                        # BUSCA REALIZADA POR CPF
-                        elif resp_busca == 2:
-                            sleep(0.5)
-                            try:
-                                busca_cpf = str(input("Digite o CPF (Sem acento): "))
-                                convertendo_comando_STR = str("SELECT * FROM cliente_mercadinho "
-                                                              "WHERE cpf_cliente = " + "'" + busca_cpf + "'")
-                                comando_busco_cpf = convertendo_comando_STR
-                                conectando_banco_DB.execute(comando_busco_cpf)
-                                view_dados_cliente(conectando_banco_DB)
-                            except mysql.connector.Error as erro:
-                                print(f'Ocorreu um erro!\n'
-                                      f'{erro}')
-                                RELATORIOS.relatorio_geral_COM_ERROS(erro)
+                    # BUSCANDO POR INFORMAÇÕES ESPECIFICAS
+                    elif resp_opcao == 2:
+                        sleep(0.5)
+                        while True:
+                            print('''
+                            [1] BUSCA POR NOME
+                            [2] BUSCA POR CPF
+                            [3] BUSCA POR TELEFONE
+                            [4] BUSCA POR EMAIL
+                            [0] Voltar
+                            ''')
+                            resp_busca = Aparencia.leiaInt('Escolha um opção: ')
 
-                        # BUSCA REALIZADA POR TELEFONE
-                        elif resp_busca == 3:
-                            sleep(0.5)
-                            try:
-                                busca_telefone = str(input('Digite o telefone(com DDD): '))
-                                convertendo_comando_STR = str("SELECT * FROM cliente_mercadinho "
-                                                              "WHERE tel_cliente = " + "'" + busca_telefone + "'")
-                                comando_busca_tele = convertendo_comando_STR
-                                conectando_banco_DB.execute(comando_busca_tele)
-                                view_dados_cliente(conectando_banco_DB)
-                            except mysql.connector.Error as erro:
-                                print(f' ==> {erro}')
-                                RELATORIOS.relatorio_geral_COM_ERROS(erro)
+                            # BUSCA REALIZADA POR NOME
+                            if resp_busca == 1:
+                                sleep(0.5)
+                                nome_busca = str(input('Digite o nome do cliente: '))
+                                try:
+                                    convertendo_STR = str("SELECT * FROM cliente_mercadinho "
+                                                          "WHERE nome_cliente LIKE " + "'" + nome_busca + "%'")
+                                    comando_busca_nome = convertendo_STR
+                                    conectando_banco_DB.execute(comando_busca_nome)
+                                    view_dados_cliente(conectando_banco_DB)
+                                except mysql.connector.Error as erro:
+                                    print(f' ==> {erro}')
+                                    RELATORIOS.relatorio_geral_COM_ERROS(erro)
 
-                        # BUSCA REALIZADA POR E-MAIL
-                        elif resp_busca == 4:
-                            sleep(0.5)
-                            try:
-                                buscar_email = str(input('Digite um e-mail: '))
-                                convertendo_comando_STR = str("SELECT * FROM cliente_mercadinho "
-                                                              "WHERE email_cliente = " + "'" + buscar_email + "'")
-                                comando_busca_email = convertendo_comando_STR
-                                conectando_banco_DB.execute(comando_busca_email)
-                                view_dados_cliente(conectando_banco_DB)
-                            except mysql.connector.Error as erro:
-                                print(f' ==> {erro}')
-                                RELATORIOS.relatorio_geral_COM_ERROS(erro)
+                            # BUSCA REALIZADA POR CPF
+                            elif resp_busca == 2:
+                                sleep(0.5)
+                                try:
+                                    busca_cpf = str(input("Digite o CPF (Sem acento): "))
+                                    convertendo_comando_STR = str("SELECT * FROM cliente_mercadinho "
+                                                                  "WHERE cpf_cliente = " + "'" + busca_cpf + "'")
+                                    comando_busco_cpf = convertendo_comando_STR
+                                    conectando_banco_DB.execute(comando_busco_cpf)
+                                    view_dados_cliente(conectando_banco_DB)
+                                except mysql.connector.Error as erro:
+                                    print(f'Ocorreu um erro!\n'
+                                          f'{erro}')
+                                    RELATORIOS.relatorio_geral_COM_ERROS(erro)
 
-                        # VOLTAR AO MENU ANTERIOR
-                        if resp_busca == 0:
-                            sleep(0.5)
-                            print('Voltando ao menu!')
-                            sleep(0.5)
-                            break
+                            # BUSCA REALIZADA POR TELEFONE
+                            elif resp_busca == 3:
+                                sleep(0.5)
+                                try:
+                                    busca_telefone = str(input('Digite o telefone(com DDD): '))
+                                    convertendo_comando_STR = str("SELECT * FROM cliente_mercadinho "
+                                                                  "WHERE tel_cliente = " + "'" + busca_telefone + "'")
+                                    comando_busca_tele = convertendo_comando_STR
+                                    conectando_banco_DB.execute(comando_busca_tele)
+                                    view_dados_cliente(conectando_banco_DB)
+                                except mysql.connector.Error as erro:
+                                    print(f' ==> {erro}')
+                                    RELATORIOS.relatorio_geral_COM_ERROS(erro)
+
+                            # BUSCA REALIZADA POR E-MAIL
+                            elif resp_busca == 4:
+                                sleep(0.5)
+                                try:
+                                    buscar_email = str(input('Digite um e-mail: '))
+                                    convertendo_comando_STR = str("SELECT * FROM cliente_mercadinho "
+                                                                  "WHERE email_cliente = " + "'" + buscar_email + "'")
+                                    comando_busca_email = convertendo_comando_STR
+                                    conectando_banco_DB.execute(comando_busca_email)
+                                    view_dados_cliente(conectando_banco_DB)
+                                except mysql.connector.Error as erro:
+                                    print(f' ==> {erro}')
+                                    RELATORIOS.relatorio_geral_COM_ERROS(erro)
+
+                            # VOLTAR AO MENU ANTERIOR
+                            if resp_busca == 0:
+                                sleep(0.5)
+                                print('Voltando ao menu!')
+                                sleep(0.5)
+                                break
+
+                    # VOLTANDO PARA O MENU ANTERIOR
+                    elif resp_opcao == 0:
+                        print('Voltando o menu!')
+                        break
 
             # VERIFICANDO TABELA PRODUTOS_MERCADINHO
             elif opc_consultar == 2:
@@ -649,6 +652,7 @@ class mercadinho:
                             [3] BUSCA PELO FABRICANTE DOS PRODUTOS
                             [4] BUSCA PELO VALOR
                             [5] BUSCA POR CATEGORIA
+                            [0] Volta o menu
                             ''')
                             resp_busca_espc = Aparencia.leiaInt('Escolha uma opção: ')
 
@@ -718,6 +722,9 @@ class mercadinho:
                                 except mysql.connector.Error as erro:
                                     print(f'NÃO FOI POSSÍVEL BUSCAR OS DADOS!! ==> {erro}')
                                     RELATORIOS.relatorio_geral_COM_ERROS(erro)
+                            elif resp_busca_espc == 0:
+                                print('Voltando o menu de busca')
+                                break
                             else:
                                 print('Opção invalida!')
 
@@ -733,6 +740,48 @@ class mercadinho:
 
 
 MERCADINHO = mercadinho()
+
+
+class Caixa_mercadinho:
+    def __init__(self):
+        self.janela_principal = Tk()
+
+        self.frame_1 = Frame(self.janela_principal, height=100, width=200)
+        self.frame_1.pack(side='left')
+        self.frame_2 = Frame(self.janela_principal, height=100, width=200)
+        self.frame_2.pack(side='left')
+
+        self.radio_valor = IntVar()
+        self.radio_valor.set(0)
+
+        self.label_1 = Label(self.frame_1, text='Selecione uma opção!')
+        self.label_1.pack(side='left')
+
+        self.botao_RD_entrar = Radiobutton(self.frame_1, text='Entrar', variable=self.radio_valor, value=1)
+        self.botao_RD_entrar.pack(anchor='w')
+
+        self.botao_RD_sair = Radiobutton(self.frame_1, text='Sair', variable=self.radio_valor, value=2)
+        self.botao_RD_sair.pack(anchor='w')
+
+        self.botao_DR_sair = Button(self.frame_1, text='Sair', height=1, width=2, command=self.janela_principal.quit)
+        self.botao_DR_sair.pack(side='right')
+
+        self.botao_RD_enter = Button(self.frame_1, text='OK', height=2, width=4, command=self.radio_entrar)
+        self.botao_RD_enter.pack(side='right')
+
+        mainloop()
+
+    def radio_entrar(self):
+        valor_radio = self.radio_valor.get()
+        if valor_radio == 1:
+            self.janela_registradora = Tk()
+            self.frame_1_REG = Frame(self.janela_registradora, height=100, width=200)
+            self.frame_1_REG.pack(side='left')
+        elif valor_radio == 2:
+            messagebox.showinfo('Aviso!!', f'O valor foi {valor_radio}')
+
+
+exec_caixa = Caixa_mercadinho()
 
 
 class menu_principal:
@@ -763,47 +812,3 @@ class menu_principal:
 
 
 MENU_PRINCIPAL = menu_principal()
-
-
-class Caixa_mercadinho:
-    def __init__(self):
-        self.janela_principal = Tk()
-
-        self.frame_1 = Frame(self.janela_principal, height=100, width=200)
-        self.frame_1.pack(side='left')
-        self.frame_2 = Frame(self.janela_principal, height=100, width=200)
-        self.frame_2.pack(side='left')
-
-        self.radio_valor = IntVar()
-        self.radio_valor.set(0)
-
-        self.label_1 = Label(self.frame_1, text='Selecione uma opção!')
-        self.label_1.pack(side='left')
-
-        self.botao_RD_entrar = Radiobutton(self.frame_1, text='Entrar', variable=self.radio_valor, value=1)
-        self.botao_RD_entrar.pack(anchor='w')
-
-        self.botao_RD_sair = Radiobutton(self.frame_1, text='Sair', variable=self.radio_valor, value=2)
-        self.botao_RD_sair.pack(anchor='w')
-
-        self.botao_DR_sair = Button(self.frame_1, text='Sair', height=1, width=2, command=self.janela_principal.quit)
-        self.botao_DR_sair.pack(side='right')
-
-        self.botao_RD_enter = Button(self.frame_1, text='OK', height=2, width=4, command=self.radio_entrar)
-        self.botao_RD_enter.pack(side='right')
-
-
-        mainloop()
-
-    def radio_entrar(self):
-        valor_radio = self.radio_valor.get()
-        if valor_radio == 1:
-            self.janela_registradora = Tk()
-            self.frame_1_REG = Frame(self.janela_registradora, height=100, width=200)
-            self.frame_1_REG.pack(side='left')
-        elif valor_radio == 2:
-            messagebox.showinfo('Aviso!!', f'O valor foi {valor_radio}')
-
-
-
-exec_caixa = Caixa_mercadinho()
