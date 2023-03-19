@@ -7,13 +7,14 @@ from mysql.connector import errorcode
 
 def CaixaMercadinhoPinheiro():
     class Caixa_mercadinho:
-        def conectando_DB(self):
-            try:
-                self.conexao_banco = mysql.connector.connect(host='db4free.net', user=self.user_DB,
-                                                        password=self.pass_DB, database='drizzithiago_sql')
-                messagebox.showinfo('AVISO!', 'Banco de dados conectado!')                
-            except mysql.connector.Error as falha:
-                messagebox.showerror('AVISO!', 'Ocorreu um erro!! ==> {}'.format(falha))
+        user_DB = None
+        pass_DB = None
+        try:
+            conexao_banco = mysql.connector.connect(host='db4free.net', user=user_DB,
+                                                    password=pass_DB, database='drizzithiago_sql')
+            messagebox.showinfo('AVISO!', 'Banco de dados conectado!')
+        except mysql.connector.Error as falha:
+            messagebox.showerror('AVISO!', 'Ocorreu um erro!! ==> {}'.format(falha))
 
         def __init__(self):
             self.conexao_banco = None
@@ -47,7 +48,7 @@ def CaixaMercadinhoPinheiro():
             self.pass_DB = str(self.entrada_pass.get())            
             self.janela_login_DB.destroy()
 
-            cursor_DB = self.conexao_banco.cursor()
+            cursor_DB = self.conexao_banco
             comando_view_produtos = "SELECT * FROM produtos_mercadinho "
             cursor_DB.execute(comando_view_produtos)
 
