@@ -2,8 +2,8 @@ import mysql.connector
 from analise_dados import *
 from datetime import datetime, date
 from os import makedirs, listdir
-from modulo_caixa import *
-
+import tkinter
+from tkinter import messagebox
 
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
 class Aparencia:
@@ -736,6 +736,49 @@ class mercadinho:
                         print('Você digitou uma opção invalida!!')
                         sleep(0.5)
 
+
+def CaixaMercadinhoPinheiro():
+    class Caixa_mercadinho:
+        def __init__(self):
+
+            self.conexao_banco = None
+            self.janela_login_DB = Tk()
+
+            self.frame_reg_1 = Frame(self.janela_login_DB)
+            self.frame_reg_1.pack(side='left')
+
+            self.frame_reg_2 = Frame(self.janela_login_DB)
+            self.frame_reg_2.pack(side='left')
+
+            self.label_user = Label(self.frame_reg_1, text='Usuário')
+            self.label_user.pack(side='top')
+
+            self.label_pass = Label(self.frame_reg_2, text='Password')
+            self.label_pass.pack(side='top')
+
+            self.entrada_user = Entry(self.frame_reg_1, bd=15)
+            self.entrada_user.pack(side='left')
+
+            self.entrada_pass = Entry(self.frame_reg_2, bd=15)
+            self.entrada_pass.pack(side='left')
+
+            self.botao_enter = Button(self.janela_login_DB, text='Enter', height=2, width=4, command=self.login_db)
+            self.botao_enter.pack(side='left')
+
+            mainloop()
+
+        def login_db(self):
+            user_DB = str(self.entrada_user.get())
+            pass_DB = str(self.entrada_pass.get())
+            self.janela_login_DB.destroy()
+
+            cursor_DB = banco_dados(user_DB, pass_DB).cursor()
+            comando = "select * from produtos_mercadinho "
+            cursor_DB.execute(comando)
+            print(cursor_DB)
+
+
+    iniciando = Caixa_mercadinho()
 
 MERCADINHO = mercadinho()
 
