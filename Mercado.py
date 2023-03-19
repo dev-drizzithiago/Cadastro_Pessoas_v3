@@ -3,7 +3,7 @@ from mysql.connector import errorcode
 from analise_dados import *
 from datetime import datetime, date
 from os import makedirs, listdir
-
+from modulo_caixa import *
 
 
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
@@ -181,9 +181,6 @@ class Relatorios_Mercadinho:
 RELATORIOS = Relatorios_Mercadinho()
 RELATORIOS.pasta_relatorio()
 RELATORIOS.verificacao_relatorios_txt()
-
-
-
 
 
 class mercadinho:
@@ -746,10 +743,12 @@ MERCADINHO = mercadinho()
 
 class menu_principal:
     global fechando_programa
+
     while True:
         print('''
     ==> [1] Realizar um cadastro (Clientes/Produtos)
     ==> [2] Consultando cadastros (Clientes/Produtos)
+    ==> [3] Abrir o caixa
     ==> [0] Sair do programa
         ''')
         opc_menu_principal = Aparencia.leiaInt('Escolha uma opção: ')
@@ -761,6 +760,9 @@ class menu_principal:
             print('Direcionando para opção escolhida...')
             sleep(0.5)
             MERCADINHO.visualizar_cadastros()
+        elif opc_menu_principal == 3:
+            print('Direcionando para opção escolhida...')
+            CaixaMercadinhoPinheiro()
         elif opc_menu_principal == 0:
             print('Saindo do BANDO DE DADOS!')
             print('Fechando o programa!')
