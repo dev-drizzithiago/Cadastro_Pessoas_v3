@@ -1,9 +1,11 @@
+from mysql.connector import errorcode
 import mysql.connector
 from analise_dados import *
 from datetime import datetime, date
 from os import makedirs, listdir
-import tkinter
+import tkinter as tk
 from tkinter import messagebox
+
 
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
 class Aparencia:
@@ -737,50 +739,45 @@ class mercadinho:
                         sleep(0.5)
 
 
+MERCADINHO = mercadinho()
+
+
 def CaixaMercadinhoPinheiro():
-    class Caixa_mercadinho:
+    class JanelaMercadinho:
         def __init__(self):
+            self.janela_login_DB = tk.Tk()
 
-            self.conexao_banco = None
-            self.janela_login_DB = Tk()
-
-            self.frame_reg_1 = Frame(self.janela_login_DB)
+            self.frame_reg_1 = tk.Frame(self.janela_login_DB)
             self.frame_reg_1.pack(side='left')
 
-            self.frame_reg_2 = Frame(self.janela_login_DB)
+            self.frame_reg_2 = tk.Frame(self.janela_login_DB)
             self.frame_reg_2.pack(side='left')
 
-            self.label_user = Label(self.frame_reg_1, text='Usuário')
+            self.label_user = tk.Label(self.frame_reg_1, text='Usuário')
             self.label_user.pack(side='top')
 
-            self.label_pass = Label(self.frame_reg_2, text='Password')
+            self.label_pass = tk.Label(self.frame_reg_2, text='Password')
             self.label_pass.pack(side='top')
 
-            self.entrada_user = Entry(self.frame_reg_1, bd=15)
+            self.entrada_user = tk.Entry(self.frame_reg_1, bd=15)
             self.entrada_user.pack(side='left')
 
-            self.entrada_pass = Entry(self.frame_reg_2, bd=15)
+            self.entrada_pass = tk.Entry(self.frame_reg_2, bd=15)
             self.entrada_pass.pack(side='left')
 
-            self.botao_enter = Button(self.janela_login_DB, text='Enter', height=2, width=4, command=self.login_db)
-            self.botao_enter.pack(side='left')
+            botao_enter = tk.Button(janela_login_DB, text='Enter', height=2, width=4, command=self.login_db)
+            botao_enter.pack(side='left')
 
-            mainloop()
+            tk.mainloop()
 
         def login_db(self):
-            user_DB = str(self.entrada_user.get())
+            user_DB = str(self.entrada_user)
             pass_DB = str(self.entrada_pass.get())
             self.janela_login_DB.destroy()
 
-            cursor_DB = banco_dados(user_DB, pass_DB).cursor()
-            comando = "select * from produtos_mercadinho "
-            cursor_DB.execute(comando)
-            print(cursor_DB)
+            iniciando.
 
-
-    iniciando = Caixa_mercadinho()
-
-MERCADINHO = mercadinho()
+    iniciando = JanelaMercadinho()
 
 
 class menu_principal:
