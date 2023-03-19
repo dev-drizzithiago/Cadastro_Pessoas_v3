@@ -3,7 +3,6 @@ from mysql.connector import errorcode
 from analise_dados import *
 from datetime import datetime, date
 from os import makedirs, listdir
-from modulo_caixa import *
 
 
 
@@ -182,6 +181,9 @@ class Relatorios_Mercadinho:
 RELATORIOS = Relatorios_Mercadinho()
 RELATORIOS.pasta_relatorio()
 RELATORIOS.verificacao_relatorios_txt()
+
+
+
 
 
 class mercadinho:
