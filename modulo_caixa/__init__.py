@@ -17,7 +17,6 @@ class conexao_DB:
 def CaixaMercadinhoPinheiro():
     class Caixa_mercadinho:
         def __init__(self):
-
             self.janela_login_DB = Tk()
 
             self.frame_reg_1 = Frame(self.janela_login_DB)
@@ -43,13 +42,15 @@ def CaixaMercadinhoPinheiro():
 
             mainloop()
 
+        def visualizar_DB(self):
+            self.janela_view_DB = Tk()
+            self.visualizacao_DB = Text(self.janela_view_DB)
+            self.visualizacao_DB.insert(INSERT, 'Texto')
+
         def login_db(self):
             user_DB = str(self.entrada_user.get())
             pass_DB = str(self.entrada_pass.get())
             conexao_DB(user_DB, pass_DB)
             self.janela_login_DB.destroy()
 
-    iniciando = Caixa_mercadinho
-
-
-
+    iniciando = Caixa_mercadinho()
