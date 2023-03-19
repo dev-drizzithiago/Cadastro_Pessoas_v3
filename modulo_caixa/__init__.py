@@ -13,10 +13,12 @@ def CaixaMercadinhoPinheiro():
             conexao_banco = mysql.connector.connect(host='db4free.net', user=user_DB,
                                                     password=pass_DB, database='drizzithiago_sql')
             messagebox.showinfo('AVISO!', 'Banco de dados conectado!')
+            cursor_DB = conexao_banco.cursor()
         except mysql.connector.Error as falha:
             messagebox.showerror('AVISO!', 'Ocorreu um erro!! ==> {}'.format(falha))
 
         def __init__(self):
+
             self.conexao_banco = None
             self.janela_login_DB = Tk()
 
@@ -45,16 +47,15 @@ def CaixaMercadinhoPinheiro():
 
         def login_db(self):
             self.user_DB = str(self.entrada_user.get())
-            self.pass_DB = str(self.entrada_pass.get())            
+            self.pass_DB = str(self.entrada_pass.get())
             self.janela_login_DB.destroy()
 
-            cursor_DB = self.conexao_banco
             comando_view_produtos = "SELECT * FROM produtos_mercadinho "
-            cursor_DB.execute(comando_view_produtos)
+            self.cursor_DB.execute(comando_view_produtos)
 
             self.janela_view_DB = Tk()
             self.visualizacao_DB = Text(self.janela_view_DB)
-            self.visualizacao_DB.insert(INSERT, f'{cursor_DB} \n ')
+            self.visualizacao_DB.insert(INSERT, f'{self.cursor_DB} \n ')
             self.visualizacao_DB.insert(END, 'bye!')
             self.visualizacao_DB.pack()
 
