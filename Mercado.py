@@ -3,8 +3,7 @@ import mysql.connector
 from analise_dados import *
 from datetime import datetime, date
 from os import makedirs, listdir
-import tkinter as tk
-from tkinter import messagebox
+from tkinter import *
 
 
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
@@ -738,46 +737,60 @@ class mercadinho:
                         print('Você digitou uma opção invalida!!')
                         sleep(0.5)
 
+    def CaixaMercadinhoPinheiro(self):
+        cursor_DB = self.db_conexao.cursor()
+        class JanelaMercadinho:
+            def __init__(self):
+                self.janela_login_DB = Tk()
+
+                self.frame_reg_1 = Frame(self.janela_login_DB)
+                self.frame_reg_1.pack(side='left')
+
+                self.frame_reg_2 = Frame(self.janela_login_DB)
+                self.frame_reg_2.pack(side='left')
+
+                self.label_user = Label(self.frame_reg_1, text='Usuário')
+                self.label_user.pack(side='top')
+
+                self.label_pass = Label(self.frame_reg_2, text='Password')
+                self.label_pass.pack(side='top')
+
+                self.entrada_user = Entry(self.frame_reg_1, bd=15)
+                self.entrada_user.pack(side='left')
+
+                self.entrada_pass = Entry(self.frame_reg_2, bd=15)
+                self.entrada_pass.pack(side='left')
+
+                botao_enter = Button(self.janela_login_DB, text='Enter', height=2, width=4, command=self.login_db)
+                botao_enter.pack(side='left')
+
+                mainloop()
+
+            def login_db(self):
+                # user_DB = str(self.entrada_user.get())
+                # pass_DB = str(self.entrada_pass.get())
+                # print(user_DB, pass_DB)
+                # Aparencia.apt_enter()
+
+                texto = 'Testando'
+
+                self.janela_view_produtos = Tk()
+                self.frame_VIEW_DB_1 = Text(self.janela_view_produtos)
+                self.frame_VIEW_DB_1.insert(INSERT, texto)
+                self.frame_VIEW_DB_1.pack(side='left')
+
+                self.botao_sair_view = Button(self.frame_VIEW_DB_1, text='Sair', command=self.janela_login_DB.destroy)
+                self.botao_sair_view.pack(side='left')
+
+
+
+        iniciando = JanelaMercadinho()
+
 
 MERCADINHO = mercadinho()
 
 
-def CaixaMercadinhoPinheiro():
-    class JanelaMercadinho:
-        def __init__(self):
-            self.janela_login_DB = tk.Tk()
 
-            self.frame_reg_1 = tk.Frame(self.janela_login_DB)
-            self.frame_reg_1.pack(side='left')
-
-            self.frame_reg_2 = tk.Frame(self.janela_login_DB)
-            self.frame_reg_2.pack(side='left')
-
-            self.label_user = tk.Label(self.frame_reg_1, text='Usuário')
-            self.label_user.pack(side='top')
-
-            self.label_pass = tk.Label(self.frame_reg_2, text='Password')
-            self.label_pass.pack(side='top')
-
-            self.entrada_user = tk.Entry(self.frame_reg_1, bd=15)
-            self.entrada_user.pack(side='left')
-
-            self.entrada_pass = tk.Entry(self.frame_reg_2, bd=15)
-            self.entrada_pass.pack(side='left')
-
-            botao_enter = tk.Button(janela_login_DB, text='Enter', height=2, width=4, command=self.login_db)
-            botao_enter.pack(side='left')
-
-            tk.mainloop()
-
-        def login_db(self):
-            user_DB = str(self.entrada_user)
-            pass_DB = str(self.entrada_pass.get())
-            self.janela_login_DB.destroy()
-
-            iniciando.
-
-    iniciando = JanelaMercadinho()
 
 
 class menu_principal:
@@ -801,7 +814,7 @@ class menu_principal:
             MERCADINHO.visualizar_cadastros()
         elif opc_menu_principal == 3:
             print('Direcionando para opção escolhida...')
-            CaixaMercadinhoPinheiro()
+            MERCADINHO.CaixaMercadinhoPinheiro()
         elif opc_menu_principal == 0:
             print('Saindo do BANDO DE DADOS!')
             print('Fechando o programa!')
