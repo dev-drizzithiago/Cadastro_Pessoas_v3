@@ -47,13 +47,13 @@ def CaixaMercadinhoPinheiro():
             self.pass_DB = str(self.entrada_pass.get())            
             self.janela_login_DB.destroy()
 
-            cursor = self.conexao_banco.cursor
+            cursor_DB = self.conexao_banco.cursor()
             comando_view_produtos = "SELECT * FROM produtos_mercadinho "
-            cursor.execute(comando_view_produtos)
+            cursor_DB.execute(comando_view_produtos)
 
             self.janela_view_DB = Tk()
             self.visualizacao_DB = Text(self.janela_view_DB)
-            self.visualizacao_DB.insert(INSERT, f'{cursor} \n ')
+            self.visualizacao_DB.insert(INSERT, f'{cursor_DB} \n ')
             self.visualizacao_DB.insert(END, 'bye!')
             self.visualizacao_DB.pack()
 
