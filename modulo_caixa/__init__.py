@@ -1,21 +1,20 @@
 from tkinter import *
 from tkinter import messagebox
+from modulo_banco_dados import *
 import mysql
 from mysql.connector import errorcode
 
 
-class conexao_DB:
-    def __init__(self, usuario, password):
+def CaixaMercadinhoPinheiro(usuario, password):
+    class Caixa_mercadinho:
         try:
             conexao_banco = mysql.connector.connect(host='db4free.net', user=usuario,
                                                     password=password, database='drizzithiago_sql')
             messagebox.showinfo('AVISO!', 'Banco de dados conectado!')
+            cursor_DB = conexao_banco.cursor()
         except mysql.connector.Error as falha:
-            messagebox.showerror('AVISO!', 'Ocorreu um erro {}'.format(falha))
+            messagebox.showerror('AVISO!', 'Ocorreu um erro!! ==> {}'.format(falha))
 
-
-def CaixaMercadinhoPinheiro():
-    class Caixa_mercadinho:
         def __init__(self):
             self.janela_login_DB = Tk()
 
@@ -42,15 +41,16 @@ def CaixaMercadinhoPinheiro():
 
             mainloop()
 
-        def visualizar_DB(self):
-            self.janela_view_DB = Tk()
-            self.visualizacao_DB = Text(self.janela_view_DB)
-            self.visualizacao_DB.insert(INSERT, 'Texto')
-
         def login_db(self):
             user_DB = str(self.entrada_user.get())
             pass_DB = str(self.entrada_pass.get())
-            conexao_DB(user_DB, pass_DB)
+            cursor = banco_dados(user_DB, pass_DB)
             self.janela_login_DB.destroy()
+
+            self.janela_view_DB = Tk()
+            self.visualizacao_DB = Text(self.janela_view_DB)
+            self.visualizacao_DB.insert(INSERT, f'{cursor} \n ')
+            self.visualizacao_DB.insert(END, 'bye!')
+            self.visualizacao_DB.pack()
 
     iniciando = Caixa_mercadinho()
