@@ -1,6 +1,4 @@
 import mysql.connector
-from mysql.connector import errorcode
-import getpass
 from analise_dados import *
 from datetime import datetime, date
 from os import makedirs, listdir

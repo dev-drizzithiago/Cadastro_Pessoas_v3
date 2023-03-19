@@ -5,17 +5,18 @@ import mysql
 from mysql.connector import errorcode
 
 
-def CaixaMercadinhoPinheiro(usuario, password):
+def CaixaMercadinhoPinheiro():
     class Caixa_mercadinho:
-        try:
-            conexao_banco = mysql.connector.connect(host='db4free.net', user=usuario,
-                                                    password=password, database='drizzithiago_sql')
-            messagebox.showinfo('AVISO!', 'Banco de dados conectado!')
-            cursor_DB = conexao_banco.cursor()
-        except mysql.connector.Error as falha:
-            messagebox.showerror('AVISO!', 'Ocorreu um erro!! ==> {}'.format(falha))
+        def conectando_DB(self):
+            try:
+                self.conexao_banco = mysql.connector.connect(host='db4free.net', user=self.user_DB,
+                                                        password=self.pass_DB, database='drizzithiago_sql')
+                messagebox.showinfo('AVISO!', 'Banco de dados conectado!')                
+            except mysql.connector.Error as falha:
+                messagebox.showerror('AVISO!', 'Ocorreu um erro!! ==> {}'.format(falha))
 
         def __init__(self):
+            self.conexao_banco = None
             self.janela_login_DB = Tk()
 
             self.frame_reg_1 = Frame(self.janela_login_DB)
@@ -42,10 +43,13 @@ def CaixaMercadinhoPinheiro(usuario, password):
             mainloop()
 
         def login_db(self):
-            user_DB = str(self.entrada_user.get())
-            pass_DB = str(self.entrada_pass.get())
-            cursor = banco_dados(user_DB, pass_DB)
+            self.user_DB = str(self.entrada_user.get())
+            self.pass_DB = str(self.entrada_pass.get())            
             self.janela_login_DB.destroy()
+
+            cursor = self.conexao_banco.cursor
+            comando_view_produtos = "SELECT * FROM produtos_mercadinho "
+            cursor.execute(comando_view_produtos)
 
             self.janela_view_DB = Tk()
             self.visualizacao_DB = Text(self.janela_view_DB)
