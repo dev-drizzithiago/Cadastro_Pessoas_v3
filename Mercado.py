@@ -767,17 +767,25 @@ class mercadinho:
                 mainloop()
 
             def login_db(self):
+                lista_cliente = list()
                 # user_DB = str(self.entrada_user.get())
                 # pass_DB = str(self.entrada_pass.get())
                 # print(user_DB, pass_DB)
                 # Aparencia.apt_enter()
 
-                texto_inicio = 'Testando'
-                texto_fim = 'TESTE FIM'
+                comando_SQL = "SELECT * FROM cliente_mercadinho"
+                cursor_DB.execute(comando_SQL)
+                for id_cliente, nome_cliente, cpf_cliente, nasci, tele, email in cursor_DB:
+                    lista_cliente.append(id_cliente)
+                    lista_cliente.append(nome_cliente)
+                    lista_cliente.append(cpf_cliente)
+                    lista_cliente.append(nasci)
+                    lista_cliente.append(tele)
+                    lista_cliente.append(email)
 
                 self.janela_view_produtos = Tk()
                 self.janela_view = Text(self.janela_view_produtos)
-                self.janela_view.insert(INSERT, texto_inicio)
+                self.janela_view.insert(INSERT, lista_cliente)
                 # self.janela_view.insert(END, texto_fim)
                 self.janela_view.pack()
 
