@@ -739,6 +739,7 @@ class mercadinho:
 
     def CaixaMercadinhoPinheiro(self):
         cursor_DB = self.db_conexao.cursor()
+
         class JanelaMercadinho:
             def __init__(self):
                 self.janela_login_DB = Tk()
@@ -776,12 +777,12 @@ class mercadinho:
                 comando_SQL = "SELECT * FROM cliente_mercadinho"
                 cursor_DB.execute(comando_SQL)
                 for id_cliente, nome_cliente, cpf_cliente, nasci, tele, email in cursor_DB:
-                    lista_cliente.append(id_cliente)
-                    lista_cliente.append(nome_cliente)
-                    lista_cliente.append(cpf_cliente)
-                    lista_cliente.append(nasci)
-                    lista_cliente.append(tele)
-                    lista_cliente.append(email)
+                    lista_cliente.append(f'{id_cliente} \n')
+                    lista_cliente.append(f'{nome_cliente} \n')
+                    lista_cliente.append(f'{cpf_cliente} \n')
+                    lista_cliente.append(f'{nasci} \n')
+                    lista_cliente.append(f'{tele} \n')
+                    lista_cliente.append(f'{email} \n')
 
                 self.janela_view_produtos = Tk()
                 self.janela_view = Text(self.janela_view_produtos)
@@ -791,18 +792,14 @@ class mercadinho:
 
                 self.frame_view_DB_1 = Frame(self.janela_view_produtos)
                 self.frame_view_DB_1.pack(side='top')
-                self.botao_sair_view = Button(self.frame_view_DB_1, text='Sair', command=self.janela_view_produtos.destroy)
+                self.botao_sair_view = Button(self.frame_view_DB_1, text='Sair',
+                                              command=self.janela_view_produtos.destroy)
                 self.botao_sair_view.pack(side='top')
-
-
 
         iniciando = JanelaMercadinho()
 
 
 MERCADINHO = mercadinho()
-
-
-
 
 
 class menu_principal:
