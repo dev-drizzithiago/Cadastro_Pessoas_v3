@@ -47,17 +47,36 @@ def CaixaMercadinhoPinheiro():
             valor_radio = self.radio_valor.get()
             if valor_radio == 1:
                 self.janela_registradora = Tk()
-                self.label_user = Label(self.janela_registradora, text='Usuário')
-                self.label_user.pack(side='left')
-                self.label_pass = Label(self.janela_registradora, text='Password')
-                self.entrada_user = Entry(self.janela_registradora, bd=30)
-                self.entrada_user.pack(side='right')
-                self.botao_enter = Button(self.janela_registradora, text='Enter', command=self.login_db)
+                self.frame_reg_1 = Frame(self.janela_registradora)
+                self.frame_reg_1.pack(side='left')
 
-            def login_db():
+                self.frame_reg_2 = Frame(self.janela_registradora)
+                self.frame_reg_2.pack(side='left')
 
+                self.label_user = Label(self.frame_reg_1, text='Usuário')
+                self.label_user.pack(side='top')
+
+                self.label_pass = Label(self.frame_reg_2, text='Password')
+                self.label_pass.pack(side='top')
+
+                self.entrada_user = Entry(self.frame_reg_1, bd=15)
+                self.entrada_user.pack(side='left')
+
+                self.entrada_pass = Entry(self.frame_reg_1, bd=15)
+                self.entrada_pass.pack(side='left')
+
+                self.botao_enter = Button(self.janela_registradora, text='Enter', height=2, width=4, command=self.login_db)
+                self.botao_enter.pack(side='right')
 
             elif valor_radio == 2:
                 messagebox.askquestion('Teste', 'Sim')
+
+        def login_db(self):
+            lista_login = list()
+            user_DB = str(self.entrada_user)
+            pass_DB = str(self.entrada_pass)
+            lista_login.append(user_DB)
+            lista_login.append(pass_DB)
+            print(lista_login)
 
     exceltando_caixa = Caixa_mercadinho()
