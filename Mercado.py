@@ -739,7 +739,10 @@ class mercadinho:
 
     def CaixaMercadinhoPinheiro(self):
         cursor_DB = self.db_conexao.cursor()
+<<<<<<< HEAD
 
+=======
+>>>>>>> Caixa_mercadinho
         class JanelaMercadinho:
             def __init__(self):
                 self.janela_login_DB = Tk()
@@ -768,12 +771,16 @@ class mercadinho:
                 mainloop()
 
             def login_db(self):
+<<<<<<< HEAD
                 lista_cliente = list()
+=======
+>>>>>>> Caixa_mercadinho
                 # user_DB = str(self.entrada_user.get())
                 # pass_DB = str(self.entrada_pass.get())
                 # print(user_DB, pass_DB)
                 # Aparencia.apt_enter()
 
+<<<<<<< HEAD
                 comando_SQL = "SELECT * FROM cliente_mercadinho"
                 cursor_DB.execute(comando_SQL)
                 for id_cliente, nome_cliente, cpf_cliente, nasci, tele, email in cursor_DB:
@@ -795,11 +802,27 @@ class mercadinho:
                 self.botao_sair_view = Button(self.frame_view_DB_1, text='Sair',
                                               command=self.janela_view_produtos.destroy)
                 self.botao_sair_view.pack(side='top')
+=======
+                texto = 'Testando'
+
+                self.janela_view_produtos = Tk()
+                self.frame_VIEW_DB_1 = Text(self.janela_view_produtos)
+                self.frame_VIEW_DB_1.insert(INSERT, texto)
+                self.frame_VIEW_DB_1.pack(side='left')
+
+                self.botao_sair_view = Button(self.frame_VIEW_DB_1, text='Sair', command=self.janela_login_DB.destroy)
+                self.botao_sair_view.pack(side='left')
+
+
+>>>>>>> Caixa_mercadinho
 
         iniciando = JanelaMercadinho()
 
 
 MERCADINHO = mercadinho()
+
+
+
 
 
 class menu_principal:
