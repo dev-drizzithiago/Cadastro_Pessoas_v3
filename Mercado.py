@@ -763,7 +763,7 @@ class mercadinho:
                 botao_enter = Button(self.janela_login_DB, text='Enter', height=2, width=4, command=self.login_db)
                 botao_enter.pack(anchor='center')
 
-                botao_sair = Button(self.janela_login_DB, text='Sair', height=2, width=4, command=self.janela_login_DB.destroy())
+                botao_sair = Button(self.janela_login_DB, text='Sair', height=2, width=4, command=self.janela_login_DB.destroy)
                 botao_sair.pack(anchor='center')
 
                 mainloop()
@@ -791,11 +791,8 @@ class mercadinho:
                 self.botao_sair_view = Button(self.frame_view_DB_1, text='Sair', command=self.janela_view_produtos.destroy)
                 self.botao_sair_view.pack(side='top')
 
-                self.botao_sair_view = Button(self.frame_view_DB_1, text='Sair', command=self.janela_login_DB.destroy)
-                self.botao_sair_view.pack(side='left')
-
-
         iniciando = JanelaMercadinho()
+
 
 MERCADINHO = mercadinho()
 
