@@ -739,48 +739,27 @@ class mercadinho:
 
     def CaixaMercadinhoPinheiro(self):
         cursor_DB = self.db_conexao.cursor()
-<<<<<<< HEAD
-
-=======
->>>>>>> Caixa_mercadinho
         class JanelaMercadinho:
             def __init__(self):
                 self.janela_login_DB = Tk()
-
                 self.frame_reg_1 = Frame(self.janela_login_DB)
                 self.frame_reg_1.pack(side='left')
-
                 self.frame_reg_2 = Frame(self.janela_login_DB)
                 self.frame_reg_2.pack(side='left')
-
                 self.label_user = Label(self.frame_reg_1, text='Usuário')
                 self.label_user.pack(side='top')
-
                 self.label_pass = Label(self.frame_reg_2, text='Password')
                 self.label_pass.pack(side='top')
-
                 self.entrada_user = Entry(self.frame_reg_1, bd=15)
                 self.entrada_user.pack(side='left')
-
                 self.entrada_pass = Entry(self.frame_reg_2, bd=15)
                 self.entrada_pass.pack(side='left')
-
                 botao_enter = Button(self.janela_login_DB, text='Enter', height=2, width=4, command=self.login_db)
                 botao_enter.pack(side='left')
-
                 mainloop()
 
             def login_db(self):
-<<<<<<< HEAD
                 lista_cliente = list()
-=======
->>>>>>> Caixa_mercadinho
-                # user_DB = str(self.entrada_user.get())
-                # pass_DB = str(self.entrada_pass.get())
-                # print(user_DB, pass_DB)
-                # Aparencia.apt_enter()
-
-<<<<<<< HEAD
                 comando_SQL = "SELECT * FROM cliente_mercadinho"
                 cursor_DB.execute(comando_SQL)
                 for id_cliente, nome_cliente, cpf_cliente, nasci, tele, email in cursor_DB:
@@ -796,38 +775,27 @@ class mercadinho:
                 self.janela_view.insert(INSERT, lista_cliente)
                 # self.janela_view.insert(END, texto_fim)
                 self.janela_view.pack()
-
                 self.frame_view_DB_1 = Frame(self.janela_view_produtos)
                 self.frame_view_DB_1.pack(side='top')
                 self.botao_sair_view = Button(self.frame_view_DB_1, text='Sair',
                                               command=self.janela_view_produtos.destroy)
                 self.botao_sair_view.pack(side='top')
-=======
-                texto = 'Testando'
 
                 self.janela_view_produtos = Tk()
                 self.frame_VIEW_DB_1 = Text(self.janela_view_produtos)
-                self.frame_VIEW_DB_1.insert(INSERT, texto)
+                self.frame_VIEW_DB_1.insert(INSERT, lista_cliente)
                 self.frame_VIEW_DB_1.pack(side='left')
 
                 self.botao_sair_view = Button(self.frame_VIEW_DB_1, text='Sair', command=self.janela_login_DB.destroy)
                 self.botao_sair_view.pack(side='left')
 
 
->>>>>>> Caixa_mercadinho
-
         iniciando = JanelaMercadinho()
-
 
 MERCADINHO = mercadinho()
 
 
-
-
-
 class menu_principal:
-    global fechando_programa
-
     while True:
         print('''
     ==> [1] Realizar um cadastro (Clientes/Produtos)
