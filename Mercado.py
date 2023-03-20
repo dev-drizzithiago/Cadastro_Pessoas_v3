@@ -743,19 +743,29 @@ class mercadinho:
             def __init__(self):
                 self.janela_login_DB = Tk()
                 self.frame_reg_1 = Frame(self.janela_login_DB)
-                self.frame_reg_1.pack(side='left')
+                self.frame_reg_1.pack(anchor='center')
+
                 self.frame_reg_2 = Frame(self.janela_login_DB)
-                self.frame_reg_2.pack(side='left')
+                self.frame_reg_2.pack(anchor='center')
+
                 self.label_user = Label(self.frame_reg_1, text='Usuário')
-                self.label_user.pack(side='top')
+                self.label_user.pack(anchor='center')
+
                 self.label_pass = Label(self.frame_reg_2, text='Password')
-                self.label_pass.pack(side='top')
+                self.label_pass.pack(anchor='center')
+
                 self.entrada_user = Entry(self.frame_reg_1, bd=15)
-                self.entrada_user.pack(side='left')
+                self.entrada_user.pack(anchor='center')
+
                 self.entrada_pass = Entry(self.frame_reg_2, bd=15)
-                self.entrada_pass.pack(side='left')
+                self.entrada_pass.pack(anchor='center')
+
                 botao_enter = Button(self.janela_login_DB, text='Enter', height=2, width=4, command=self.login_db)
-                botao_enter.pack(side='left')
+                botao_enter.pack(anchor='center')
+
+                botao_sair = Button(self.janela_login_DB, text='Sair', height=2, width=4, command=self.janela_login_DB.destroy())
+                botao_sair.pack(anchor='center')
+
                 mainloop()
 
             def login_db(self):
@@ -773,20 +783,15 @@ class mercadinho:
                 self.janela_view_produtos = Tk()
                 self.janela_view = Text(self.janela_view_produtos)
                 self.janela_view.insert(INSERT, lista_cliente)
-                # self.janela_view.insert(END, texto_fim)
                 self.janela_view.pack()
+
                 self.frame_view_DB_1 = Frame(self.janela_view_produtos)
                 self.frame_view_DB_1.pack(side='top')
-                self.botao_sair_view = Button(self.frame_view_DB_1, text='Sair',
-                                              command=self.janela_view_produtos.destroy)
+
+                self.botao_sair_view = Button(self.frame_view_DB_1, text='Sair', command=self.janela_view_produtos.destroy)
                 self.botao_sair_view.pack(side='top')
 
-                self.janela_view_produtos = Tk()
-                self.frame_VIEW_DB_1 = Text(self.janela_view_produtos)
-                self.frame_VIEW_DB_1.insert(INSERT, lista_cliente)
-                self.frame_VIEW_DB_1.pack(side='left')
-
-                self.botao_sair_view = Button(self.frame_VIEW_DB_1, text='Sair', command=self.janela_login_DB.destroy)
+                self.botao_sair_view = Button(self.frame_view_DB_1, text='Sair', command=self.janela_login_DB.destroy)
                 self.botao_sair_view.pack(side='left')
 
 
