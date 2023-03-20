@@ -177,6 +177,10 @@ class Relatorios_Mercadinho:
         if not RELATORIOS.verf_relatorio(RELATORIOS.criando_arquivo_txt_cliente()):
             RELATORIOS.criando_arquivo(RELATORIOS.criando_arquivo_txt_cliente())
 
+    @staticmethod
+    def enviar_email():
+        print("<desenvolvimento>")
+
 
 RELATORIOS = Relatorios_Mercadinho()
 RELATORIOS.pasta_relatorio()
@@ -741,6 +745,7 @@ class mercadinho:
         cursor_DB = self.db_conexao.cursor()
         class JanelaMercadinho:
             def __init__(self):
+                self.fonte_padrao = ['Arial', '12']
                 self.janela_login_DB = Tk()
                 self.frame_reg_1 = Frame(self.janela_login_DB)
                 self.frame_reg_1.pack(anchor='center')
@@ -761,10 +766,10 @@ class mercadinho:
                 self.entrada_pass.pack(anchor='center')
 
                 botao_enter = Button(self.janela_login_DB, text='Enter', height=2, width=4, command=self.login_db)
-                botao_enter.pack(anchor='center')
+                botao_enter.pack(side='top')
 
                 botao_sair = Button(self.janela_login_DB, text='Sair', height=2, width=4, command=self.janela_login_DB.destroy)
-                botao_sair.pack(anchor='center')
+                botao_sair.pack(side='top')
 
                 mainloop()
 
@@ -773,12 +778,13 @@ class mercadinho:
                 comando_SQL = "SELECT * FROM cliente_mercadinho"
                 cursor_DB.execute(comando_SQL)
                 for id_cliente, nome_cliente, cpf_cliente, nasci, tele, email in cursor_DB:
-                    lista_cliente.append(f'{id_cliente} \n')
-                    lista_cliente.append(f'{nome_cliente} \n')
-                    lista_cliente.append(f'{cpf_cliente} \n')
-                    lista_cliente.append(f'{nasci} \n')
-                    lista_cliente.append(f'{tele} \n')
-                    lista_cliente.append(f'{email} \n')
+                    lista_cliente.append('----------------------------------------------- \n')
+                    lista_cliente.append(f' ==> ID: {id_cliente} \n')
+                    lista_cliente.append(f' ==> Nome: {nome_cliente} \n')
+                    lista_cliente.append(f' ==> CPF: {cpf_cliente} \n')
+                    lista_cliente.append(f' ==> Nascimento: {nasci} \n')
+                    lista_cliente.append(f' ==> Telefone:{tele} \n')
+                    lista_cliente.append(f' ==> E-MAIL: {email} \n')
 
                 self.janela_view_produtos = Tk()
                 self.janela_view = Text(self.janela_view_produtos)
