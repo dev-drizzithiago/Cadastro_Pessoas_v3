@@ -192,11 +192,11 @@ class mercadinho:
         try:
             Aparencia.logo_principal('ABRINDO O BANDO DE DADOS, ENTRE COM SUAS INFORMAÇÕES')
             Aparencia.logo_principal('DIGITE O USUÁRIO E A SENHA PARA SE CONECTAR AO BANCO DE DADOS')
-            # usuario = input('Usuário: ')
-            # password = input('Password: ')
+            usuario = input('Usuário: ')
+            password = input('Password: ')
             print('ABRINDO O BANCO DE DADOS, AGUARDE...!!')
             sleep(0.5)
-            db_conexao = mysql.connector.connect(host='localhost', user='root', password='',
+            db_conexao = mysql.connector.connect(host='db4free.net', user=usuario, password=password,
                                                  database='mercadinho_pinheiro')
             print('Bando de dados conectado!!')
             RELATORIOS.relatorio_geral_SEM_ERROS('Banco de dados conectado!!')
@@ -739,6 +739,7 @@ class mercadinho:
 
     def CaixaMercadinhoPinheiro(self):
         cursor_DB = self.db_conexao.cursor()
+
         class JanelaMercadinho:
             def __init__(self):
                 self.janela_login_DB = Tk()
@@ -789,8 +790,8 @@ class mercadinho:
                 self.botao_sair_view = Button(self.frame_VIEW_DB_1, text='Sair', command=self.janela_login_DB.destroy)
                 self.botao_sair_view.pack(side='left')
 
-
         iniciando = JanelaMercadinho()
+
 
 MERCADINHO = mercadinho()
 
