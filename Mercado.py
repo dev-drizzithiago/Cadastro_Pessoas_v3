@@ -197,7 +197,7 @@ class mercadinho:
             print('ABRINDO O BANCO DE DADOS, AGUARDE...!!')
             sleep(0.5)
             db_conexao = mysql.connector.connect(host='db4free.net', user=usuario, password=password,
-                                                 database='mercadinho_pinheiro')
+                                                 database='drizzithiago_sql')
             print('Bando de dados conectado!!')
             RELATORIOS.relatorio_geral_SEM_ERROS('Banco de dados conectado!!')
             sleep(0.5)
@@ -286,6 +286,8 @@ class mercadinho:
                     if len(telefone) == 0:
                         telefone = '(xx)xxxxx-xxxx'
                     email = str(input('Email do cliente (opcional): '))
+                    if email in '@':
+                        print('não é um email valido')
                     if cont == 5:
                         print('Você não pode deixar esse campo vazio')
                         sleep(1)
