@@ -267,6 +267,7 @@ class mercadinho:
             # CADASTRO CLIENTES
             if opc_cadastro == 1:
                 cont = 0
+                tentativas = int
                 Aparencia.logo_principal('CADASTRANDO CLIENTES...')
                 while True:
                     while True:
@@ -274,8 +275,15 @@ class mercadinho:
                         if len(nome_cliente) == 0:
                             print('Esse campo não pode ficar vazio!')
                             cont += 1
+                            if cont == 5:
+                                tentativas = 1
+                                print('Você já tentou 5 vezes, decida-se')
+                                aparencia.apt_enter()
+                                return tentativas
                         else:
                             break
+                    if tentativas == 1:
+                        break
                     cpf_cliente = Aparencia.leiaInt('Entre com o CPF(Sem pontos): ')
                     data_nasc = str(input('Data de nascimento (ddmmaaaa): '))
                     if len(data_nasc) == 0:
@@ -286,12 +294,8 @@ class mercadinho:
                     if len(telefone) == 0:
                         telefone = '(xx)xxxxx-xxxx'
                     email = str(input('Email do cliente (opcional): '))
-                    if cont == 5:
-                        print('Você não pode deixar esse campo vazio')
-                        sleep(1)
-                        print('Voltando ao menu...')
-                        sleep(1)
-                        break
+                    if len(email) == 0:
+                        email = '<desconhecido>'
                     Aparencia.linha()
                     print('Você adicionou as seguintes informações \n')
                     print(f'Nome do Cliente: {nome_cliente} \n'
@@ -739,6 +743,7 @@ class mercadinho:
 
     def CaixaMercadinhoPinheiro(self):
         cursor_DB = self.db_conexao.cursor()
+
         class JanelaMercadinho:
             def __init__(self):
                 self.janela_login_DB = Tk()
@@ -789,8 +794,8 @@ class mercadinho:
                 self.botao_sair_view = Button(self.frame_VIEW_DB_1, text='Sair', command=self.janela_login_DB.destroy)
                 self.botao_sair_view.pack(side='left')
 
-
         iniciando = JanelaMercadinho()
+
 
 MERCADINHO = mercadinho()
 
