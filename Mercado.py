@@ -308,7 +308,7 @@ class mercadinho:
                         try:
                             conexao_cliente = self.db_conexao.cursor()
                             comando_SQL_cliente: str = "INSERT INTO cliente_mercadinho (" \
-                                                       "nome_cliente, cpf_cliente, data_nasc," \
+                                                       "nome_cliente, cpf_cliente, data_nasc, " \
                                                        "tel_cliente, email_cliente) " \
                                                        "VALUES (%s, %s, %s, %s, %s)"
                             valores_SQL_cliente = (nome_cliente, cpf_cliente, data_nasc, telefone, email)
