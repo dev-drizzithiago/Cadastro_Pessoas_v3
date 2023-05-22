@@ -4,6 +4,7 @@ from analise_dados import *
 from datetime import datetime, date
 from os import makedirs, listdir
 from tkinter import *
+import tkinter
 
 
 # OBJETO PARA MELHORAR A APARENCIA DO PROGRAMA
